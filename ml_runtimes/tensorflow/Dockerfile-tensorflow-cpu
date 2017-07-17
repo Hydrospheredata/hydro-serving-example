@@ -1,0 +1,7 @@
+FROM tensorflow/tensorflow:latest-devel-py3
+ADD src/ /app/
+ADD requirements.txt /app/
+ADD start.sh /app/
+
+WORKDIR /app
+RUN pip3 install -r requirements.txt
