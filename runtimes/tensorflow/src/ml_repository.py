@@ -1,7 +1,7 @@
 import urllib.request
 import json
 import os
-from sklearn.externals import joblib
+import tensorflow as tf
 
 
 class MLRepository:
@@ -27,6 +27,8 @@ class MLRepository:
 
         return save_path
 
-    def load_model(self, model_name):
-        model_path = "models/{0}/model.pkl".format(model_name)
-        return joblib.load(model_path)
+    def load_model(self, sess, model_name):
+        model_path = "models/{0}/{0}".format(model_name)
+        meta_graph = tf.train.import_meta_graph("{0}.meta".format(model_path))
+        meta_graph.restore(sess, model_path)
+        return sess
