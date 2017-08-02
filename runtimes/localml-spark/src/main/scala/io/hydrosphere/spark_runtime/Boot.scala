@@ -40,13 +40,11 @@ object Boot extends App {
   implicit val ex = system.dispatcher
   implicit val timeout = Timeout(2.minutes)
 
+  val pipelineModel = PipelineLoader.load("/model")
+
   val addr = Properties.envOrElse("SERVE_ADDR", "0.0.0.0")
   val port = Properties.envOrElse("SERVE_PORT", "9090").toInt
 
-  val mlRepoAddr = Properties.envOrSome("ML_REPO_ADDR", Some("192.168.99.100")).get
-  val mlRepoPort = Properties.envOrSome("ML_REPO_PORT", Some("8080")).get.toInt
-
-  val repo = system.actorOf(ModelServer.props(mlRepoAddr, mlRepoPort))
   val corsSettings = CorsSettings.defaultSettings
 
   val routes = cors(corsSettings) {
@@ -61,35 +59,24 @@ object Boot extends App {
         path(Segment) { modelName =>
           import MapAnyJson._
           entity(as[List[Map[String, Any]]]) { mapList =>
-            println(s"Incoming request. Model: $modelName. Params: $mapList")
-            val f = repo ? ModelServer.Message.GetModel(modelName)
-            onSuccess(f.mapTo[ModelEntry]) { model =>
-              val pipelineModel = model.pipeline
-              val inputs = model.metadata.inputs
-              val inputKeys = mapList.head.keys.toList
-              if (!inputKeys.containsSlice(inputs)) {
-                complete {
-                  Failure(new IllegalArgumentException(s"Invalid input data. Received $inputKeys. Required $inputs"))
-                }
-              } else {
-                val columns = inputKeys.map { colName =>
-                  val colData = mapList.map { row =>
-                    val data = row(colName)
-                    data match {
-                      case l: List[Any] => convertCollection(l)
-                      case x => x
-                    }
-                  }
-                  LocalDataColumn(colName, colData)
-                }
-                val inputLDF = LocalData(columns)
-                val result = pipelineModel.transform(inputLDF)
-                complete {
-                  val res = result.toMapList.asInstanceOf[List[Any]]
-                  println(s"Results: $res")
-                  res
+            println(s"Incoming request. Params: $mapList")
+            val inputKeys = mapList.head.keys.toList
+            val columns = inputKeys.map { colName =>
+              val colData = mapList.map { row =>
+                val data = row(colName)
+                data match {
+                  case l: List[Any] => convertCollection(l)
+                  case x => x
                 }
               }
+              LocalDataColumn(colName, colData)
+            }
+            val inputLDF = LocalData(columns)
+            val result = pipelineModel.transform(inputLDF)
+            complete {
+              val res = result.toMapList.asInstanceOf[List[Any]]
+              println(s"Results: $res")
+              res
             }
           }
         }
