@@ -11,7 +11,7 @@ cd runtimes
 
 echo "Spark Local ML..."
 cd localml-spark
-sbt assembly
+./sbt/sbt assembly
 docker build --build-arg VERSION=$VERSION --no-cache -t hydro-serving/runtime-sparklocal .
 cd ../
 
