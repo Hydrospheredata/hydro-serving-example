@@ -17,8 +17,9 @@ ADD target/scala-2.11/${SERVER_JAR} /app/${SERVER_JAR}
 WORKDIR /app
 
 RUN apk update && \
-    apk add --no-cache curl && \
-    chmod +x ./sidecar.sh; sync; &&  ./sidecar.sh --target /hydro-serving/sidecar -- alpine && \
+    apk add --no-cache curl && sync && \
+    chmod +x /app/start.sh && sync && \
+    ./sidecar.sh --target /hydro-serving/sidecar -- alpine && \
     rm -rf sidecar.sh && rm -rf /var/cache/apk/*
 
 HEALTHCHECK --interval=30s --timeout=3s --retries=3 CMD curl -f http://localhost:8080/health || exit 1

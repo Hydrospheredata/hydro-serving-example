@@ -15,6 +15,8 @@ WORKDIR /app
 RUN apk update && \
     apk add --no-cache curl && \
     apk add gcc g++ linux-headers gfortran musl-dev python3-dev && \
+    chmod +x /app/sidecar.sh && sync && \
+    chmod +x /app/start.sh && sync && \
     ./sidecar.sh --target /hydro-serving/sidecar -- alpine && \
     rm -rf sidecar.sh && rm -rf /var/cache/apk/* && \
     ln -s locale.h /usr/include/xlocale.h
