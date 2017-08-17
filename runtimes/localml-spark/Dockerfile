@@ -17,8 +17,9 @@ ADD target/scala-2.11/${SERVER_JAR} /app/${SERVER_JAR}
 WORKDIR /app
 
 RUN apk update && \
-    apk add --no-cache curl && sync && \
+    apk add --no-cache curl && \
     chmod +x /app/start.sh && sync && \
+    chmod +x ./sidecar.sh && sync && \
     ./sidecar.sh --target /hydro-serving/sidecar -- alpine && \
     rm -rf sidecar.sh && rm -rf /var/cache/apk/*
 
