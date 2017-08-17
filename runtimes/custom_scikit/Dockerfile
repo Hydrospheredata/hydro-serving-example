@@ -1,18 +1,17 @@
+ARG VERSION=latest
 FROM frolvlad/alpine-python-machinelearning
-LABEL artifactId=custom_scikit runtimeType=model version=1.0-SNAPSHOT
 
-ENV RUNTIME_TYPE=model
-ENV ENVOY_HTTP_PORT=8080 ENVOY_ADMIN_PORT=8082
-ENV ZIPKIN_HOST=localhost ZIPKIN_PORT=9411 ZIPKIN_ENABLED=false
-ENV MANAGER_HOST=localhost MANAGER_PORT=8080
+ARG VERSION
+
+ENV SIDECAR_HTTP_PORT=8080
 ENV APP_HTTP_PORT=9090
 ENV APP_START_SCRIPT=/app/start.sh
-ENV ML_REPO_ADDR=localhost ML_REPO_PORT=8081
-ENV MODEL_NAME=pm_scikit MODEL_TYPE=custom_scikit MODEL_VERSION=1
 
 ADD . /app/
+ADD http://repo.hydrosphere.io/hydrosphere/static/hydro-serving-sidecar-install-$VERSION.sh /app/sidecar.sh
 
 WORKDIR /app
+
 RUN apk update && \
     apk add --no-cache curl && \
     apk add gcc g++ linux-headers gfortran musl-dev python3-dev && \

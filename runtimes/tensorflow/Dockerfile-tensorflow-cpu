@@ -1,7 +1,27 @@
+ARG VERSION=latest
 FROM tensorflow/tensorflow:latest-devel-py3
-ADD src/ /app/
-ADD requirements.txt /app/
-ADD start.sh /app/
+
+ARG VERSION
+
+ENV SIDECAR_HTTP_PORT=8080
+ENV APP_HTTP_PORT=9090
+ENV APP_START_SCRIPT=/app/start.sh
+
+ADD . /app/
+ADD http://repo.hydrosphere.io/hydrosphere/static/hydro-serving-sidecar-install-$VERSION.sh /app/sidecar.sh
 
 WORKDIR /app
-RUN pip3 install -r requirements.txt
+
+RUN apt update && \
+    apt install curl && \
+    chmod +x /app/sidecar.sh && \
+    chmod +x /app/start.sh && \
+    ./sidecar.sh --target /hydro-serving/sidecar -- ubuntu && \
+    rm -rf sidecar.sh && rm -rf /var/cache/apk/*
+
+RUN pip install -r requirements.txt
+
+WORKDIR /app/src
+
+HEALTHCHECK --interval=30s --timeout=3s --retries=3 CMD curl -f http://localhost:8080/health || exit 1
+CMD ["/hydro-serving/sidecar/start.sh"]
