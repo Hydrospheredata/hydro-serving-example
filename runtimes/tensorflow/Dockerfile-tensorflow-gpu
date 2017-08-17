@@ -1,8 +1,8 @@
 FROM alpine:latest AS serving-alpine-cuda
 RUN apk update && apk add --update wget alpine-sdk perl && \ 
  wget http://developer.download.nvidia.com/compute/cuda/7.5/Prod/local_installers/cuda_7.5.18_linux.run && \ 
- chmod +x cuda_*_linux.run; sync; \
- && ./cuda_*_linux.run --tar mxvf && \
+ chmod +x cuda_*_linux.run; && \
+ ./cuda_*_linux.run --tar mxvf && \
  ./run_files/cuda-linux64-rel-*.run -noprompt && \
  rm -rf cuda_*_linux.run \
     /run_files \ 
