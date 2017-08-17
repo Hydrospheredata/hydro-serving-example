@@ -18,9 +18,16 @@ ML_REPO_ADDR = os.getenv('ML_REPO_ADDR', '0.0.0.0')
 ML_REPO_PORT = os.getenv('ML_REPO_PORT', '8081')
 
 app = Flask(__name__)
-repo = MLRepository(ML_REPO_ADDR, ML_REPO_PORT)
 
-model_cache = {}
+print("Loading TF model...")
+sess = tf.Session()
+meta_graph = tf.saved_model.loader.load(sess, [tf.saved_model.tag_constants.SERVING], '/model/')
+signature = meta_graph.signature_def[DEFAULT_SERVING_SIGNATURE_DEF_KEY]
+inputs = list(signature.inputs._values.keys())
+outputs = list(signature.outputs._values.keys())
+input_tensors = {x: sess.graph.get_tensor_by_name(signature.inputs[x].name) for x in inputs}
+output_tensors = {x: sess.graph.get_tensor_by_name(signature.outputs[x].name) for x in outputs}
+print("Model loaded. Ready to serve.")
 
 
 @app.route('/health', methods=['GET'])
@@ -30,14 +37,6 @@ def health():
 
 @app.route('/<model_name>', methods=['POST'])
 def predict(model_name):
-    with tf.Session() as sess:
-        meta_graph = tf.saved_model.loader.load(sess, [tf.saved_model.tag_constants.SERVING], '/tmp/{0}'.format(model_name))
-        signature = meta_graph.signature_def[DEFAULT_SERVING_SIGNATURE_DEF_KEY]
-        inputs = list(signature.inputs._values.keys())
-        outputs = list(signature.outputs._values.keys())
-        input_tensors = {x: sess.graph.get_tensor_by_name(signature.inputs[x].name) for x in inputs}
-        output_tensors = {x: sess.graph.get_tensor_by_name(signature.outputs[x].name) for x in outputs}
-
         input_raw = request.json
         input_dict = dict(zip(input_raw[0], zip(*[d.values() for d in input_raw])))
         feed_dict = {v.name: np.matrix(list(input_dict[k])) for (k, v) in input_tensors.items()}

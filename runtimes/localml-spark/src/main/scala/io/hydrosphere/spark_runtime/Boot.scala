@@ -40,10 +40,10 @@ object Boot extends App {
   implicit val ex = system.dispatcher
   implicit val timeout = Timeout(2.minutes)
 
-  val pipelineModel = PipelineLoader.load("/model")
-
+  val pipelineModel = PipelineLoader.load("/tmp/databricks/test_model")
+  println("Model loaded. Ready to serve.")
   val addr = Properties.envOrElse("SERVE_ADDR", "0.0.0.0")
-  val port = Properties.envOrElse("SERVE_PORT", "9090").toInt
+  val port = Properties.envOrElse("SERVE_PORT", "2004").toInt
 
   val corsSettings = CorsSettings.defaultSettings
 
@@ -65,6 +65,7 @@ object Boot extends App {
               val colData = mapList.map { row =>
                 val data = row(colName)
                 data match {
+                  case l: List[String] => l.toArray
                   case l: List[Any] => convertCollection(l)
                   case x => x
                 }

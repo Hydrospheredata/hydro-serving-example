@@ -1,18 +1,7 @@
 echo "Building dependencies and Docker images for demo..."
 
-echo "Building envoy and other dependencies..."
-cd envoy
-mvn clean install
-cd ../
-
-echo "ML Repository..."
-cd ml_repository
-sbt assembly
-docker build --no-cache -t mist-ml-repository .
-cd ../
-
 echo "Runtimes:"
-cd ml_runtimes
+cd runtimes
 
 echo "Spark Local ML..."
 cd localml-spark
@@ -29,6 +18,11 @@ cd ../
 echo "Custom Scikit..."
 cd custom_scikit
 docker build --no-cache -t mist-runtime-customscikit .
+cd ../
+
+echo "Tensorflow..."
+cd tensorflow
+docker build --no-cache -t mist-runtime-tensorflow -f Dockerfile-tensorflow-cpu .
 cd ../
 
 cd ../
