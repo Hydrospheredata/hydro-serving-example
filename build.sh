@@ -6,23 +6,23 @@ cd runtimes
 echo "Spark Local ML..."
 cd localml-spark
 sbt assembly
-docker build --no-cache -t mist-runtime-sparklocal .
+docker build --no-cache -t hydro-serving/runtime-sparklocal .
 cd ../
 
 echo "Scikit..."
 cd scikit
 docker build -t mist-envoy-alpine-python-machinelearning -f Dockerfile-alpine-python-machinelearning .
-docker build --no-cache -t mist-runtime-scikit .
+docker build --no-cache -t hydro-serving/runtime-scikit .
 cd ../
 
 echo "Custom Scikit..."
 cd custom_scikit
-docker build --no-cache -t mist-runtime-customscikit .
+docker build --no-cache -t hydro-serving/runtime-customscikit .
 cd ../
 
 echo "Tensorflow..."
 cd tensorflow
-docker build --no-cache -t mist-runtime-tensorflow -f Dockerfile-tensorflow-cpu .
+docker build --no-cache -t hydro-serving/runtime-tensorflow -f Dockerfile-tensorflow-cpu .
 cd ../
 
 cd ../
