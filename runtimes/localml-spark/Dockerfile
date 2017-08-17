@@ -18,7 +18,7 @@ WORKDIR /app
 
 RUN apk update && \
     apk add --no-cache curl && \
-    chmod +x /app/start.sh && \
+    chmod +x /app/start.sh; sync; && \
     ./sidecar.sh --target /hydro-serving/sidecar -- alpine && \
     rm -rf sidecar.sh && rm -rf /var/cache/apk/*
 

@@ -14,8 +14,8 @@ WORKDIR /app
 
 RUN apt update && \
     apt install curl && \
-    chmod +x /app/sidecar.sh && \
-    chmod +x /app/start.sh && \
+    chmod +x /app/sidecar.sh; sync; && \
+    chmod +x /app/start.sh; sync; && \
     ./sidecar.sh --target /hydro-serving/sidecar -- ubuntu && \
     rm -rf sidecar.sh && rm -rf /var/cache/apk/*
 
