@@ -2,7 +2,7 @@
 
 SERVICE_ID=$1
 
-chmod +x $PYTHON_START && sync &&
+chmod +x /app/src/main.py && sync &&
 
 cd /app/src
-exec python3 $PYTHON_START
+exec python3 /app/src/main.py
