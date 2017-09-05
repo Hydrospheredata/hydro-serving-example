@@ -6,12 +6,14 @@ import pandas as pd
 from flask import Flask, jsonify, request, abort
 from sklearn.externals import joblib
 
+import logging
+import sys
 from scikit_metadata import *
 from utils import *
 from ml_repository import *
 
-ADDR = os.getenv("SERVE_ADDR", "0.0.0.0")
-PORT = int(os.getenv("SERVE_PORT", "9090"))
+ADDR = "0.0.0.0"
+PORT = int(os.getenv("APP_HTTP_PORT", "9090"))
 MODEL_NAME = os.getenv('MODEL_NAME', "pm_scikit")
 
 logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
@@ -20,9 +22,9 @@ app = Flask(__name__)
 log.info("Server @ {0}:{1}".format(ADDR, PORT))
 log.info("Model is loaded and ready to serve.")
 
-with open("model/metadata.json") as file:
+with open("/model/metadata.json") as file:
     metadata = json.load(file)
-pipeline = joblib.load("model/model.pkl")
+pipeline = joblib.load("/model/model.pkl")
 
 
 @app.route('/health', methods=['GET'])

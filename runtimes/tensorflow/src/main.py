@@ -2,20 +2,18 @@ import os
 import urllib.request
 import json
 from flask import Flask, jsonify, request, abort
+import tensorflow as tf
 from tensorflow.python.saved_model.signature_constants import DEFAULT_SERVING_SIGNATURE_DEF_KEY
 
 from utils import *
 from ml_repository import *
 
-ADDR = os.getenv("SERVE_ADDR", "0.0.0.0")
-PORT = int(os.getenv("SERVE_PORT", "9090"))
+ADDR = "0.0.0.0"
+PORT = int(os.getenv("APP_HTTP_PORT", "9090"))
 
 MODEL_VERSION = os.getenv('MODEL_VERSION', "version")
 MODEL_NAME = os.getenv('MODEL_NAME', "name")
 MODEL_TYPE = os.getenv('MODEL_TYPE', "type")
-
-ML_REPO_ADDR = os.getenv('ML_REPO_ADDR', '0.0.0.0')
-ML_REPO_PORT = os.getenv('ML_REPO_PORT', '8081')
 
 app = Flask(__name__)
 
@@ -23,6 +21,7 @@ print("Loading TF model...")
 sess = tf.Session()
 meta_graph = tf.saved_model.loader.load(sess, [tf.saved_model.tag_constants.SERVING], '/model/')
 signature = meta_graph.signature_def[DEFAULT_SERVING_SIGNATURE_DEF_KEY]
+
 inputs = list(signature.inputs._values.keys())
 outputs = list(signature.outputs._values.keys())
 input_tensors = {x: sess.graph.get_tensor_by_name(signature.inputs[x].name) for x in inputs}

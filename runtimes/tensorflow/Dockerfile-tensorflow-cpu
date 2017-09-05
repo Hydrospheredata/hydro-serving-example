@@ -1,5 +1,5 @@
 ARG VERSION=latest
-FROM tensorflow/tensorflow:latest-devel-py3
+FROM tensorflow/tensorflow:1.1.0-devel-py3
 
 ARG VERSION
 
