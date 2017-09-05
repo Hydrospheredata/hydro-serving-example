@@ -22,8 +22,8 @@ sess = tf.Session()
 meta_graph = tf.saved_model.loader.load(sess, [tf.saved_model.tag_constants.SERVING], '/model/')
 signature = meta_graph.signature_def[DEFAULT_SERVING_SIGNATURE_DEF_KEY]
 
-inputs = list(signature.inputs._values.keys())
-outputs = list(signature.outputs._values.keys())
+inputs = list(signature.inputs.keys())
+outputs = list(signature.outputs.keys())
 input_tensors = {x: sess.graph.get_tensor_by_name(signature.inputs[x].name) for x in inputs}
 output_tensors = {x: sess.graph.get_tensor_by_name(signature.outputs[x].name) for x in outputs}
 print("Model loaded. Ready to serve.")
