@@ -43,7 +43,7 @@ object Boot extends App {
   val pipelineModel = PipelineLoader.load("/model")
   println("Model loaded. Ready to serve.")
   val addr = Properties.envOrElse("SERVE_ADDR", "0.0.0.0")
-  val port = Properties.envOrElse("SERVE_PORT", "2004").toInt
+  val port = Properties.envOrElse("SERVE_PORT", "9090").toInt
 
   val corsSettings = CorsSettings.defaultSettings
 
