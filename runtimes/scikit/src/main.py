@@ -38,12 +38,12 @@ def predict(model_name):
     output_columns = metadata['outputs']
     input_data = request.json
     input_data_keys = list(input_data[0].keys())
-    if set(output_columns).issubset(set(input_data_keys)):
-        log.info("ERROR Same columns in input and output")
-        abort(400, "Same columns in input and output.\nInput:{0}\nOutput:{1}".format(input_data_keys, output_columns))
+    if not set(input_columns).issubset(set(input_data_keys)):
+        log.info("ERROR Input columns are missing")
+        abort(400, "Input columns are missing")
     df = dict_to_df(input_data, input_columns)
     log.info(df)
-    prediction = imported_model.predict(df[input_columns])
+    prediction = pipeline.predict(df[input_columns])
     res_df = pd.DataFrame(data=prediction, columns=output_columns)
     log.info(str(df) + '\nPrediction:\n' + str(res_df))
     return jsonify(df_to_json(df.join(res_df)))
