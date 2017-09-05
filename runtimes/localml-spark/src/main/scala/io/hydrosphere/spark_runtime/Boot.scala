@@ -40,7 +40,7 @@ object Boot extends App {
   implicit val ex = system.dispatcher
   implicit val timeout = Timeout(2.minutes)
 
-  val pipelineModel = PipelineLoader.load("/tmp/databricks/test_model")
+  val pipelineModel = PipelineLoader.load("/model")
   println("Model loaded. Ready to serve.")
   val addr = Properties.envOrElse("SERVE_ADDR", "0.0.0.0")
   val port = Properties.envOrElse("SERVE_PORT", "2004").toInt
