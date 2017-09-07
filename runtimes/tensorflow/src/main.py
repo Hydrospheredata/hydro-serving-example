@@ -19,7 +19,7 @@ app = Flask(__name__)
 
 print("Loading TF model...")
 sess = tf.Session()
-meta_graph = tf.saved_model.loader.load(sess, [tf.saved_model.tag_constants.SERVING], '/Users/bulat/Documents/Dev/Provectus/hydro-serving-runtime/models/mnist_classifier')
+meta_graph = tf.saved_model.loader.load(sess, [tf.saved_model.tag_constants.SERVING], '/model')
 signature = meta_graph.signature_def[DEFAULT_SERVING_SIGNATURE_DEF_KEY]
 
 inputs = list(signature.inputs.keys())
