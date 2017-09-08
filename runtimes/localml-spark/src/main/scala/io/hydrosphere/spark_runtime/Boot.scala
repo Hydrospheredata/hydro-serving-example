@@ -14,12 +14,11 @@ import io.hydrosphere.spark_ml_serving._
 import scala.concurrent.duration._
 import scala.reflect.runtime.universe._
 import scala.util.{Failure, Properties}
-
 import LocalPipelineModel._
-import SparkMetadata._
 import MapAnyJson._
 import spray.json._
 import DefaultJsonProtocol._
+import akka.http.scaladsl.model.{StatusCode, StatusCodes}
 
 /**
   * Created by Bulat on 19.05.2017.
@@ -58,27 +57,38 @@ object Boot extends App {
       post {
         path(Segment) { modelName =>
           import MapAnyJson._
-          entity(as[List[Map[String, Any]]]) { mapList =>
-            println(s"Incoming request. Params: $mapList")
-            val inputKeys = mapList.head.keys.toList
-            val columns = inputKeys.map { colName =>
-              val colData = mapList.map { row =>
-                val data = row(colName)
-                data match {
-                  case l: List[String] => l.toArray
-                  case l: List[Any] => convertCollection(l)
-                  case x => x
+          entity(as[List[Map[String, Any]]]) {
+            case Nil =>
+              println(s"Incoming request. Empty.")
+              complete(StatusCodes.BadRequest)
+            case mapList =>
+              import SparkUtils._
+              val inputKeys = mapList.head.keys.toList
+              println(pipelineModel.inputCols)
+              if (!inputKeys.containsSlice(pipelineModel.inputCols)) {
+                println(s"Incoming request. No input columns detected.")
+                complete(StatusCodes.BadRequest)
+              } else {
+                println(s"Incoming request. Params: $mapList")
+                val columns = inputKeys.map { colName =>
+                  val colData = mapList.map { row =>
+                    val data = row(colName)
+                    data match {
+                      case l: List[String] => l.toArray
+                      case l: List[Any] => convertCollection(l)
+                      case x => x
+                    }
+                  }
+                  LocalDataColumn(colName, colData)
+                }
+                val inputLDF = LocalData(columns)
+                val result = pipelineModel.transform(inputLDF)
+                complete {
+                  val res = result.toMapList.asInstanceOf[List[Any]]
+                  println(s"Results: $res")
+                  res
                 }
               }
-              LocalDataColumn(colName, colData)
-            }
-            val inputLDF = LocalData(columns)
-            val result = pipelineModel.transform(inputLDF)
-            complete {
-              val res = result.toMapList.asInstanceOf[List[Any]]
-              println(s"Results: $res")
-              res
-            }
           }
         }
       }

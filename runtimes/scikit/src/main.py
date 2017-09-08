@@ -10,7 +10,6 @@ import logging
 import sys
 from scikit_metadata import *
 from utils import *
-from ml_repository import *
 
 ADDR = "0.0.0.0"
 PORT = int(os.getenv("APP_HTTP_PORT", "9090"))
@@ -25,7 +24,8 @@ log.info("Model is loaded and ready to serve.")
 with open("/model/metadata.json") as file:
     metadata = json.load(file)
 pipeline = joblib.load("/model/model.pkl")
-
+input_columns = metadata['inputs']
+output_columns = metadata['outputs']
 
 @app.route('/health', methods=['GET'])
 def health():
@@ -34,9 +34,9 @@ def health():
 
 @app.route('/<model_name>', methods=['POST'])
 def predict(model_name):
-    input_columns = metadata['inputs']
-    output_columns = metadata['outputs']
     input_data = request.json
+    if not input_data:
+        return abort(400, "Data is empty")
     input_data_keys = list(input_data[0].keys())
     if not set(input_columns).issubset(set(input_data_keys)):
         log.info("ERROR Input columns are missing")

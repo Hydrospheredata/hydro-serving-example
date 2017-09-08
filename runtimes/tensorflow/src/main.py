@@ -3,10 +3,10 @@ import urllib.request
 import json
 from flask import Flask, jsonify, request, abort
 import tensorflow as tf
+import numpy as np
 from tensorflow.python.saved_model.signature_constants import DEFAULT_SERVING_SIGNATURE_DEF_KEY
 
 from utils import *
-from ml_repository import *
 
 ADDR = "0.0.0.0"
 PORT = int(os.getenv("APP_HTTP_PORT", "9090"))
@@ -19,7 +19,7 @@ app = Flask(__name__)
 
 print("Loading TF model...")
 sess = tf.Session()
-meta_graph = tf.saved_model.loader.load(sess, [tf.saved_model.tag_constants.SERVING], '/model/')
+meta_graph = tf.saved_model.loader.load(sess, [tf.saved_model.tag_constants.SERVING], '/model')
 signature = meta_graph.signature_def[DEFAULT_SERVING_SIGNATURE_DEF_KEY]
 
 inputs = list(signature.inputs.keys())
@@ -37,7 +37,12 @@ def health():
 @app.route('/<model_name>', methods=['POST'])
 def predict(model_name):
         input_raw = request.json
+        if not input_raw:
+            return abort(400, "Data is empty")
         input_dict = dict(zip(input_raw[0], zip(*[d.values() for d in input_raw])))
+        if not set(inputs).issubset(set(input_dict.keys())):
+            print("ERROR Input columns are missing")
+            abort(400, "Input columns are missing")
         feed_dict = {v.name: np.matrix(list(input_dict[k])) for (k, v) in input_tensors.items()}
 
         result = sess.run(output_tensors, feed_dict)
