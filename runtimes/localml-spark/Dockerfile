@@ -1,7 +1,7 @@
-ARG VERSION=latest
+ARG SIDECAR_VERSION=0.0.1
 FROM anapsix/alpine-java:8
 
-ARG VERSION
+ARG SIDECAR_VERSION
 
 ENV SIDECAR_HTTP_PORT=8080
 ENV APP_HTTP_PORT=9090
@@ -11,7 +11,7 @@ ENV SERVER_HOME=/app
 ENV SERVER_JAR=spark-localml-serve-assembly-1.0.jar
 
 ADD start.sh /app/
-ADD http://repo.hydrosphere.io/hydrosphere/static/hydro-serving-sidecar-install-$VERSION.sh /app/sidecar.sh
+ADD http://repo.hydrosphere.io/hydrosphere/static/hydro-serving-sidecar-install-$SIDECAR_VERSION.sh /app/sidecar.sh
 ADD target/scala-2.11/${SERVER_JAR} /app/${SERVER_JAR}
 
 WORKDIR /app

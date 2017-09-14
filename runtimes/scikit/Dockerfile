@@ -1,14 +1,14 @@
-ARG VERSION=latest
+ARG SIDECAR_VERSION=0.0.1
 FROM frolvlad/alpine-python-machinelearning
 
-ARG VERSION
+ARG SIDECAR_VERSION
 
 ENV SIDECAR_HTTP_PORT=8080
 ENV APP_HTTP_PORT=9090
 ENV APP_START_SCRIPT=/app/start.sh
 
 ADD . /app/
-ADD http://repo.hydrosphere.io/hydrosphere/static/hydro-serving-sidecar-install-$VERSION.sh /app/sidecar.sh
+ADD http://repo.hydrosphere.io/hydrosphere/static/hydro-serving-sidecar-install-$SIDECAR_VERSION.sh /app/sidecar.sh
 
 WORKDIR /app
 
