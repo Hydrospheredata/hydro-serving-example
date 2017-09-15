@@ -49,6 +49,30 @@ def isReleaseJob() {
     return "release".equalsIgnoreCase(env.BRANCH_NAME)
 }
 
+def generateTagComment(releaseVersion){
+    jenkinsLastCommit = sh(returnStdout: true, script: "git log --pretty=\"%H\" --author=jenkinsci -1").trim()
+    commitsList=sh(returnStdout: true, script: "git log --pretty=\"* %s (%an)\" ${jenkinsLastCommit}...HEAD").trim()
+    return "Release: ${releaseVersion} \n${commitsList}"
+}
+
+def createReleaseInGithub(gitCredentialId, organization, repository, releaseVersion, message){
+
+   bodyMessage=message.replaceAll("\n","<br />").replace("\r", "")
+   withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: gitCredentialId, usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD']]) {
+        def request = """
+            {
+                "tag_name": "${releaseVersion}",
+                "name": "${releaseVersion}",
+                "body": "${bodyMessage}",
+                "draft": false,
+                "prerelease": false
+            }
+        """
+        echo request
+        def response = httpRequest consoleLogResponseBody: true, acceptType: 'APPLICATION_JSON', contentType: 'APPLICATION_JSON', httpMode: 'POST', requestBody: request, url: "https://api.github.com/repos/${organization}/${repository}/releases?access_token=${GIT_PASSWORD}"
+   }
+}
+
 node("JenkinsOnDemand") {
     def repository = 'hydro-serving-runtime'
     def organization = 'Hydrospheredata'
@@ -84,8 +108,9 @@ node("JenkinsOnDemand") {
 
         stage("Publish"){
             def curVersion = currentVersion()
+            tagComment=generateTagComment(curVersion)
             sh "git commit -m 'Releasing ${curVersion}' -- version"
-            sh "git tag -a ${curVersion} -m 'Releasing ${curVersion}'"
+            sh "git tag -a ${curVersion} -m '${tagComment}'"
 
             sh "git checkout master"
 
@@ -95,6 +120,13 @@ node("JenkinsOnDemand") {
             sh "git commit -m 'Development version increased: ${nextVersion}' -- version"
 
             pushSource(gitCredentialId, organization, repository, "")
+
+            sh "docker push hydrosphere/serving-runtime-scikit:${curVersion}"
+            sh "docker push hydrosphere/serving-runtime-customscikit:${curVersion}"
+            sh "docker push hydrosphere/serving-runtime-sparklocal:${curVersion}"
+            sh "docker push hydrosphere/serving-runtime-tensorflow:${curVersion}"
+
+            createReleaseInGithub(gitCredentialId, organization, repository,curVersion,tagComment)
             pushSource(gitCredentialId, organization, repository, "refs/tags/${curVersion}")
         }
     }
