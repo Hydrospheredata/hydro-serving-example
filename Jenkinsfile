@@ -50,7 +50,7 @@ def isReleaseJob() {
 }
 
 def generateTagComment(releaseVersion){
-    commitsList=sh(returnStdout: true, script: "git log --pretty=\"%s\n\r (%an)\" -1").trim()
+    commitsList=sh(returnStdout: true, script: "git log --pretty=\"%b\n\r (%an)\" -1").trim()
     return "${commitsList}"
 }
 
