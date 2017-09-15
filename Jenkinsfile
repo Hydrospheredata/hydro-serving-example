@@ -50,9 +50,8 @@ def isReleaseJob() {
 }
 
 def generateTagComment(releaseVersion){
-    jenkinsLastCommit = sh(returnStdout: true, script: "git log --pretty=\"%H\" --author=jenkinsci -1").trim()
-    commitsList=sh(returnStdout: true, script: "git log --pretty=\"* %s (%an)\" ${jenkinsLastCommit}...HEAD").trim()
-    return "Release: ${releaseVersion} \n${commitsList}"
+    commitsList=sh(returnStdout: true, script: "git log --pretty=\"%s\n\r (%an)\" -1").trim()
+    return "${commitsList}"
 }
 
 def createReleaseInGithub(gitCredentialId, organization, repository, releaseVersion, message){
@@ -126,8 +125,9 @@ node("JenkinsOnDemand") {
             sh "docker push hydrosphere/serving-runtime-sparklocal:${curVersion}"
             sh "docker push hydrosphere/serving-runtime-tensorflow:${curVersion}"
 
-            createReleaseInGithub(gitCredentialId, organization, repository,curVersion,tagComment)
             pushSource(gitCredentialId, organization, repository, "refs/tags/${curVersion}")
+
+            createReleaseInGithub(gitCredentialId, organization, repository,curVersion,tagComment)
         }
     }
 }
