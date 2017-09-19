@@ -30,7 +30,7 @@ object Boot extends App {
   implicit val ex = system.dispatcher
   implicit val timeout = Timeout(2.minutes)
 
-  val pipelineModel = PipelineLoader.load("/Users/bulat/Documents/Dev/Provectus/hydro-serving-runtime/models/dtreeclassifier")
+  val pipelineModel = PipelineLoader.load("/model")
   println("Model loaded. Ready to serve.")
 
   pipelineModel.getStages.foreach(println)
