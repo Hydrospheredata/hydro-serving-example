@@ -24,23 +24,17 @@ import akka.http.scaladsl.model.{StatusCode, StatusCodes}
   * Created by Bulat on 19.05.2017.
   */
 object Boot extends App {
-  def convertCollection[T: TypeTag](list: List[T]) = {
-    list match {
-      case value: List[Double @unchecked] =>
-        value.toArray
-      case value: List[Int @unchecked] =>
-        value.toArray
-      case e => throw new IllegalArgumentException(e.toString)
-    }
-  }
-
+  import SparkUtils._
   implicit val system = ActorSystem("ml_server")
   implicit val materializer = ActorMaterializer()
   implicit val ex = system.dispatcher
   implicit val timeout = Timeout(2.minutes)
 
-  val pipelineModel = PipelineLoader.load("/model")
+  val pipelineModel = PipelineLoader.load("/Users/bulat/Documents/Dev/Provectus/hydro-serving-runtime/models/dtreeclassifier")
   println("Model loaded. Ready to serve.")
+
+  pipelineModel.getStages.foreach(println)
+
   val addr = "0.0.0.0"
   val port = Properties.envOrElse("APP_HTTP_PORT", "9090").toInt
 
@@ -72,12 +66,7 @@ object Boot extends App {
                 println(s"Incoming request. Params: $mapList")
                 val columns = inputKeys.map { colName =>
                   val colData = mapList.map { row =>
-                    val data = row(colName)
-                    data match {
-                      case l: List[String] => l.toArray
-                      case l: List[Any] => convertCollection(l)
-                      case x => x
-                    }
+                    row(colName)
                   }
                   LocalDataColumn(colName, colData)
                 }

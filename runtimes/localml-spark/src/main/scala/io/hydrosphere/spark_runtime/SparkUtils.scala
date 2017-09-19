@@ -45,5 +45,17 @@ object SparkUtils {
     def outputCols = {
       outParams.diff(inParams)
     }
+
+    def getMetadata = {
+      pipelineModel.stages.map{s =>
+        s.params.map{ p =>
+          s.get(p)
+        }.filter(_.isDefined).map(_.get)
+      }
+    }
+
+    def getStages = {
+      pipelineModel.stages.map(_.toString())
+    }
   }
 }
