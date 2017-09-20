@@ -23,6 +23,11 @@ cd scikit
 docker build --build-arg VERSION=$VERSION --build-arg SIDECAR_VERSION=$SIDECAR_VERSION --no-cache -t hydrosphere/serving-runtime-scikit:$VERSION .
 cd ../
 
+echo "Databricks Python 2..."
+cd databricks_python2
+docker build --build-arg VERSION=$VERSION --build-arg SIDECAR_VERSION=$SIDECAR_VERSION --no-cache -t hydrosphere/serving-runtime-py2databricks:$VERSION .
+cd ../
+
 echo "Custom Scikit..."
 cd custom_scikit
 docker build --build-arg VERSION=$VERSION --build-arg SIDECAR_VERSION=$SIDECAR_VERSION --no-cache -t hydrosphere/serving-runtime-customscikit:$VERSION .
