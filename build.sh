@@ -20,7 +20,6 @@ cd ../
 
 echo "Scikit..."
 cd scikit
-docker build --build-arg VERSION=$VERSION --build-arg SIDECAR_VERSION=$SIDECAR_VERSION -t mist-envoy-alpine-python-machinelearning:$VERSION -f Dockerfile-alpine-python-machinelearning .
 docker build --build-arg VERSION=$VERSION --build-arg SIDECAR_VERSION=$SIDECAR_VERSION --no-cache -t hydrosphere/serving-runtime-scikit:$VERSION .
 cd ../
 
