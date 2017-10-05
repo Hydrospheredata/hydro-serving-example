@@ -28,6 +28,12 @@ input_tensors = {x: sess.graph.get_tensor_by_name(signature.inputs[x].name) for 
 output_tensors = {x: sess.graph.get_tensor_by_name(signature.outputs[x].name) for x in outputs}
 print("Model loaded. Ready to serve.")
 
+print("Input tensors:")
+[print(x) for x in input_tensors]
+
+print("Output tensors:")
+[print(x) for x in output_tensors]
+
 
 @app.route('/health', methods=['GET'])
 def health():
@@ -36,23 +42,23 @@ def health():
 
 @app.route('/<model_name>', methods=['POST'])
 def predict(model_name):
-        input_raw = request.json
-        if not input_raw:
-            return abort(400, "Data is empty")
-        input_dict = dict(zip(input_raw[0], zip(*[d.values() for d in input_raw])))
-        if not set(inputs).issubset(set(input_dict.keys())):
+    input_raw = request.json
+    if not input_raw:
+        return abort(400, "Data is empty")
+    res = []
+    for row in input_raw:
+        if not set(inputs).issubset(set(row.keys())):
             print("ERROR Input columns are missing")
-            abort(400, "Input columns are missing")
-        feed_dict = {v.name: np.matrix(list(input_dict[k])) for (k, v) in input_tensors.items()}
+            return abort(400, "Input columns are missing")
+        feed_dict = {v.name: convert_data_to_tensor_shape(row[k], v.shape) for (k, v) in input_tensors.items()}
 
         result = sess.run(output_tensors, feed_dict)
 
-        converted_results = {k: v.tolist() if type(v) is np.ndarray else v for k, v in result.items()}
+        converted_results = {k: convert_to_python(v) for k, v in result.items()}
+        merged_dict = dict(list(converted_results.items()) + list(row.items()))
+        res.append(merged_dict)
 
-        merged_dict = dict(list(converted_results.items()) + list(input_dict.items()))
-        res_list = [dict(zip(merged_dict, t)) for t in zip(*merged_dict.values())]
-
-        return jsonify(res_list)
+    return jsonify(res)
 
 
 if __name__ == '__main__':
