@@ -13,6 +13,7 @@ MODEL_NAME = os.getenv('MODEL_NAME', "pm_scikit")
 FUNCTION_PATH = "/model"
 
 sys.path.append(f"{FUNCTION_PATH}/src")
+import function
 
 logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
 log = logging.getLogger()
@@ -26,7 +27,6 @@ def health():
 
 @app.route('/<path>', methods=['POST'])
 def execute(path):
-    import function
 
     input_data = request.json
     if not input_data:

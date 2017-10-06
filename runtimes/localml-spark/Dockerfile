@@ -23,5 +23,5 @@ RUN apk update && \
     ./sidecar.sh --target /hydro-serving/sidecar -- alpine && \
     rm -rf sidecar.sh && rm -rf /var/cache/apk/*
 
-HEALTHCHECK --interval=30s --timeout=3s --retries=3 CMD curl -f http://localhost:8080/health || exit 1
+HEALTHCHECK --interval=30s --timeout=3s --retries=3 CMD curl -f http://localhost:$APP_HTTP_PORT/health || exit 1
 CMD ["/hydro-serving/sidecar/start.sh"]

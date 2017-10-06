@@ -1,5 +1,5 @@
 ARG SIDECAR_VERSION=0.0.1
-FROM python:3-alpine
+FROM python:3-slim
 
 ARG SIDECAR_VERSION
 
@@ -12,18 +12,16 @@ ADD http://repo.hydrosphere.io/hydrosphere/static/hydro-serving-sidecar-install-
 
 WORKDIR /app
 
-RUN apk update && \
-    apk add --no-cache curl && \
-    apk add gcc g++ linux-headers gfortran musl-dev python3-dev && \
+RUN apt update && \
+    apt install -y curl && \
     chmod +x /app/sidecar.sh && sync && \
     chmod +x /app/start.sh && sync && \
-    ./sidecar.sh --target /hydro-serving/sidecar -- alpine && \
-    rm -rf sidecar.sh && rm -rf /var/cache/apk/* && \
-    ln -s locale.h /usr/include/xlocale.h
+    ./sidecar.sh --target /hydro-serving/sidecar -- ubuntu && \
+    rm -rf sidecar.sh && rm -rf /var/cache/apk/*
 
 RUN pip install -r requirements.txt
 
 WORKDIR /app/src
 
-HEALTHCHECK --interval=30s --timeout=3s --retries=3 CMD curl -f http://localhost:8080/health || exit 1
+HEALTHCHECK --interval=30s --timeout=3s --retries=3 CMD curl -f http://localhost:$APP_HTTP_PORT/health || exit 1
 CMD ["/hydro-serving/sidecar/start.sh"]
