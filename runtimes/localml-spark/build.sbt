@@ -1,21 +1,31 @@
-name := "spark-localml-serve"
+lazy val sparkVersion = util.Properties.propOrElse("sparkVersion", "2.2.0")
+lazy val sparkVersionLogger = taskKey[Unit]("Logs Spark version")
+
+sparkVersionLogger := {
+  val log = streams.value.log
+  log.info(s"Spark version: $sparkVersion")
+}
+
+lazy val localSparkVersion = sparkVersion.substring(0,sparkVersion.lastIndexOf(".")).replace('.', '_')
+
+name := s"spark-localml-serve-${localSparkVersion.replace('_', '.')}"
 version := "1.0"
 scalaVersion := "2.11.8"
 
-def sparkDependencies(v: String) =
+lazy val sparkDependencies =
   Seq(
-    "org.apache.spark" %% "spark-core" % v,
-    "org.apache.spark" %% "spark-sql" % v,
-    "org.apache.spark" %% "spark-hive" % v,
-    "org.apache.spark" %% "spark-streaming" % v,
-    "org.apache.spark" %% "spark-mllib" % v
+    "org.apache.spark" %% "spark-mllib" % sparkVersion,
+    "io.hydrosphere" %% s"spark-ml-serving-$localSparkVersion" % "0.2.0"
   )
 
-lazy val hdfsDependencies = Seq(
-  "org.apache.hadoop" % "hadoop-client" % "2.6.4",
-  "org.apache.hadoop" % "hadoop-hdfs" % "2.6.4",
-  "org.apache.hadoop" % "hadoop-common" % "2.6.4"
-)
+lazy val hdfsDependencies = {
+  val hdfsV = "2.6.4"
+  Seq(
+    "org.apache.hadoop" % "hadoop-client" % hdfsV,
+    "org.apache.hadoop" % "hadoop-hdfs" % hdfsV,
+    "org.apache.hadoop" % "hadoop-common" % hdfsV
+  )
+}
 
 lazy val akkaDependencies = {
   val akkaV = "2.4.14"
@@ -31,15 +41,17 @@ lazy val akkaDependencies = {
   )
 }
 
-lazy val sparkMlServingDependency = RootProject(uri("git://github.com/Hydrospheredata/spark-ml-serving.git"))
-dependsOn(sparkMlServingDependency)
+resolvers ++= Seq(
+  Resolver.sonatypeRepo("releases"),
+  Resolver.sonatypeRepo("snapshots")
+)
 
-
-libraryDependencies ++= sparkDependencies("2.1.0")
 libraryDependencies ++= hdfsDependencies
 libraryDependencies ++= akkaDependencies
+libraryDependencies ++= sparkDependencies
 
 mainClass in assembly := Some("io.hydrosphere.spark_runtime.Boot")
+
 assemblyMergeStrategy in assembly := {
   case m if m.toLowerCase.endsWith("manifest.mf") => MergeStrategy.discard
   case PathList("META-INF", "services", "org.apache.hadoop.fs.FileSystem") => MergeStrategy.filterDistinctLines
@@ -54,3 +66,4 @@ assemblyMergeStrategy in assembly := {
 }
 test in assembly := {}
 
+assembly := {assembly.dependsOn(sparkVersionLogger).value}
