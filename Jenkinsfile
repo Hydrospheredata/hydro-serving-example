@@ -122,7 +122,10 @@ node("JenkinsOnDemand") {
 
             sh "docker push hydrosphere/serving-runtime-scikit:${curVersion}"
             sh "docker push hydrosphere/serving-runtime-customscikit:${curVersion}"
-            sh "docker push hydrosphere/serving-runtime-sparklocal:${curVersion}"
+            sh "docker push hydrosphere/serving-runtime-py2databricks:${curVersion}"
+            sh "docker push hydrosphere/serving-runtime-sparklocal-2.0:${curVersion}"
+            sh "docker push hydrosphere/serving-runtime-sparklocal-2.1:${curVersion}"
+            sh "docker push hydrosphere/serving-runtime-sparklocal-2.2:${curVersion}"
             sh "docker push hydrosphere/serving-runtime-tensorflow:${curVersion}"
 
             pushSource(gitCredentialId, organization, repository, "refs/tags/${curVersion}")
