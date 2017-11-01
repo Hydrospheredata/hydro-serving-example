@@ -1,5 +1,5 @@
-ARG SIDECAR_VERSION=0.0.1
 FROM frolvlad/alpine-python2 AS py2sklearn
+ARG SIDECAR_VERSION=0.0.1
 
 RUN apk update && \
     apk add --no-cache curl libstdc++ lapack-dev && \

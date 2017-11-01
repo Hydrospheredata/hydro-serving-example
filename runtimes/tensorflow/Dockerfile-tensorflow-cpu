@@ -1,6 +1,5 @@
-ARG SIDECAR_VERSION=0.0.1
-
 FROM tensorflow/tensorflow:1.1.0-py3
+ARG SIDECAR_VERSION=0.0.1
 
 ARG SIDECAR_VERSION
 
@@ -13,8 +12,8 @@ ADD http://repo.hydrosphere.io/hydrosphere/static/hydro-serving-sidecar-install-
 
 WORKDIR /app
 
-RUN apt update && \
-    apt install curl && \
+RUN apt-get update && \
+    apt-get install -y curl && \
     chmod +x /app/sidecar.sh && sync && \
     chmod +x /app/start.sh && sync && \
     ./sidecar.sh --target /hydro-serving/sidecar -- ubuntu && \

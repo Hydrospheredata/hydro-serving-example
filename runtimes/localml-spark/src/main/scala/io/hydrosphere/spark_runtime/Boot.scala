@@ -63,7 +63,7 @@ object Boot extends App {
                 println(s"Incoming request. No input columns detected.")
                 complete(StatusCodes.BadRequest)
               } else {
-                println(s"Incoming request. Params: $mapList")
+                println(s"Incoming request. Size: ${mapList.size}, head: ${mapList.head}")
                 val columns = inputKeys.map { colName =>
                   val colData = mapList.map { row =>
                     row(colName)
@@ -73,9 +73,7 @@ object Boot extends App {
                 val inputLDF = LocalData(columns)
                 val result = pipelineModel.transform(inputLDF)
                 complete {
-                  val res = result.toMapList.asInstanceOf[List[Any]]
-                  println(s"Results: $res")
-                  res
+                  result.toMapList.asInstanceOf[List[Any]]
                 }
               }
           }
