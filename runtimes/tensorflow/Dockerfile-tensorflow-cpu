@@ -12,8 +12,8 @@ ADD http://repo.hydrosphere.io/hydrosphere/static/hydro-serving-sidecar-install-
 
 WORKDIR /app
 
-RUN apt-get update && \
-    apt-get install -y curl && \
+RUN apt update && \
+    apt install -y curl && \
     chmod +x /app/sidecar.sh && sync && \
     chmod +x /app/start.sh && sync && \
     ./sidecar.sh --target /hydro-serving/sidecar -- ubuntu && \

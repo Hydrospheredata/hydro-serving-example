@@ -14,8 +14,7 @@ cd runtimes
 
 echo "Spark Local ML..."
 cd localml-spark
-./sbt/sbt assembly
-docker build --build-arg VERSION=$VERSION --build-arg SIDECAR_VERSION=$SIDECAR_VERSION --no-cache -t hydrosphere/serving-runtime-sparklocal:$VERSION .
+sh build.sh $VERSION $SIDECAR_VERSION
 cd ../
 
 echo "Scikit..."

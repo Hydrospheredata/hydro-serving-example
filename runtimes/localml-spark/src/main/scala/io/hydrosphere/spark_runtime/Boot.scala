@@ -4,21 +4,16 @@ import akka.actor.ActorSystem
 import akka.http.scaladsl.Http
 import akka.http.scaladsl.marshallers.sprayjson.SprayJsonSupport._
 import akka.http.scaladsl.server.Directives._
-import akka.pattern.ask
 import akka.stream.ActorMaterializer
 import akka.util.Timeout
 import ch.megard.akka.http.cors.CorsDirectives._
 import ch.megard.akka.http.cors.CorsSettings
-import io.hydrosphere.spark_ml_serving._
-
+import io.hydrosphere.spark_ml_serving.common._
 import scala.concurrent.duration._
-import scala.reflect.runtime.universe._
-import scala.util.{Failure, Properties}
+import scala.util.Properties
 import LocalPipelineModel._
-import MapAnyJson._
 import spray.json._
-import DefaultJsonProtocol._
-import akka.http.scaladsl.model.{StatusCode, StatusCodes}
+import akka.http.scaladsl.model.StatusCodes
 
 /**
   * Created by Bulat on 19.05.2017.
