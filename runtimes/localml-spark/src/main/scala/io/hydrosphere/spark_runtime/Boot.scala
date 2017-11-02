@@ -9,11 +9,12 @@ import akka.util.Timeout
 import ch.megard.akka.http.cors.CorsDirectives._
 import ch.megard.akka.http.cors.CorsSettings
 import io.hydrosphere.spark_ml_serving.common._
+
 import scala.concurrent.duration._
 import scala.util.Properties
 import LocalPipelineModel._
 import spray.json._
-import akka.http.scaladsl.model.StatusCodes
+import akka.http.scaladsl.model.{ContentTypes, HttpEntity, HttpResponse, StatusCodes}
 
 /**
   * Created by Bulat on 19.05.2017.
@@ -34,6 +35,19 @@ object Boot extends App {
   val port = Properties.envOrElse("APP_HTTP_PORT", "9090").toInt
 
   val corsSettings = CorsSettings.defaultSettings
+
+  def convertVecs(colData: List[List[_]]) = {
+    colData.map{ vec =>
+      vec.head match {
+        case _: String =>
+          vec.map(_.asInstanceOf[String])
+        case _: Double =>
+          vec.map(_.asInstanceOf[Double])
+        case _: Boolean =>
+          vec.map(_.asInstanceOf[Boolean])
+      }
+    }
+  }
 
   val routes = cors(corsSettings) {
     get {
@@ -63,14 +77,33 @@ object Boot extends App {
                   val colData = mapList.map { row =>
                     row(colName)
                   }
-                  LocalDataColumn(colName, colData)
+                  val refinedData = colData.head match {
+                    case _: String =>
+                      colData.map(_.asInstanceOf[String])
+                    case _: Double =>
+                      colData.map(_.asInstanceOf[Double])
+                    case _: Boolean =>
+                      colData.map(_.asInstanceOf[Boolean])
+                    case _: List[_] => convertVecs(colData.map(_.asInstanceOf[List[Any]]))
+                  }
+                  LocalDataColumn(colName, refinedData)
                 }
                 val inputLDF = LocalData(columns)
-                val result = pipelineModel.transform(inputLDF)
-                complete {
-                  val res = result.toMapList.asInstanceOf[List[Any]]
-                  println(s"Results: $res")
-                  res
+                try {
+                  val result = pipelineModel.transform(inputLDF)
+                  complete {
+                    val res = result.toMapList.asInstanceOf[List[Any]]
+                    println(s"Results: $res")
+                    res
+                  }
+                } catch {
+                  case e: Exception =>
+                    complete{
+                      HttpResponse(StatusCodes.BadRequest,
+                        entity = HttpEntity(ContentTypes.`text/plain(UTF-8)`,
+                          e.getMessage)
+                      )
+                    }
                 }
               }
           }
