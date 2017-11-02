@@ -17,7 +17,7 @@ object SparkUtils {
       params.map{ i =>
           if (transformer.hasParam(i)) {
             val param = transformer.getParam(i).asInstanceOf[Param[String]]
-            Some(transformer.get(param).get)
+            Some(transformer.getOrDefault(param))
           } else {
             None
           }
