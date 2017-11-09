@@ -122,12 +122,33 @@ node("JenkinsOnDemand") {
 
             sh "docker push hydrosphere/serving-runtime-scikit:${curVersion}"
             sh "docker push hydrosphere/serving-runtime-customscikit:${curVersion}"
-            sh "docker push hydrosphere/serving-runtime-sparklocal:${curVersion}"
+            sh "docker push hydrosphere/serving-runtime-py2databricks:${curVersion}"
+            sh "docker push hydrosphere/serving-runtime-sparklocal-2.0:${curVersion}"
+            sh "docker push hydrosphere/serving-runtime-sparklocal-2.1:${curVersion}"
+            sh "docker push hydrosphere/serving-runtime-sparklocal-2.2:${curVersion}"
             sh "docker push hydrosphere/serving-runtime-tensorflow:${curVersion}"
 
             pushSource(gitCredentialId, organization, repository, "refs/tags/${curVersion}")
 
             createReleaseInGithub(gitCredentialId, organization, repository,curVersion,tagComment)
         }
-    }
+    } else {
+        stage("Publish_snapshoot"){
+            def curVersion = currentVersion()
+            GIT_COMMIT = sh (
+                     script: 'git rev-parse --short HEAD',
+                     returnStdout: true
+            ).trim()
+      
+            ['serving-runtime-scikit', 'serving-runtime-customscikit', 'serving-runtime-py2databricks', 'serving-runtime-sparklocal-2.0', 'serving-runtime-sparklocal-2.1', 'serving-runtime-sparklocal-2.2', 'serving-runtime-tensorflow'].each {
+           
+              sh "docker tag hydrosphere/${it}:${curVersion} 060183668755.dkr.ecr.eu-central-1.amazonaws.com/${it}:${GIT_COMMIT}"
+
+              IMAGE = "060183668755.dkr.ecr.eu-central-1.amazonaws.com/${it}:${GIT_COMMIT}"
+              docker.withRegistry('https://060183668755.dkr.ecr.eu-central-1.amazonaws.com', 'ecr:eu-central-1:jenkins_aws') {
+                docker.image(IMAGE).push()
+              }
+          }
+        }
+     }
 }
