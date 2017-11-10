@@ -15,7 +15,7 @@ scalaVersion := "2.11.8"
 lazy val sparkDependencies =
   Seq(
     "org.apache.spark" %% "spark-mllib" % sparkVersion,
-    "io.hydrosphere" %% s"spark-ml-serving-$localSparkVersion" % "0.2.0"
+    "io.hydrosphere" %% s"spark-ml-serving-$localSparkVersion" % "0.2.1"
   )
 
 lazy val hdfsDependencies = {
