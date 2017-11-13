@@ -127,6 +127,8 @@ node("JenkinsOnDemand") {
             sh "docker push hydrosphere/serving-runtime-sparklocal-2.1:${curVersion}"
             sh "docker push hydrosphere/serving-runtime-sparklocal-2.2:${curVersion}"
             sh "docker push hydrosphere/serving-runtime-tensorflow:${curVersion}"
+            sh "docker push hydrosphere/serving-runtime-tensorflow-optimizer::${curVersion}"
+            sh "docker push hydrosphere/serving-runtime-python3:${curVersion}"
 
             pushSource(gitCredentialId, organization, repository, "refs/tags/${curVersion}")
 
@@ -139,9 +141,9 @@ node("JenkinsOnDemand") {
                      script: 'git rev-parse --short HEAD',
                      returnStdout: true
             ).trim()
-      
+
             ['serving-runtime-scikit', 'serving-runtime-customscikit', 'serving-runtime-py2databricks', 'serving-runtime-sparklocal-2.0', 'serving-runtime-sparklocal-2.1', 'serving-runtime-sparklocal-2.2', 'serving-runtime-tensorflow'].each {
-           
+
               sh "docker tag hydrosphere/${it}:${curVersion} 060183668755.dkr.ecr.eu-central-1.amazonaws.com/${it}:${GIT_COMMIT}"
 
               IMAGE = "060183668755.dkr.ecr.eu-central-1.amazonaws.com/${it}:${GIT_COMMIT}"

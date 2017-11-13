@@ -42,6 +42,11 @@ cd tensorflow
 docker build --build-arg VERSION=$VERSION --build-arg SIDECAR_VERSION=$SIDECAR_VERSION --no-cache -t hydrosphere/serving-runtime-tensorflow:$VERSION -f Dockerfile-tensorflow-cpu .
 cd ../
 
+echo "Tensorflow Optimizer..."
+cd tensorflow_optimizer
+docker build --build-arg VERSION=$VERSION --build-arg SIDECAR_VERSION=$SIDECAR_VERSION --no-cache -t hydrosphere/serving-runtime-tensorflow-optimizer:$VERSION .
+cd ../
+
 cd ../
 
 echo "Build complete. Images are ready to run."
