@@ -56,10 +56,13 @@ def load_and_optimize(model_path):
             tf.import_graph_def(optimized, name="")
             opt_sess = tf.Session(graph = g)
             tf.import_graph_def(optimized, name="")
-            print("Getting new input tensors...")
+            print("Checking optimized graph for variables...")
+            print("\"trainable_variables\": {0}".format(opt_sess.graph.get_collection_ref("trainable_variables")))
+            print("\"variables\": {0}".format(opt_sess.graph.get_collection_ref("variables")))
+            print("Refreshing input and output tensors...")
             input_tensors = {x: opt_sess.graph.get_tensor_by_name(signature.inputs[x].name) for x in inputs}
             output_tensors = {x: opt_sess.graph.get_tensor_by_name(signature.outputs[x].name) for x in outputs}
-            # restore shape information for tensors
+            # restore shape information for optimized tensors
             for i in inputs:
                 input_tensors[i].set_shape(old_input_tensors[i].shape)
             for i in outputs:

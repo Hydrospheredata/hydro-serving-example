@@ -1,13 +1,6 @@
 import os
-import urllib.request
-import json
 from flask import Flask, jsonify, request, abort
-import tensorflow as tf
-import numpy as np
-from tensorflow.python.saved_model.signature_constants import DEFAULT_SERVING_SIGNATURE_DEF_KEY
-from tensorflow.python.tools.optimize_for_inference_lib import optimize_for_inference
-
-from src.utils import *
+from utils import *
 
 ADDR = "0.0.0.0"
 PORT = int(os.getenv("APP_HTTP_PORT", "9090"))
@@ -20,10 +13,8 @@ app = Flask(__name__)
 
 print("Importing TensorFlow model...")
 
-sess, inputs, outputs = load_and_optimize("/Users/bulat/Documents/Dev/Provectus/hydro-serving-runtime/models/mnist_classifier")
+sess, inputs, outputs = load_and_optimize("/model")
 
-for k in inputs.values():
-    print(k)
 
 @app.route('/health', methods=['GET'])
 def health():
