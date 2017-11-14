@@ -1,4 +1,4 @@
-FROM tensorflow/tensorflow:1.1.0-py3
+FROM tensorflow/tensorflow:latest-gpu-py3
 
 ARG SIDECAR_VERSION=0.0.1
 
