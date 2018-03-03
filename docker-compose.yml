@@ -56,7 +56,6 @@ services:
       - extnet
     depends_on:
       - postgres
-      - sidecar
     environment:
       - "APP_SHADOWING_ON=true"
       - "ADVERTISED_MANAGER_HOST=manager"
@@ -85,6 +84,7 @@ services:
       - extnet
       - hydronet
     environment:
+      #- "SIDECAR_LOG_LEVEL=trace"
       - "MANAGER_HOST=manager"
       - "MANAGER_PORT=9091"
       - "SERVICE_ID=-20"
@@ -100,22 +100,19 @@ services:
       - hydronet
     environment:
       - "MANAGER_HOST=sidecar:8080"
+    depends_on:
+      - sidecar
 
   kafka-serving:
     image: ${gateway_kafka_image}:${gateway_kafka_version}
     container_name: kafka-serving
     networks:
       - hydronet
-    links:
-      - kafka
-      - sidecar
-      - manager
     ports:
       - "19093:9091"
     depends_on:
       - sidecar
       - kafka
-      - manager
     environment:
       - "SIDECAR_INGRESS_PORT=8080"
       - "SIDECAR_EGRESS_PORT=8081"
