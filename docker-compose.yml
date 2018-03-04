@@ -120,6 +120,30 @@ services:
       - "KAFKA_HOST=kafka"
       - "KAFKA_PORT=9092"
 
+  debug_app:
+    image: icekhan/serving-sonar:latest
+    container_name: debug_app
+    networks:
+      - extnet
+      - hydronet
+    depends_on:
+      - kafka
+      - sidecar
+    links:
+      - kafka
+      - sidecar
+    ports:
+      - "9999:9090"
+    command: ["/app/wait_for_kafka.sh", "kafka", "9092", "/app/start.sh"]
+    environment:
+      - "SIDECAR_HOST=sidecar"
+      - "KAFKA_HOST=kafka"
+      - "KAFKA_PORT=9092"
+      - "APP_ID=hydro-serving-debug"
+      - "APP_PORT=9090"
+      - "DEMO_TOPIC=shadow_topic"
+      - "DEMO_THRESHOLD=0.9"
+
 networks:
   hydronet:
     name: demo_hydronet
