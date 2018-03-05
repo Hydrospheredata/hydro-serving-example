@@ -264,6 +264,7 @@ services:
       - "SONAR_HOST=serving-sonar:9090"
     depends_on:
       - sidecar
+      - serving-sonar
     logging:
       driver: gelf
       options:
