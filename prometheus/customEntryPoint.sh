@@ -34,7 +34,7 @@ scrape_configs:
     file_sd_configs:
       - files: ['/var/targets/*.json']
     relabel_configs:
-      - source_labels: [serviceId,instanceId]
+      - source_labels: [serviceId,instanceId,serviceType]
         target_label: __metrics_path__
         separator: /
         replacement: /v1/prometheus/proxyMetrics/$1
