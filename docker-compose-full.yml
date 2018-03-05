@@ -96,6 +96,9 @@ services:
       - hydronet
     depends_on:
       - kafka
+    environment:
+      - "MANAGER_HOST=sidecar"
+      - "MANAGER_PORT=8080"
     logging:
       driver: gelf
       options:
