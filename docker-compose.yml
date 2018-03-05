@@ -136,7 +136,6 @@ services:
       - sidecar
     ports:
       - "9999:9090"
-    command: ["/app/wait_for_kafka.sh", "kafka", "9092", "/app/start.sh"]
     environment:
       - "SIDECAR_HOST=sidecar"
       - "KAFKA_HOST=kafka"
