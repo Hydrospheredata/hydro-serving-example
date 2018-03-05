@@ -99,6 +99,7 @@ services:
       - hydronet
     environment:
       - "MANAGER_HOST=sidecar:8080"
+      - "SONAR_HOST=serving-sonar:9090"
     depends_on:
       - sidecar
 
@@ -153,7 +154,7 @@ services:
       - extnet
       - hydronet
     environment:
-      - PASSWORD=${tensorflow_password}"
+      - "PASSWORD=${tensorflow_password}"
     volumes:
       - ./noteboks/:/notebooks
 
