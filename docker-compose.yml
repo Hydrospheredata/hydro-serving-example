@@ -120,9 +120,9 @@ services:
       - "KAFKA_HOST=kafka"
       - "KAFKA_PORT=9092"
 
-  debug_app:
+  serving-sonar:
     image: icekhan/serving-sonar:latest
-    container_name: debug_app
+    container_name: serving-sonar
     networks:
       - extnet
       - hydronet
@@ -139,10 +139,23 @@ services:
       - "SIDECAR_HOST=sidecar"
       - "KAFKA_HOST=kafka"
       - "KAFKA_PORT=9092"
-      - "APP_ID=hydro-serving-debug"
+      - "APP_ID=hydro-serving-sonar"
       - "APP_PORT=9090"
       - "DEMO_TOPIC=shadow_topic"
       - "DEMO_THRESHOLD=0.9"
+
+  tensorflow:
+    image: tensorflow/tensorflow:latest-py3
+    container_name: tensorflow
+    ports:
+      - "8888:8888"
+    networks:
+      - extnet
+      - hydronet
+    environment:
+      - PASSWORD=${tensorflow_password}"
+    volumes:
+      - ./noteboks/:/notebooks
 
 networks:
   hydronet:
