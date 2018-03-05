@@ -102,6 +102,7 @@ services:
       - "SONAR_HOST=serving-sonar:9090"
     depends_on:
       - sidecar
+      - serving-sonar
 
   kafka-serving:
     image: ${gateway_kafka_image}:${gateway_kafka_version}
