@@ -3,6 +3,10 @@
 COMPOSE_FILE=$1
 [ -z "$COMPOSE_FILE" ] && COMPOSE_FILE="docker-compose.yml"
 
+docker-compose -f $COMPOSE_FILE exec kafka kafka-topics --create --partitions 1 --replication-factor 1 --if-not-exists --zookeeper zookeeper:2181 --topic test_weight
+docker-compose -f $COMPOSE_FILE exec kafka kafka-topics --create --partitions 1 --replication-factor 1 --if-not-exists --zookeeper zookeeper:2181 --topic success_weight
+docker-compose -f $COMPOSE_FILE exec kafka kafka-topics --create --partitions 1 --replication-factor 1 --if-not-exists --zookeeper zookeeper:2181 --topic failure_weight
+
 docker-compose -f $COMPOSE_FILE exec kafka kafka-topics --create --partitions 1 --replication-factor 1 --if-not-exists --zookeeper zookeeper:2181 --topic test
 docker-compose -f $COMPOSE_FILE exec kafka kafka-topics --create --partitions 1 --replication-factor 1 --if-not-exists --zookeeper zookeeper:2181 --topic success
 docker-compose -f $COMPOSE_FILE exec kafka kafka-topics --create --partitions 1 --replication-factor 1 --if-not-exists --zookeeper zookeeper:2181 --topic failure
@@ -102,3 +106,39 @@ curl -X POST --header 'Content-Type: application/json' --header 'Accept: applica
      }
    ]
  }' 'http://localhost:8080/api/v1/applications'
+
+modelNextReleaseId=$(curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '{
+   "modelId": '"$modelId"'
+ }' 'http://localhost:80/api/v1/model/build' | jq '.id')
+
+curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '{
+    "name": "weighted_application",
+    "executionGraph": {
+      "stages": [
+        {
+          "services": [
+           {
+             "runtimeId": '"$runtimeId"',
+             "modelVersionId": '"$modelReleaseId"',
+             "weight": 50,
+             "signatureName": "default_spark"
+           },
+           {
+            "runtimeId": '"$runtimeId"',
+            "modelVersionId": '"$modelNextReleaseId"',
+            "weight": 50,
+            "signatureName": "default_spark"
+          }
+          ]
+        }
+      ]
+    },
+    "kafkaStreaming": [
+      {
+        "sourceTopic": "test_weight",
+        "destinationTopic": "success_weight",
+        "consumerId": "test_weight",
+        "errorTopic": "failure_weight"
+      }
+    ]
+  }' 'http://localhost:8080/api/v1/applications'
