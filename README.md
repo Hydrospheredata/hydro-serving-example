@@ -50,7 +50,7 @@ TBD
 ##### using curl + jq
 ```
 #Find `word2vec`
-modelId=$(curl -X GET --header 'Accept: application/json' 'http://localhost:8080/api/v1/model' | jq -c '.[].model | select(.name | contains("word2vec"))| .id')
+modelId=$(curl -X GET --header 'Accept: application/json' 'http://localhost:8080/api/v1/model' | jq -c '.[].model | select(.source | contains("local:word2vec"))| .id')
 
 #Release model
 modelReleaseId=$(curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '{ 

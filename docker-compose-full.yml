@@ -291,11 +291,11 @@ services:
       - "SIDECAR_HOST=sidecar"
       - "KAFKA_HOST=kafka"
       - "KAFKA_PORT=9092"
-    logging:
-      driver: gelf
-      options:
-        gelf-address: "udp://172.16.0.38:12201"
-        labels: "kafka-serving"
+#    logging:
+#      driver: gelf
+#      options:
+#        gelf-address: "udp://172.16.0.38:12201"
+#        labels: "kafka-serving"
 
   serving-sonar:
     image: icekhan/serving-sonar:latest
