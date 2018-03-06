@@ -59,7 +59,7 @@ modelReleaseId=$(curl -X POST --header 'Content-Type: application/json' --header
  
 #Deploy application with new model version
 applicationId=$(curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '{ 
-   "name": "Test", 
+   "name": "test_application", 
    "executionGraph": { 
      "stages": [ 
        { 
@@ -90,7 +90,20 @@ TBD
 
 #### Serve your application
 ##### using hs-cli 
-TBD
+
+###### using hs-cli and kafka
+
+```
+#Send message to test_application (word2vec model) 
+hs kafka --brokers localhost:19092 --topic test publish --file hs-cli-examples/kafka_word2vec_message.json
+
+#Read messages
+hs kafka --topic success --brokers localhost:19092 read
+#Read messages
+hs kafka --topic success --brokers localhost:19092 read
+```
+
+
 
 ##### using curl
 ```
