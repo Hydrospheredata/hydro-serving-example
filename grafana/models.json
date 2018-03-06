@@ -192,7 +192,7 @@
               "current": false,
               "max": false,
               "min": false,
-              "show": false,
+              "show": true,
               "total": false,
               "values": false
             },
@@ -211,10 +211,10 @@
             "steppedLine": false,
             "targets": [
               {
-                "expr": "sum(envoy_cluster_upstream_rq{targetModelName=\"$model\",targetModelVersion=~\"$version\"})",
+                "expr": "sum(envoy_cluster_upstream_rq{targetModelName=\"$model\",targetModelVersion=~\"$version\"}) by (targetModelVersion)",
                 "format": "time_series",
                 "intervalFactor": 1,
-                "legendFormat": "мХХЪ",
+                "legendFormat": "v{{targetModelVersion}}",
                 "refId": "A",
                 "step": 2
               }
@@ -527,8 +527,8 @@
           "allValue": ".+",
           "current": {
             "tags": [],
-            "text": "ssd_model_example",
-            "value": "ssd_model_example"
+            "text": "word2vec",
+            "value": "word2vec"
           },
           "datasource": "Prometheus",
           "hide": 0,
@@ -585,7 +585,7 @@
       ]
     },
     "time": {
-      "from": "now-30m",
+      "from": "now-3h",
       "to": "now"
     },
     "timepicker": {
@@ -615,6 +615,6 @@
     },
     "timezone": "",
     "title": "Model stats",
-    "version": 2
+    "version": 3
   }
 }
