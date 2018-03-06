@@ -18,7 +18,7 @@ for i in $(ls grafana | grep json); do
 done
 
 
-curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '{
+runtimeId=$(curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '{
    "name": "hydrosphere/serving-runtime-spark",
    "version": "2.1-latest",
    "modelTypes": [
@@ -28,7 +28,7 @@ curl -X POST --header 'Content-Type: application/json' --header 'Accept: applica
      "string"
    ],
    "configParams": {}
- }' 'http://localhost:80/api/v1/runtime'
+ }' 'http://localhost:80/api/v1/runtime' | jq '.id')
 
 curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '{
    "name": "hydrosphere/serving-runtime-spark",
@@ -78,7 +78,7 @@ modelReleaseId=$(curl -X POST --header 'Content-Type: application/json' --header
  }' 'http://localhost:80/api/v1/model/build' | jq '.id')
 
 curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '{
-   "name": "Test",
+   "name": "test_application",
    "executionGraph": {
      "stages": [
        {
