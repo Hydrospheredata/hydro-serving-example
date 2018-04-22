@@ -12,6 +12,7 @@ services:
     command: elasticsearch -Etransport.host=127.0.0.1
     networks:
       - hydronet
+      - extnet
     logging:
       driver: gelf
       options:
@@ -224,6 +225,7 @@ services:
       - "S3_MODEL_QUEUE=${S3_MODEL_QUEUE}"
       - "S3_MODEL_PATH=/models"
       - "LOCAL_MODEL_PATH=/models"
+      - "METRICS_ELASTIC_URI=http://elasticsearch:9200/"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./models:/models
@@ -258,7 +260,7 @@ services:
     image: ${manager_ui_image}:${manager_ui_version}
     container_name: managerui
     ports:
-      - "80:80"
+      - "80:9091"
     networks:
       - extnet
       - hydronet

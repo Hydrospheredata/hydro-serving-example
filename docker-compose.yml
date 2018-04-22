@@ -1,6 +1,19 @@
 version: "3.5"
 services:
 
+  elasticsearch:
+    image: elasticsearch:5.6.8-alpine
+    container_name: elasticsearch
+    ports:
+      - "9200:9200"
+    restart: always
+    environment:
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    command: elasticsearch -Etransport.host=127.0.0.1
+    networks:
+      - hydronet
+      - extnet
+
   zookeeper:
     image: confluentinc/cp-zookeeper:4.0.0
     container_name: zookeeper
@@ -69,6 +82,7 @@ services:
       - "S3_MODEL_QUEUE=${S3_MODEL_QUEUE}"
       - "S3_MODEL_PATH=/models"
       - "LOCAL_MODEL_PATH=/models"
+      - "METRICS_ELASTIC_URI=http://elasticsearch:9200/"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./models:/models
@@ -93,10 +107,12 @@ services:
     image: ${manager_ui_image}:${manager_ui_version}
     container_name: managerui
     ports:
-      - "80:80"
+      - "80:9091"
     networks:
       - extnet
       - hydronet
+    labels:
+      - "RUNTIME_ID=-22"
     environment:
       - "MANAGER_HOST=sidecar:8080"
       - "SONAR_HOST=serving-sonar:9090"
