@@ -46,6 +46,20 @@ services:
     depends_on:
       - zookeeper
 
+  prometheus:
+    build: ./prometheus
+    container_name: prometheus
+    ports:
+      - "9090:9090"
+    networks:
+      - extnet
+      - hydronet
+    depends_on:
+      - kafka
+    environment:
+      - "MANAGER_HOST=sidecar"
+      - "MANAGER_PORT=8080"
+
   grafana:
     image: grafana/grafana:5.0.4
     container_name: grafana
@@ -94,7 +108,6 @@ services:
       - "S3_MODEL_QUEUE=${S3_MODEL_QUEUE}"
       - "S3_MODEL_PATH=/models"
       - "LOCAL_MODEL_PATH=/models"
-      - "METRICS_ELASTIC_URI=http://elasticsearch:9200/"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./models:/models
