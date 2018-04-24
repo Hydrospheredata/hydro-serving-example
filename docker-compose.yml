@@ -31,6 +31,7 @@ services:
     container_name: kafka
     ports:
       - "19092:19092"
+      - "9092:9092"
     networks:
       - extnet
       - hydronet
@@ -152,27 +153,27 @@ services:
       - "KAFKA_PORT=9092"
 
   serving-sonar:
-    image: icekhan/serving-sonar:latest
+    image: 060183668755.dkr.ecr.eu-central-1.amazonaws.com/serving-sonar:v0.0.1
     container_name: serving-sonar
     networks:
       - extnet
       - hydronet
     depends_on:
       - kafka
-      - sidecar
     links:
       - kafka
-      - sidecar
     ports:
-      - "9999:9090"
-    environment:
-      - "SIDECAR_HOST=sidecar"
-      - "KAFKA_HOST=kafka"
-      - "KAFKA_PORT=9092"
-      - "APP_ID=hydro-serving-sonar"
-      - "APP_PORT=9090"
-      - "DEMO_TOPIC=shadow_topic"
-      - "DEMO_THRESHOLD=0.9"
+      - "9999:9999"
+    volumes:
+      - ./sonar/sonar.conf:/etc/sonar.conf
+    # environment:
+    #   - "SIDECAR_HOST=sidecar"
+    #   - "KAFKA_HOST=kafka"
+    #   - "KAFKA_PORT=9092"
+    #   - "APP_ID=hydro-serving-sonar"
+    #   - "APP_PORT=9090"
+    #   - "DEMO_TOPIC=shadow_topic"
+    #   - "DEMO_THRESHOLD=0.9"
 
   tensorflow:
     image: tensorflow/tensorflow:latest-py3
