@@ -225,7 +225,6 @@ services:
       - "S3_MODEL_QUEUE=${S3_MODEL_QUEUE}"
       - "S3_MODEL_PATH=/models"
       - "LOCAL_MODEL_PATH=/models"
-      - "METRICS_ELASTIC_URI=http://elasticsearch:9200/"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./models:/models
