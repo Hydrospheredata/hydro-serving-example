@@ -46,6 +46,18 @@ services:
     depends_on:
       - zookeeper
 
+  grafana:
+    image: grafana/grafana:4.6.3
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    networks:
+      - extnet
+      - hydronet
+    environment:
+      - "GF_SECURITY_ADMIN_PASSWORD=foobar"
+      - "GF_USERS_ALLOW_SIGN_UP=false"
+
   postgres:
       image: postgres:9.6-alpine
       container_name: postgres
