@@ -3,8 +3,8 @@ import os
 import shutil
 from tensorflow.python.saved_model import tag_constants
 
-from pipeline.lstm.training.src import model_def
-from pipeline.lstm.training.src.stateful_saved_model_builder import StatefulSavedModelBuilder
+import model_def
+from stateful_saved_model_builder import StatefulSavedModelBuilder
 
 export_dir = "../models"
 

@@ -1,7 +1,7 @@
 import numpy as np
 import tensorflow as tf
 
-from pipeline.lstm.src import model_def
+import model_def
 
 train_steps   = 10
 seq_length    = 32
