@@ -9,6 +9,11 @@ Pipeline consists of 3 steps:
 Post- and pre-processing are implemented as Python functions.
 Stateful LSTM is implemented in Tensorflow, and exported by our custom SavedModelBuilder with state support.
 
+## Requirements
+- `pip install hydro_serving_grpc`
+- `pip install hs==0.0.7`
+- `pip install tensorflow==1.7.0`
+- `pip install protobuf==3.4.0`
 
 ## How to use:
 1. Prepare LSTM
