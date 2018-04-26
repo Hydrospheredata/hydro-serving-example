@@ -183,7 +183,10 @@ class StatefulSavedModelBuilder(SavedModelBuilder):
         # TODO(soergel): Reinstate clear_extraneous_savers=True when possible.
         meta_graph_def = saver.export_meta_graph(
             clear_devices=clear_devices,
-            collection_list=[StatefulSavedModelBuilder.STATE_COLLECTION_KEY],
+            collection_list=[
+                StatefulSavedModelBuilder.STATE_ZERO_COLLECTION_KEY,
+                StatefulSavedModelBuilder.STATE_PLACEHOLDERS_COLLECTION_KEY
+            ],
             strip_default_attrs=strip_default_attrs
         )
 
