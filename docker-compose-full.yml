@@ -19,6 +19,22 @@ services:
         gelf-address: "udp://172.16.0.38:12201"
         labels: "elasticsearch"
 
+
+  influxdb:
+    image: influxdb:1.5.2
+    container_name: influxdb
+    ports:
+      - "8086:8086"
+    restart: always
+    networks:
+      - hydronet
+      - extnet
+    logging:
+      driver: gelf
+      options:
+        gelf-address: "udp://172.16.0.38:12201"
+        labels: "elasticsearch"
+
   logstash:
     image: logstash:5.6.8-alpine
     container_name: logstash
@@ -225,6 +241,7 @@ services:
       - "S3_MODEL_QUEUE=${S3_MODEL_QUEUE}"
       - "S3_MODEL_PATH=/models"
       - "LOCAL_MODEL_PATH=/models"
+      - "METRICS_INFLUXDB_HOST=influxdb"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./models:/models
