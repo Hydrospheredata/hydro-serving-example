@@ -12,16 +12,17 @@ Stateful LSTM is implemented in Tensorflow, and exported by our custom SavedMode
 
 ## How to use:
 1. Prepare LSTM
-    1. Train: run training [script](/stateful_lstm_example/pipeline/lstm/training/src/training.py)
-    2. Export: run export [script](/stateful_lstm_example/pipeline/lstm/training/src/export.py).
+    1. Train: run training [script](/stateful_lstm_example/pipeline/lstm/training/src/training.py) `python training.py`
+    2. Export: run export [script](/stateful_lstm_example/pipeline/lstm/training/src/export.py) `python export.py`
     Export script stores additional information in collections:
      - `h_zero_states` collection contains tensors with zero state.
      - `h_state_placeholders` collection contains state placeholders for fetching.  
      i-th `zero_state` tensor must be compatible with i-th `state_placeholder`.
-2. Run `hydro-serving` from docker-compose
+2. Run `hydro-serving` from docker-compose or use cloud version.
 3. Upload all stages: 
-    NOTICE: there are optional parameters HOST and PORT for `hs upload`.
-You might want to change them if you have different infrastructure.
+    NOTICE: there are optional parameters HOST and PORT for `hs upload`. 
+    Default parameters are `HOST=localhost` and `PORT=9090`
+    You might want to change them if you use cloud version.
     1. `cd pipeline/preprocessing && hs upload`
     2. `cd pipeline/lstm && hs upload`
     3. `cd pipeline/postprocessing && hs upload`
