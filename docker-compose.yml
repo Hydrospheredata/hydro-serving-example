@@ -153,6 +153,7 @@ services:
       - "MANAGER_HOST=sidecar:8080"
       - "SONAR_HOST=serving-sonar:9090"
       - "ELASTIC_HOST=elasticsearch:9200"
+      - "INFLUX_HOST=influxdb:8086"
     depends_on:
       - sidecar
       - serving-sonar
