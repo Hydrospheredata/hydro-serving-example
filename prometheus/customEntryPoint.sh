@@ -37,7 +37,7 @@ scrape_configs:
       - source_labels: [serviceId,instanceId,serviceType]
         target_label: __metrics_path__
         separator: /
-        replacement: /v1/prometheus/proxyMetrics/$1
+        replacement: /api/v1/prometheus/proxyMetrics/$1
       - source_labels: []
         target_label: __address__
 EOF
@@ -45,7 +45,7 @@ cat <<EOF >> /etc/prometheus/prometheus.yml
         replacement: $MANAGER_HOST:$MANAGER_PORT
 EOF
 
-while true; do curl -s http://$MANAGER_HOST:$MANAGER_PORT/v1/prometheus/services > /tmp/allServices.json; cp /tmp/allServices.json /var/targets/allServices.json; sleep 30; done &
+while true; do curl -s http://$MANAGER_HOST:$MANAGER_PORT/api/v1/prometheus/services > /tmp/allServices.json; cp /tmp/allServices.json /var/targets/allServices.json; curl -X POST http://localhost:9090/-/reload ; sleep 60; done &
 exec /bin/prometheus -config.file=/etc/prometheus/prometheus.yml \
                 -storage.local.path=/prometheus \
                 -web.console.libraries=/usr/share/prometheus/console_libraries \

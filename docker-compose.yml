@@ -14,6 +14,16 @@ services:
       - hydronet
       - extnet
 
+  influxdb:
+    image: influxdb:1.5.2
+    container_name: influxdb
+    ports:
+      - "8086:8086"
+    restart: always
+    networks:
+      - hydronet
+      - extnet
+
   zookeeper:
     image: confluentinc/cp-zookeeper:4.0.0
     container_name: zookeeper
@@ -47,8 +57,22 @@ services:
     depends_on:
       - zookeeper
 
+  prometheus:
+    build: ./prometheus
+    container_name: prometheus
+    ports:
+      - "9090:9090"
+    networks:
+      - extnet
+      - hydronet
+    depends_on:
+      - kafka
+    environment:
+      - "MANAGER_HOST=sidecar"
+      - "MANAGER_PORT=8080"
+
   grafana:
-    image: grafana/grafana:4.6.3
+    image: grafana/grafana:5.0.4
     container_name: grafana
     ports:
       - "3000:3000"
@@ -95,7 +119,7 @@ services:
       - "S3_MODEL_QUEUE=${S3_MODEL_QUEUE}"
       - "S3_MODEL_PATH=/models"
       - "LOCAL_MODEL_PATH=/models"
-      - "METRICS_ELASTIC_URI=http://elasticsearch:9200/"
+      - "METRICS_INFLUXDB_HOST=influxdb"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./models:/models
