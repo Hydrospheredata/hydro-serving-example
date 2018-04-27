@@ -153,7 +153,7 @@ services:
       - "KAFKA_PORT=9092"
 
   serving-sonar:
-    image: 060183668755.dkr.ecr.eu-central-1.amazonaws.com/serving-sonar:v0.0.1
+    image: hydrosphere/serving-sonar:v0.0.2
     container_name: serving-sonar
     networks:
       - extnet
@@ -166,14 +166,6 @@ services:
       - "9999:9999"
     volumes:
       - ./sonar/sonar.conf:/etc/sonar.conf
-    # environment:
-    #   - "SIDECAR_HOST=sidecar"
-    #   - "KAFKA_HOST=kafka"
-    #   - "KAFKA_PORT=9092"
-    #   - "APP_ID=hydro-serving-sonar"
-    #   - "APP_PORT=9090"
-    #   - "DEMO_TOPIC=shadow_topic"
-    #   - "DEMO_THRESHOLD=0.9"
 
   tensorflow:
     image: tensorflow/tensorflow:latest-py3
