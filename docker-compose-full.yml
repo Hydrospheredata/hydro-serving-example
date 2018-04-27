@@ -357,6 +357,21 @@ services:
         gelf-address: "udp://172.16.0.38:12201"
         labels: "tensorflow"
 
+  serving-sonar:
+    image: hydrosphere/serving-sonar:v0.0.2
+    container_name: serving-sonar
+    networks:
+      - extnet
+      - hydronet
+    depends_on:
+      - kafka
+    links:
+      - kafka
+    ports:
+      - "9999:9999"
+    volumes:
+      - ./sonar/sonar.conf:/etc/sonar.conf
+
 networks:
   hydronet:
     name: demo_hydronet
