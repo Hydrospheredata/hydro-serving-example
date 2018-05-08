@@ -34,9 +34,8 @@ Stateful LSTM is implemented in Tensorflow, and exported by our custom SavedMode
 4. Run demo Jupyter [Notebook](/stateful_lstm_example/demo.ipynb)
 
 ## How to export stateful Tensorflow model 
-We developed a custom `SavedModelBuilder` compatible with Tensorflow `SavedModel` message.
-The main difference is that we store zerostate tensors in `h_zero_states` collection, and
-state placeholders in `h_state_placeholders` collection.
+We store zerostate tensors in `h_zero_states` collection, 
+and state placeholders in `h_state_placeholders` collection.
 
 ```python
 # Add zero state tensors
@@ -47,7 +46,7 @@ sess.graph.add_to_collection("h_zero_states", rnn_init_state[0].h)
 sess.graph.add_to_collection("h_state_placeholders", rnn_final_state[0].c)
 sess.graph.add_to_collection("h_state_placeholders", rnn_final_state[0].h)
 
-builder = StatefulSavedModelBuilder("/tmp/model") # note the usage of StatefulSavedModelBuilder
+builder = SavedModelBuilder("/tmp/model")
 inference_signature = (
     tf.saved_model.signature_def_utils.build_signature_def(...)
 )

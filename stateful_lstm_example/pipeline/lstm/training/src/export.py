@@ -1,10 +1,7 @@
 import tensorflow as tf
 import os
 import shutil
-from tensorflow.python.saved_model import tag_constants
-
 import model_def
-from stateful_saved_model_builder import StatefulSavedModelBuilder
 
 export_dir = "../models"
 
@@ -30,11 +27,11 @@ latest_checkpoint = tf.train.latest_checkpoint("./checkpoints/")
 saver.restore(export_sess, latest_checkpoint)
 
 # Add state tensors to collection
-export_sess.graph.add_to_collection(StatefulSavedModelBuilder.STATE_ZERO_COLLECTION_KEY, rnn_init_state[0].c)
-export_sess.graph.add_to_collection(StatefulSavedModelBuilder.STATE_ZERO_COLLECTION_KEY, rnn_init_state[0].h)
+export_sess.graph.add_to_collection("h_zero_states", rnn_init_state[0].c)
+export_sess.graph.add_to_collection("h_zero_states", rnn_init_state[0].h)
 
-export_sess.graph.add_to_collection(StatefulSavedModelBuilder.STATE_PLACEHOLDERS_COLLECTION_KEY, rnn_final_state[0].c)
-export_sess.graph.add_to_collection(StatefulSavedModelBuilder.STATE_PLACEHOLDERS_COLLECTION_KEY, rnn_final_state[0].h)
+export_sess.graph.add_to_collection("h_state_placeholders", rnn_final_state[0].c)
+export_sess.graph.add_to_collection("h_state_placeholders", rnn_final_state[0].h)
 
 # Export using custom SavedModelBuilder
 versions = [int(x) for x in filter(lambda x: os.path.isdir(os.path.join(export_dir, x)), os.listdir(export_dir))]
@@ -46,7 +43,7 @@ else:
     current_version = "1"
 
 export_path = os.path.join(export_dir, current_version)
-builder = StatefulSavedModelBuilder(export_path)
+builder = tf.saved_model.builder.SavedModelBuilder(export_path)
 print("Exporting to {}".format(export_path))
 legacy_init_op = tf.group(tf.tables_initializer(), name='legacy_init_op')
 
@@ -57,7 +54,7 @@ inference_signature = (
         method_name='infer'))
 
 builder.add_meta_graph_and_variables(
-    export_sess, [tag_constants.SERVING],
+    export_sess, [tf.saved_model.tag_constants.SERVING],
     signature_def_map={
         'infer':
             inference_signature,

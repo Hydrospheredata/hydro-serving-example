@@ -1,7 +1,6 @@
 model:
   name: "demo_lstm"
   type: "tensorflow"
-  contract: "contract.prototxt"
   payload:
     - "saved_model.pb"
     - "variables/"
