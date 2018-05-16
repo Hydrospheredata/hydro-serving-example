@@ -5,6 +5,9 @@ import model_def
 
 export_dir = "../models"
 
+if not os.path.exists(export_dir):
+    os.mkdir(export_dir)
+
 export_sess = tf.Session()
 seq_length = 1
 batch_size = 1
@@ -33,7 +36,6 @@ export_sess.graph.add_to_collection("h_zero_states", rnn_init_state[0].h)
 export_sess.graph.add_to_collection("h_state_placeholders", rnn_final_state[0].c)
 export_sess.graph.add_to_collection("h_state_placeholders", rnn_final_state[0].h)
 
-# Export using custom SavedModelBuilder
 versions = [int(x) for x in filter(lambda x: os.path.isdir(os.path.join(export_dir, x)), os.listdir(export_dir))]
 print(versions)
 if len(versions) != 0:
@@ -60,19 +62,5 @@ builder.add_meta_graph_and_variables(
             inference_signature,
     })
 builder.save()
-
-shutil.copy(
-    os.path.join(export_path, "saved_model.pb"),
-    os.path.join("../../")
-)
-
-
-if os.path.exists("../../variables"):
-    shutil.rmtree("../../variables")
-
-shutil.copytree(
-    os.path.join(export_path, "variables"),
-    os.path.join("../../variables")
-)
 
 print("Training done.")
