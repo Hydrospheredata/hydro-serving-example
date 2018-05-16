@@ -1,0 +1,43 @@
+version: "3.5"
+services:
+
+  zookeeper:
+    image: confluentinc/cp-zookeeper:4.0.0
+    container_name: zookeeper
+    ports:
+      - "2181:2181"
+    networks:
+      - extnet
+      - hydronet
+    environment:
+      - "ZOOKEEPER_CLIENT_PORT=2181"
+
+  kafka:
+    image: confluentinc/cp-kafka:4.0.0
+    container_name: kafka
+    ports:
+      - "19092:19092"
+    networks:
+      - extnet
+      - hydronet
+    environment:
+      - "KAFKA_JMX_HOSTNAME=kafka"
+      - "KAFKA_AUTO_CREATE_TOPICS_ENABLE=true"
+      - "KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181"
+      - "KAFKA_LISTENER_SECURITY_PROTOCOL_MAP=INSIDE:PLAINTEXT,OUTSIDE:PLAINTEXT"
+      - "KAFKA_ADVERTISED_LISTENERS=INSIDE://kafka:9092,OUTSIDE://${KAFKA_ADVERTISED_HOST}:19092"
+      - "KAFKA_INTER_BROKER_LISTENER_NAME=INSIDE"
+      - "KAFKA_DEFAULT_REPLICATION_FACTOR=1"
+      - "KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR=1"
+    depends_on:
+      - zookeeper
+networks:
+  hydronet:
+    name: demo_hydronet
+    internal: true
+    ipam:
+      config:
+        - subnet: 172.16.0.0/24
+
+  extnet:
+    driver: bridge
