@@ -203,7 +203,7 @@ services:
     environment:
       - "PASSWORD=${tensorflow_password}"
     volumes:
-      - ./noteboks/:/notebooks
+      - ./notebooks/:/notebooks
 
 networks:
   hydronet:

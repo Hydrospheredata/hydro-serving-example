@@ -1,1 +1,0 @@
-{"inputs": ["carat", "cut", "color", "clarity", "depth", "table", "x", "y", "z"], "model": "linear_diamonds", "outputs": ["price"]}
