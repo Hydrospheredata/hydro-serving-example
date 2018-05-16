@@ -66,3 +66,27 @@ curl -X POST --header 'Content-Type: application/json' --header 'Accept: applica
     ],
     "configParams": {}
   }' 'http://localhost:8080/api/v1/runtime'
+
+curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '{
+    "name": "hydrosphere/serving-runtime-python",
+    "version": "3.6-latest",
+    "modelTypes": [
+      "python:3.6"
+    ],
+    "tags": [
+      "string"
+    ],
+    "configParams": {}
+  }' 'http://localhost:8080/api/v1/runtime'
+
+curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '{
+    "name": "hydrosphere/serving-runtime-tensorflow",
+    "version": "1.4.0-latest",
+    "modelTypes": [
+      "tensorflow:1.4.0"
+    ],
+    "tags": [
+      "string"
+    ],
+    "configParams": {}
+  }' 'http://localhost:8080/api/v1/runtime'
