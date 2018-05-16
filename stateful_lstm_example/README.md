@@ -38,7 +38,39 @@ Stateful LSTM is implemented in Tensorflow, and exported by our custom SavedMode
      `cd pipeline/lstm/models/1 && hs --name lstm upload`
      Name parameter explicitly puts appropriate name for a model.
     3. Upload postprocessing: `cd pipeline/postprocessing && hs upload`
-4. Run demo Jupyter [Notebook](/stateful_lstm_example/demo.ipynb)
+4. Open UI
+5. Release models
+6. Create application
+7. Test it
+8. Run load test:
+
+```python
+import hydro_serving_grpc as hs
+import os
+import grpc
+import numpy as np
+import random
+app_name = "YOUR_APPLICATION_NAME"
+channel = grpc.insecure_channel("SERVING_HOST")
+client = hs.PredictionServiceStub(channel=channel)
+shape = hs.TensorShapeProto(dim=[
+    hs.TensorShapeProto.Dim(size=24)
+])
+for i in range(1,1000):
+    data_tensor = hs.TensorProto(
+        dtype=hs.DT_DOUBLE,
+        tensor_shape=shape,
+        double_val=[x for x in np.random.random(24).tolist()]
+    )
+    request = hs.PredictRequest(
+        model_spec=hs.ModelSpec(signature_name=app_name, name=app_name),
+        inputs={
+            "data": data_tensor,
+        }
+    )
+    result = client.Predict(request)
+print(result)
+```
 
 ## How to export stateful Tensorflow model
 
