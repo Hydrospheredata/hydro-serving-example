@@ -184,9 +184,8 @@ services:
       - extnet
       - hydronet
     depends_on:
-      - kafka
-    links:
-      - kafka
+      - elasticsearch
+      - influxdb
     ports:
       - "8014:8014"
       - "8015:8015"
