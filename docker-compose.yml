@@ -152,7 +152,7 @@ services:
       - "RUNTIME_ID=-22"
     environment:
       - "MANAGER_HOST=sidecar:8080"
-      - "SONAR_HOST=serving-sonar:9090"
+      - "SONAR_HOST=serving-sonar:8015"
       - "ELASTIC_HOST=elasticsearch:9200"
       - "INFLUX_HOST=influxdb:8086"
     depends_on:
@@ -178,7 +178,7 @@ services:
       - "KAFKA_PORT=9092"
 
   serving-sonar:
-    image: hydrosphere/serving-sonar:v0.0.2
+    image: ${sonar_image}:${sonar_version}
     container_name: serving-sonar
     networks:
       - extnet
@@ -188,7 +188,8 @@ services:
     links:
       - kafka
     ports:
-      - "9999:9999"
+      - "8014:8014"
+      - "8015:8015"
     volumes:
       - ./sonar/sonar.conf:/etc/sonar.conf
 
