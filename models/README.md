@@ -11,10 +11,17 @@ hs upload --host $HOST --port $PORT
 
 Now, your model is uploaded to the `hydro-serving` and you can create applications.
 
-## Model index
-
 ### Spark models
+
+* binarizer 
+* randomforest_classifier
+* word2vec
 
 ### Tensorflow models
 
+* stateful_lstm
+
 ### Python scripts
+
+* stateful_lstm_postprocessing
+* stateful_lstm_preprocessing	
