@@ -20,8 +20,10 @@ Now, your model is uploaded to the `hydro-serving` and you can create applicatio
 ### Tensorflow models
 
 * stateful_lstm
+* autoencoder
 
 ### Python scripts
 
 * stateful_lstm_postprocessing
 * stateful_lstm_preprocessing	
+* claims_model
