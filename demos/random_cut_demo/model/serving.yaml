@@ -1,0 +1,6 @@
+model:
+  name: "random_cut_forest"
+  type: "python:3.6"
+  contract: "contract.prototxt"
+  payload:
+    - "param.json"
