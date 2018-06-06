@@ -1,7 +1,7 @@
 signatures {
   signature_name: "detect"
   inputs {
-    name: "data"
+    name: "features"
     shape: {
       dim: {
           size: -1
