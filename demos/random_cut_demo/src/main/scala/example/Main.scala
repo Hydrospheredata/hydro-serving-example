@@ -23,13 +23,11 @@ object Main extends App {
 
     val system = ActorSystem("HelloSystem")
     implicit val timeout = Timeout(FiniteDuration(30, "s"))
-    val numberOfFeatures = 1
     val forestParams = ForestParams.loadParams()
 
     println(s"Forest: \n ${forestParams.toString} \n is starting.")
-    println(s"Waiting for vectors with $numberOfFeatures features")
 
-    val forestService = new ForestService(forestParams, numberOfFeatures, system)
+    val forestService = new ForestService(forestParams, system)
     val service = PredictionServiceGrpc.bindService(forestService, ExecutionContext.global)
     val server = NettyServerBuilder.forPort(port).addService(service).build()
     val x = server.start()

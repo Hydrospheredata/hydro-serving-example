@@ -14,7 +14,7 @@ import akka.util.Timeout
 
 import scala.concurrent.Future
 
-class ForestService(val forestParams: ForestParams, val numberOfFeatures: Long, val actorSystem: ActorSystem)(implicit timeout: Timeout) extends PredictionService {
+class ForestService(val forestParams: ForestParams, val actorSystem: ActorSystem)(implicit timeout: Timeout) extends PredictionService {
   import actorSystem._
   val forestActor: ActorRef = actorSystem.actorOf(ForestActor.props(forestParams))
 
@@ -22,7 +22,7 @@ class ForestService(val forestParams: ForestParams, val numberOfFeatures: Long, 
     require(request.inputs.isDefinedAt("features"))
     val inputs = request.inputs.getOrElse("features", ???)
     require(inputs.dtype == DT_DOUBLE)
-    require(inputs.doubleVal.length == numberOfFeatures)
+    require(inputs.doubleVal.length == forestParams.featuresNum)
     val datapoint = DataPoint(inputs.doubleVal.toArray)
     val f = forestActor ? datapoint
     f.mapTo[PredictResponse]

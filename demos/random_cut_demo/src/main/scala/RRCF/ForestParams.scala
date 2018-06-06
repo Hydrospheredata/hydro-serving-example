@@ -10,10 +10,10 @@ import io.circe.syntax._
 
 import scala.io.Source
 
-case class ForestParams(treesNum: Int = 100, samplesNum: Int = 100,
+case class ForestParams(featuresNum: Int = 1, treesNum: Int = 100, samplesNum: Int = 100,
                         shingleSize: Int = 4, timeDecay: Long = 10000) {
 
-  override def toString: String = s"Number of trees: $treesNum; Samples per tree: $samplesNum; Shingle size: $shingleSize; Time-Decay: $timeDecay"
+  override def toString: String = s"featuresNum: $featuresNum; Number of trees: $treesNum; Samples per tree: $samplesNum; Shingle size: $shingleSize; Time-Decay: $timeDecay"
 }
 
 object ForestParams {
