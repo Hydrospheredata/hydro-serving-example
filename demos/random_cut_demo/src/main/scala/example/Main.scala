@@ -19,51 +19,54 @@ object Main extends App {
   var counter: Long = 1
 
   override def main(args: Array[String]): Unit = {
-    //        val system = ActorSystem("HelloSystem")
-    //        implicit val timeout = Timeout(FiniteDuration(30, "s"))
-    //        val numberOfFeatures = 1
-    //        val forestParams = ForestParams.loadParams()
-    //
-    //        println(s"Forest: \n ${forestParams.toString} \n is starting.")
-    //        println(s"Waiting for vectors with $numberOfFeatures features")
-    //
-    //        val forestService = new ForestService(forestParams, numberOfFeatures, system)
-    //        val service = PredictionServiceGrpc.bindService(forestService, ExecutionContext.global)
-    //        val server = NettyServerBuilder.forPort(9080).addService(service).build()
-    //        val x = server.start()
-    //        x.awaitTermination()
+  	val port = sys.env.get("APP_PORT").map(_.toInt).getOrElse(9090)
 
-    val r = new scala.util.Random()
-    val channel = NettyChannelBuilder.forAddress("0.0.0.0", 9080).usePlaintext(true).build()
-    val client = PredictionServiceGrpc.blockingStub(channel)
-    var outlierFlag = false
-    var outlierCounter = 10
+    val system = ActorSystem("HelloSystem")
+    implicit val timeout = Timeout(FiniteDuration(30, "s"))
+    val numberOfFeatures = 1
+    val forestParams = ForestParams.loadParams()
 
-    var sinCounter = 0.0
+    println(s"Forest: \n ${forestParams.toString} \n is starting.")
+    println(s"Waiting for vectors with $numberOfFeatures features")
 
-    while (sinCounter < Double.MaxValue) {
-      sinCounter += 0.1
-      if ((r.nextDouble() >= 0.005) && !outlierFlag) {
-        val normalScore = client.predict(PredictRequest(
-          inputs = Map(
-            "features" -> DoubleTensor(TensorShape.scalar, Seq(math.sin(sinCounter))).toProto
-          )))
-        println("Normal score", normalScore.outputs("score").doubleVal)
+    val forestService = new ForestService(forestParams, numberOfFeatures, system)
+    val service = PredictionServiceGrpc.bindService(forestService, ExecutionContext.global)
+    val server = NettyServerBuilder.forPort(port).addService(service).build()
+    val x = server.start()
+    println(s"Server started on port ${port}")
+    x.awaitTermination()
 
-      } else {
-        outlierFlag = true
-        outlierCounter -= 1
-        val anomalyScore = client.predict(PredictRequest(
-          inputs = Map(
-            "features" -> DoubleTensor(TensorShape.scalar, Seq(0.32)).toProto
-          )))
-        println("Anomaly score", anomalyScore.outputs("score").doubleVal)
-        if (outlierCounter == 0) {
-          outlierCounter = 10
-          outlierFlag = false
-        }
-      }
-    }
+    // val r = new scala.util.Random()
+    // val channel = NettyChannelBuilder.forAddress("0.0.0.0", port).usePlaintext(true).build()
+    // val client = PredictionServiceGrpc.blockingStub(channel)
+    // var outlierFlag = false
+    // var outlierCounter = 10
+
+    // var sinCounter = 0.0
+
+    // while (sinCounter < Double.MaxValue) {
+    //   sinCounter += 0.1
+    //   if ((r.nextDouble() >= 0.005) && !outlierFlag) {
+    //     val normalScore = client.predict(PredictRequest(
+    //       inputs = Map(
+    //         "features" -> DoubleTensor(TensorShape.scalar, Seq(math.sin(sinCounter))).toProto
+    //       )))
+    //     println("Normal score", normalScore.outputs("score").doubleVal)
+
+    //   } else {
+    //     outlierFlag = true
+    //     outlierCounter -= 1
+    //     val anomalyScore = client.predict(PredictRequest(
+    //       inputs = Map(
+    //         "features" -> DoubleTensor(TensorShape.scalar, Seq(0.32)).toProto
+    //       )))
+    //     println("Anomaly score", anomalyScore.outputs("score").doubleVal)
+    //     if (outlierCounter == 0) {
+    //       outlierCounter = 10
+    //       outlierFlag = false
+    //     }
+    //   }
+    // }
   }
 
   def measureTime[R](task: String)(block: => R): R = {
