@@ -11,3 +11,13 @@ This repo contains various demo scenarios and pre-trained models.
    
 ### stateful_lstm_example
    Pipeline example with preprocessing, stateful LSTM and postprocessing
+
+## Models
+   To upload a model:
+ ```bash
+ pip install hs
+ cd model/$MODEL_FOLDER
+ hs upload --host $HOST --port $PORT
+ ```
+  
+   
