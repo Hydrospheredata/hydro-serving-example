@@ -1,0 +1,17 @@
+signatures {
+  signature_name: "detect"
+  inputs {
+    name: "features"
+    shape: {
+      dim: {
+          size: -1
+      }
+    }
+    dtype: DT_DOUBLE
+  }
+
+  outputs {
+    name: "score"
+    dtype: DT_DOUBLE
+  }
+}
