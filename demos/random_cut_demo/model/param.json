@@ -1,1 +1,1 @@
-{"treesNum":5,"samplesNum":10,"shingleSize":2,"timeDecay":10000}
+{"treesNum":5,"samplesNum":10,"shingleSize":2,"timeDecay":10000, "featuresNum":112}
