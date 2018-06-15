@@ -9,7 +9,7 @@ import scala.io.Source
 import scala.util.control.NonFatal
 
 case class ForestParams(
-  treesNum: Int = 100,
+  treesNum: Int = 5,
   samplesNum: Int = 100,
   shingleSize: Int = 4,
   timeDecay: Long = 10000,
@@ -25,17 +25,21 @@ case class ForestParams(
 object ForestParams {
   def loadParams(path: Path): ForestParams = {
     if (Files.exists(path)) {
+      println(s"Loading from$path")
       val paramFile = Source.fromFile(path.toFile)
       try {
         val forestParams = decode[ForestParams](paramFile.getLines().mkString("\n"))
         forestParams.right.getOrElse(ForestParams())
       } catch {
-        case NonFatal(_) => ForestParams()
+        case NonFatal(ex) =>
+          println(ex)
+          ForestParams()
       }
       finally {
         paramFile.close()
       }
     } else {
+      println(s"Cant find config at $path. Using default params")
       ForestParams()
     }
   }
