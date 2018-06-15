@@ -20,7 +20,7 @@ object Main extends App {
   implicit val system: ActorSystem = ActorSystem("HelloSystem")
 
   val contract = ModelContract.parseFrom(Files.readAllBytes(modelRoot.resolve("contract.protobin")))
-  val forestParams = ForestParams.loadParams(modelRoot.resolve("files/params.json"))
+  val forestParams = ForestParams.loadParams(modelRoot.resolve("files/param.json"))
 
   println(s"Forest: \n ${forestParams.toString} \n is starting.")
 

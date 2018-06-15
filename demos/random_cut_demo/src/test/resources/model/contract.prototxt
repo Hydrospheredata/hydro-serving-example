@@ -1,5 +1,5 @@
 signatures {
-  signature_name: "infer"
+  signature_name: "detect"
   inputs {
     name: "features"
     dtype: DT_DOUBLE

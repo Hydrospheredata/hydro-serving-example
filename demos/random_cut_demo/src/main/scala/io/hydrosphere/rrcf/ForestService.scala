@@ -19,7 +19,7 @@ class ForestService(
 )(implicit val timeout: Timeout, val actorSystem: ActorSystem) extends PredictionService {
   import actorSystem._
 
-  val signature: ModelSignature = modelContract.signatures.find(_.signatureName == "infer").getOrElse(throw new IllegalArgumentException("Can't find 'infer' signature in contract"))
+  val signature: ModelSignature = modelContract.signatures.find(_.signatureName == "detect").getOrElse(throw new IllegalArgumentException("Can't find 'detect' signature in contract"))
   val input: ModelField = signature.inputs.find(_.name == "features").getOrElse(throw new IllegalArgumentException("Can't find 'features' input"))
 
   require(input.typeOrSubfields.isDtype, "RRCF only supports non-recursive types")
