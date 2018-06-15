@@ -1,5 +1,5 @@
 signatures {
-  signature_name: "detect"
+  signature_name: "infer"
   inputs {
     name: "features"
     shape: {
