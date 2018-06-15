@@ -1,69 +1,44 @@
 package io.hydrosphere.rrcf
 
-import java.nio.file.{Files, Paths}
-
-import akka.actor.ActorSystem
-import akka.util.Timeout
-import io.grpc.netty.NettyServerBuilder
-import io.hydrosphere.rrcf.impl.ForestParams
-import io.hydrosphere.serving.contract.model_contract.ModelContract
+import io.grpc.netty.NettyChannelBuilder
+import io.hydrosphere.serving.tensorflow.TensorShape
+import io.hydrosphere.serving.tensorflow.api.predict.PredictRequest
 import io.hydrosphere.serving.tensorflow.api.prediction_service.PredictionServiceGrpc
-
-import scala.concurrent.ExecutionContext
-import scala.concurrent.duration.FiniteDuration
+import io.hydrosphere.serving.tensorflow.tensor.DoubleTensor
 
 object ClientMain extends App {
+  val port = 9090
+   val r = new scala.util.Random()
+   val channel = NettyChannelBuilder.forAddress("0.0.0.0", port).usePlaintext().build()
+   val client = PredictionServiceGrpc.blockingStub(channel)
+   var outlierFlag = false
+   var outlierCounter = 10
 
-  var counter: Long = 1
+   var sinCounter = 0.0
 
-  implicit val timeout: Timeout = Timeout(FiniteDuration(30, "s"))
-  implicit val system = ActorSystem("HelloSystem")
+   while (sinCounter < Double.MaxValue) {
+     sinCounter += 0.1
+     if ((r.nextDouble() >= 0.005) && !outlierFlag) {
+       val normalScore = client.predict(PredictRequest(
+         inputs = Map(
+           "features" -> DoubleTensor(TensorShape.vector(-1), Seq(math.sin(sinCounter))).toProto
+         )))
+       println("Normal score", normalScore.outputs("score").doubleVal)
 
-  val port = sys.env.get("APP_PORT").map(_.toInt).getOrElse(9090)
-  val modelRoot = Paths.get("/model")
-  val contract = ModelContract.parseFrom(Files.readAllBytes(modelRoot.resolve("contract.protobin")))
-  val forestParams = ForestParams.loadParams(modelRoot.resolve("files/params.json"))
-
-  println(s"Forest: \n ${forestParams.toString} \n is starting.")
-
-  val forestService = new ForestService(forestParams, contract)
-  val service = PredictionServiceGrpc.bindService(forestService, ExecutionContext.global)
-  val server = NettyServerBuilder.forPort(port).addService(service).build()
-  val x = server.start()
-  println(s"Server started on port ${port}")
-  x.awaitTermination()
-
-  // val r = new scala.util.Random()
-  // val channel = NettyChannelBuilder.forAddress("0.0.0.0", port).usePlaintext(true).build()
-  // val client = PredictionServiceGrpc.blockingStub(channel)
-  // var outlierFlag = false
-  // var outlierCounter = 10
-
-  // var sinCounter = 0.0
-
-  // while (sinCounter < Double.MaxValue) {
-  //   sinCounter += 0.1
-  //   if ((r.nextDouble() >= 0.005) && !outlierFlag) {
-  //     val normalScore = client.predict(PredictRequest(
-  //       inputs = Map(
-  //         "features" -> DoubleTensor(TensorShape.scalar, Seq(math.sin(sinCounter))).toProto
-  //       )))
-  //     println("Normal score", normalScore.outputs("score").doubleVal)
-
-  //   } else {
-  //     outlierFlag = true
-  //     outlierCounter -= 1
-  //     val anomalyScore = client.predict(PredictRequest(
-  //       inputs = Map(
-  //         "features" -> DoubleTensor(TensorShape.scalar, Seq(0.32)).toProto
-  //       )))
-  //     println("Anomaly score", anomalyScore.outputs("score").doubleVal)
-  //     if (outlierCounter == 0) {
-  //       outlierCounter = 10
-  //       outlierFlag = false
-  //     }
-  //   }
-  // }
+     } else {
+       outlierFlag = true
+       outlierCounter -= 1
+       val anomalyScore = client.predict(PredictRequest(
+         inputs = Map(
+           "features" -> DoubleTensor(TensorShape.vector(-1), Seq(math.cos(sinCounter))).toProto
+         )))
+       println("Anomaly score", anomalyScore.outputs("score").doubleVal)
+       if (outlierCounter == 0) {
+         outlierCounter = 10
+         outlierFlag = false
+       }
+     }
+   }
 
   def measureTime[R](task: String)(block: => R): R = {
     val t0 = System.nanoTime()
