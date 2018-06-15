@@ -4,7 +4,7 @@ signatures {
     name: "features"
     shape: {
       dim: {
-          size: -1
+          size: 112
       }
     }
     dtype: DT_DOUBLE
