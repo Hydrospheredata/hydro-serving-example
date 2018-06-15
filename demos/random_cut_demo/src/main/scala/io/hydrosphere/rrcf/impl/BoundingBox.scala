@@ -1,4 +1,4 @@
-package RRCF
+package io.hydrosphere.rrcf.impl
 
 case class BoundingBox(var minValues: Array[Double], var maxValues: Array[Double]) {
 

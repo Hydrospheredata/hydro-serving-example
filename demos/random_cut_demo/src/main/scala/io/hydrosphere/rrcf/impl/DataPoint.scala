@@ -1,4 +1,4 @@
-package RRCF
+package io.hydrosphere.rrcf.impl
 
 case class DataPoint(array: Array[Double]) {
   override def equals(obj: scala.Any): Boolean = {

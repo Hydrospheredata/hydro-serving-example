@@ -2,11 +2,6 @@ signatures {
   signature_name: "infer"
   inputs {
     name: "features"
-    shape: {
-      dim: {
-          size: -1
-      }
-    }
     dtype: DT_DOUBLE
   }
 

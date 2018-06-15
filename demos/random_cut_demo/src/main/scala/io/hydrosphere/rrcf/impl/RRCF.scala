@@ -1,4 +1,4 @@
-package RRCF
+package io.hydrosphere.rrcf.impl
 
 
 class RRCF(val forestParams: ForestParams, initialData: Array[DataPoint]) {

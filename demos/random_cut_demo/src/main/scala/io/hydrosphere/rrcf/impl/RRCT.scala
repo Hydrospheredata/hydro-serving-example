@@ -1,4 +1,4 @@
-package RRCF
+package io.hydrosphere.rrcf.impl
 
 
 import scala.collection.mutable

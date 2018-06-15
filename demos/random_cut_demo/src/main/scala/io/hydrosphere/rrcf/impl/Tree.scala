@@ -1,4 +1,4 @@
-package RRCF
+package io.hydrosphere.rrcf.impl
 
 sealed trait Tree {
   var parent: Option[CutNode]
