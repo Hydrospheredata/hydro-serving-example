@@ -10,7 +10,6 @@ class RRCF(val forestParams: ForestParams, val initialData: Array[DataPoint]) {
   val trees = new Array[RRCT](forestParams.treesNum)
   val shingledData: Array[DataPoint] = initialData.sliding(forestParams.shingleSize, 1).map(x => DataPoint(x.flatMap(_.array))).toArray
   assert(shingledData.length == forestParams.samplesNum)
-  //  val shuffledInitShingles: List[DataPoint] = scala.util.Random.shuffle(shingledData)
   val shingler = new Shingler(initialData.takeRight(forestParams.shingleSize))
 
   (0 until forestParams.treesNum).par.foreach(index => trees(index) = new RRCT(shingledData))

@@ -21,7 +21,7 @@ class TimeDecayReservoir(var timeDecay: Int, storage: Array[DataPoint]) extends 
 
   // Exponentially weight points according to their timestamps
   private def scorePoint(point: TimestampedDataPoint): Double = {
-    math.pow(r nextDouble(), timeDecay / (timeDecay - point.timestamp))
+    math.pow(r.nextDouble(), timeDecay / (timeDecay - point.timestamp))
   }
 
 

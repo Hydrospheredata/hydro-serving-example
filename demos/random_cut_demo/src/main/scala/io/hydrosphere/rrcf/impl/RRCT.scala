@@ -147,14 +147,18 @@ class RRCT(initialData: Array[DataPoint], timeDecay: Int = 1000) {
         if (newCutNode.isDatapointInLeftSubtree(dataPoint)) {
           //Duplicate check
           leafStorage.get(dataPoint) match {
-            case Some(duplicateLeaf) => newCutNode.left = duplicateLeaf; duplicateLeaf.childrenSize += 1
+            case Some(duplicateLeaf) =>
+              newCutNode.left = duplicateLeaf
+              duplicateLeaf.childrenSize += 1
             case None => leafStorage += (dataPoint -> newCutNode.left.asInstanceOf[Leaf])
           }
           newCutNode.right.parent = Some(newCutNode)
         } else {
           //Duplicate check
           leafStorage.get(dataPoint) match {
-            case Some(duplicateLeaf) => newCutNode.right = duplicateLeaf; duplicateLeaf.childrenSize += 1
+            case Some(duplicateLeaf) =>
+              newCutNode.right = duplicateLeaf
+              duplicateLeaf.childrenSize += 1
             case None => leafStorage += (dataPoint -> newCutNode.right.asInstanceOf[Leaf])
           }
           newCutNode.left.parent = Some(newCutNode)
@@ -176,7 +180,7 @@ class RRCT(initialData: Array[DataPoint], timeDecay: Int = 1000) {
     * @param dataPoint
     */
   private[this] def deleteDatapoint(dataPoint: DataPoint): Unit = {
-    val leaf = locateDatapointInTree(dataPoint)
+    val leaf = leafStorage(dataPoint)
     if (leaf.childrenSize > 1) { // If leaf has duplicates, simply delete one of the duplicates without changing tree
       leaf.childrenSize -= 1
       leaf.parent.foreach(_.updateChildrenSize())
@@ -200,17 +204,4 @@ class RRCT(initialData: Array[DataPoint], timeDecay: Int = 1000) {
     assert(rootNode.childrenSize == treeSize - 1)
   }
 
-  /**
-    * Given datapoint return correspoing leaf from the tree by looking into the linked list with all leafs
-    *
-    * @param dataPoint
-    * @return
-    */
-  private[this] def locateDatapointInTree(dataPoint: DataPoint): Leaf = {
-    leafStorage.get(dataPoint) match {
-      case None =>
-        throw new Exception("Datapoint is not in the tree.")
-      case Some(leaf) => leaf
-    }
-  }
 }
