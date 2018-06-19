@@ -7,9 +7,9 @@ import io.hydrosphere.rrcf.impl.{DataPoint, ForestParams}
 import io.hydrosphere.serving.contract.model_contract.ModelContract
 import io.hydrosphere.serving.contract.model_field.ModelField
 import io.hydrosphere.serving.contract.model_signature.ModelSignature
-import io.hydrosphere.serving.tensorflow.types.DataType
 import io.hydrosphere.serving.tensorflow.api.predict.{PredictRequest, PredictResponse}
 import io.hydrosphere.serving.tensorflow.api.prediction_service.PredictionServiceGrpc.PredictionService
+import io.hydrosphere.serving.tensorflow.types.DataType
 
 import scala.concurrent.Future
 
@@ -17,7 +17,6 @@ class ForestService(
   val forestParams: ForestParams,
   val modelContract: ModelContract
 )(implicit val timeout: Timeout, val actorSystem: ActorSystem) extends PredictionService {
-  import actorSystem._
 
   val signature: ModelSignature = modelContract.signatures.find(_.signatureName == "detect").getOrElse(throw new IllegalArgumentException("Can't find 'detect' signature in contract"))
   val input: ModelField = signature.inputs.find(_.name == "features").getOrElse(throw new IllegalArgumentException("Can't find 'features' input"))

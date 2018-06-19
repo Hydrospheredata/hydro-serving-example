@@ -9,4 +9,6 @@ case class DataPoint(array: Array[Double]) {
   }
 
   override def toString: String = array.mkString(" ")
+
+  override def hashCode(): Int = java.util.Arrays.hashCode(array)
 }

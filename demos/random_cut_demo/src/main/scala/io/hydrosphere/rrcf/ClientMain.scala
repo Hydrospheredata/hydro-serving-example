@@ -8,37 +8,37 @@ import io.hydrosphere.serving.tensorflow.tensor.DoubleTensor
 
 object ClientMain extends App {
   val port = 9090
-   val r = new scala.util.Random()
-   val channel = NettyChannelBuilder.forAddress("0.0.0.0", port).usePlaintext().build()
-   val client = PredictionServiceGrpc.blockingStub(channel)
-   var outlierFlag = false
-   var outlierCounter = 10
+  val r = new scala.util.Random()
+  val channel = NettyChannelBuilder.forAddress("0.0.0.0", port).usePlaintext().build()
+  val client = PredictionServiceGrpc.blockingStub(channel)
+  var outlierFlag = false
+  var outlierCounter = 10
 
-   var sinCounter = 0.0
+  var sinCounter = 0.0
 
-   while (sinCounter < Double.MaxValue) {
-     sinCounter += 0.1
-     if ((r.nextDouble() >= 0.005) && !outlierFlag) {
-       val normalScore = client.predict(PredictRequest(
-         inputs = Map(
-           "features" -> DoubleTensor(TensorShape.vector(-1), Seq(math.sin(sinCounter))).toProto
-         )))
-       println("Normal score", normalScore.outputs("score").doubleVal)
+  while (sinCounter < Double.MaxValue) {
+    sinCounter += 0.1
+    if ((r.nextDouble() >= 0.005) && !outlierFlag) {
+      val normalScore = client.predict(PredictRequest(
+        inputs = Map(
+          "features" -> DoubleTensor(TensorShape.vector(-1), Seq(math.sin(sinCounter))).toProto
+        )))
+      println("Normal score", normalScore.outputs("score").doubleVal)
 
-     } else {
-       outlierFlag = true
-       outlierCounter -= 1
-       val anomalyScore = client.predict(PredictRequest(
-         inputs = Map(
-           "features" -> DoubleTensor(TensorShape.vector(-1), Seq(math.cos(sinCounter))).toProto
-         )))
-       println("Anomaly score", anomalyScore.outputs("score").doubleVal)
-       if (outlierCounter == 0) {
-         outlierCounter = 10
-         outlierFlag = false
-       }
-     }
-   }
+    } else {
+      outlierFlag = true
+      outlierCounter -= 1
+      val anomalyScore = client.predict(PredictRequest(
+        inputs = Map(
+          "features" -> DoubleTensor(TensorShape.vector(-1), Seq(math.cos(sinCounter))).toProto
+        )))
+      println("Anomaly score", anomalyScore.outputs("score").doubleVal)
+      if (outlierCounter == 0) {
+        outlierCounter = 10
+        outlierFlag = false
+      }
+    }
+  }
 
   def measureTime[R](task: String)(block: => R): R = {
     val t0 = System.nanoTime()
@@ -46,23 +46,6 @@ object ClientMain extends App {
     val t1 = System.nanoTime()
     println(s"Elapsed time ($task): \t" + (t1 - t0) / 1e9 + "s")
     result
-  }
-
-  def periodicDataGenerator(): Array[Double] = {
-    //        Array(2.0, 2.0)
-    //    counter += 1
-    val r = new scala.util.Random()
-    if (r.nextBoolean()) Array(r.nextGaussian() / 2 + 10, r.nextGaussian() / 2 + 3)
-    else Array(r.nextGaussian() / 2 - 6, r.nextGaussian() / 2 - 5, r.nextGaussian() / 2 + 5)
-    //    Array(math.sin(counter))
-  }
-
-  def outlierDataGenerator(): Array[Double] = {
-    //    counter += 1
-    val r = new scala.util.Random()
-    Array(r.nextGaussian() + 2, r.nextGaussian() - 1)
-    //    Array(0.0)
-    //    Array(math.cos(counter))
   }
 
 }
