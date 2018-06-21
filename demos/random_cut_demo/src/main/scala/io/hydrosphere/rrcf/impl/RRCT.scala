@@ -5,15 +5,13 @@ import scala.collection.mutable
 import scala.util.Random
 
 
-// TODO make RRCT care about shingles? If so, the influence of outlier on neighbour normal nodes will be diminished(?)
-// TODO
 class RRCT(initialData: Array[DataPoint], timeDecay: Int = 1000) {
   val r = new Random()
   val treeSize: Int = initialData.length
-  val leafStorage = new mutable.ListBuffer[Leaf]()
-  private[this] val initialLeaf = Leaf(initialData(0), None) // TODO do not generate this class field
+  val leafStorage = new mutable.HashMap[DataPoint, Leaf]()
+  private[this] val initialLeaf = Leaf(initialData(0), None)
   var rootNode: Tree = initialLeaf
-  leafStorage.append(initialLeaf) // TODO change to hashtable
+  leafStorage += (initialLeaf.dataPoint -> initialLeaf)
   val reservoir: Reservoir = new TimeDecayReservoir(timeDecay, initialData)
   initialData.drop(1).foreach(initializeWithDatapoint)
 
@@ -34,7 +32,9 @@ class RRCT(initialData: Array[DataPoint], timeDecay: Int = 1000) {
     val dataPointBoundingBox = new BoundingBox(newDataPoint)
     val commonBoundingBox = dataPointBoundingBox.union(possibleSiblingNode.boundingBox)
     val diameters = commonBoundingBox.minValues zip commonBoundingBox.maxValues map { case (min, max) => max - min }
-    val diameterCut = diameters.sum * r.nextDouble() // TODO it samples from semi-interval [0;1) but we need [0;1]
+    var randomCoeff = 0.0
+    do randomCoeff = r.nextDouble() while (randomCoeff == 0.0) // check to not make cut at 0.0
+    val diameterCut = diameters.sum * randomCoeff
     val dimensionCut = diameters.indices.view.map(i => (i, diameters.take(i + 1).sum >= diameterCut)).find(_._2).head._1
     val previousDimensionsOffset = diameters.take(dimensionCut).sum
     val coordinateCut = commonBoundingBox.minValues(dimensionCut) + diameterCut - previousDimensionsOffset
@@ -146,16 +146,20 @@ class RRCT(initialData: Array[DataPoint], timeDecay: Int = 1000) {
 
         if (newCutNode.isDatapointInLeftSubtree(dataPoint)) {
           //Duplicate check
-          leafStorage.find(_.dataPoint.equals(dataPoint)) match {
-            case Some(duplicateLeaf) => newCutNode.left = duplicateLeaf; duplicateLeaf.childrenSize += 1
-            case None => leafStorage.append(newCutNode.left.asInstanceOf[Leaf])
+          leafStorage.get(dataPoint) match {
+            case Some(duplicateLeaf) =>
+              newCutNode.left = duplicateLeaf
+              duplicateLeaf.childrenSize += 1
+            case None => leafStorage += (dataPoint -> newCutNode.left.asInstanceOf[Leaf])
           }
           newCutNode.right.parent = Some(newCutNode)
         } else {
           //Duplicate check
-          leafStorage.find(_.dataPoint.equals(dataPoint)) match {
-            case Some(duplicateLeaf) => newCutNode.right = duplicateLeaf; duplicateLeaf.childrenSize += 1
-            case None => leafStorage.append(newCutNode.right.asInstanceOf[Leaf])
+          leafStorage.get(dataPoint) match {
+            case Some(duplicateLeaf) =>
+              newCutNode.right = duplicateLeaf
+              duplicateLeaf.childrenSize += 1
+            case None => leafStorage += (dataPoint -> newCutNode.right.asInstanceOf[Leaf])
           }
           newCutNode.left.parent = Some(newCutNode)
         }
@@ -176,7 +180,7 @@ class RRCT(initialData: Array[DataPoint], timeDecay: Int = 1000) {
     * @param dataPoint
     */
   private[this] def deleteDatapoint(dataPoint: DataPoint): Unit = {
-    val leaf = locateDatapointInTree(dataPoint)
+    val leaf = leafStorage(dataPoint)
     if (leaf.childrenSize > 1) { // If leaf has duplicates, simply delete one of the duplicates without changing tree
       leaf.childrenSize -= 1
       leaf.parent.foreach(_.updateChildrenSize())
@@ -194,38 +198,10 @@ class RRCT(initialData: Array[DataPoint], timeDecay: Int = 1000) {
               grandParent.updateBoundingBox()
               grandParent.updateChildrenSize()
           }
-          leafStorage.remove(leafStorage.zipWithIndex.find(_._1.dataPoint.equals(dataPoint)).get._2)
       }
+      leafStorage -= dataPoint
     }
     assert(rootNode.childrenSize == treeSize - 1)
   }
 
-  /**
-    * Given datapoint return correspoing leaf from the tree by looking into the linked list with all leafs
-    *
-    * @param dataPoint
-    * @return
-    */
-  private[this] def locateDatapointInTree(dataPoint: DataPoint): Leaf = {
-
-    // TODO decide what to do with older version
-    //    def locateDatapointFromNode(dataPoint: DataPoint, node: Tree): Leaf = {
-    //      node match {
-    //        case cutNode: CutNode =>
-    //          if (cutNode.isDatapointInLeftSubtree(dataPoint)) {
-    //            locateDatapointFromNode(dataPoint, cutNode.left)
-    //          } else {
-    //            locateDatapointFromNode(dataPoint, cutNode.right)
-    //          }
-    //        case leaf: Leaf => if (leaf.dataPoint.equals(dataPoint)) leaf else throw new Exception("Datapoint is not in the tree.")
-    //      }
-    //    }
-
-    //    locateDatapointFromNode(dataPoint, rootNode)
-
-    leafStorage.find(_.dataPoint.equals(dataPoint)) match {
-      case None => throw new Exception("Datapoint is not in the tree.")
-      case Some(leaf) => leaf
-    }
-  }
 }

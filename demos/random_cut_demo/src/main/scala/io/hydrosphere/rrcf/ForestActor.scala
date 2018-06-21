@@ -11,9 +11,11 @@ import io.hydrosphere.serving.tensorflow.tensor.DoubleTensor
 class ForestActor(val forestParams: ForestParams) extends Actor with ActorLogging {
 
   log.info("Warmup state for {} requests", forestParams.warmupPointsNum)
+
   /**
     * State of actor when it actually infers the forest.
     * No state transitions from here.
+    *
     * @param forest forest to infer from
     * @return
     */
@@ -30,6 +32,7 @@ class ForestActor(val forestParams: ForestParams) extends Actor with ActorLoggin
   /**
     * State of actor, when it accumulates points and returns specified constant.
     * Changes context to `infer` when accumulated enough points.
+    *
     * @param buffer buffer with points
     * @return
     */
@@ -39,12 +42,12 @@ class ForestActor(val forestParams: ForestParams) extends Actor with ActorLoggin
       val uuid = UUID.randomUUID()
       log.info(s"[{}] Request recieved during warmup", uuid)
       val newBuffer = buffer :+ datapoint
-      val warmupPercent =  ((newBuffer.length.toDouble / forestParams.warmupPointsNum.toDouble) * 100).formatted("%2.2f%%")
+      val warmupPercent = ((newBuffer.length.toDouble / forestParams.warmupPointsNum.toDouble) * 100).formatted("%2.2f%%")
       log.info(f"[{}] Forest is initializing {}", uuid, warmupPercent)
 
       if (newBuffer.length >= forestParams.warmupPointsNum) {
         log.info(f"[{}] Warmed up", uuid)
-        val forest = new RRCF(forestParams, buffer.toArray)
+        val forest = new RRCF(forestParams, newBuffer.toArray)
         log.info("[{}] Infer state", uuid)
         val score = forest.recieve(datapoint)
         log.info(s"[{}] Response: {}", uuid, score)
@@ -58,6 +61,7 @@ class ForestActor(val forestParams: ForestParams) extends Actor with ActorLoggin
 
   /**
     * Initial state of actor is `warmup`
+    *
     * @return
     */
   override def receive: Receive = warmup(List.empty)
