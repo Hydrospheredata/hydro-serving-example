@@ -1,0 +1,8 @@
+model:
+  name: "gan_model"
+  type: "python:3.6"
+  contract: "contract.prototxt"
+  payload:
+    - "src"
+    - "requirements.txt"
+    - "gan.h5"
