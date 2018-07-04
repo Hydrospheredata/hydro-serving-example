@@ -4,10 +4,3 @@ model:
   contract: "contract.prototxt"
   payload:
     - "src/"
-
-local_deploy:
-  name: "claims_model_runtime"
-  runtime:
-    repository: "hydrosphere/serving-runtime-python"
-    tag: "3.6-latest"
-  port: 9091

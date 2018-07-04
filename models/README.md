@@ -13,7 +13,7 @@ Now, your model is uploaded to the `hydro-serving` and you can create applicatio
 
 ### Spark models
 
-* binarizer 
+* binarizer
 * randomforest_classifier
 * word2vec
 
