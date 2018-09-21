@@ -1,8 +1,19 @@
-model:
-  name: "gan_model"
-  type: "python:3.6"
-  contract: "contract.prototxt"
-  payload:
-    - "src"
-    - "requirements.txt"
-    - "gan.h5"
+kind: Model
+name: "gan_model"
+model-type: "python:3.6"
+payload:
+  - "src"
+  - "requirements.txt"
+  - "gan.h5"
+
+contract:
+  gan:
+    inputs:
+      client_profile:
+        shape: [112]
+        type: double
+    outputs:
+      class_one:
+        type: double
+      class_two:
+        type: double
