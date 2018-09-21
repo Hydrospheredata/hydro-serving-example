@@ -1,13 +1,17 @@
-model:
-  name: "demo_postprocessing"
-  type: "python:3.6"
-  contract: "contract.prototxt"
-  payload:
-    - "src/"
-
-local_deploy:
-  name: "demo_greenhouse_runtime"
-  runtime:
-    repository: "hydrosphere/serving-runtime-python"
-    tag: "3.6-latest"
-  port: 9091
+kind: Model
+name: "demo_postprocessing"
+model-type: "python:3.6"
+payload:
+  - "src/"
+contract:
+  detect:
+    inputs:
+      result:
+        shape: [1, 4]
+        type: double
+    outputs:
+      result:
+        shape: [1, 4]
+        type: double
+      anomaly:
+        type: bool
