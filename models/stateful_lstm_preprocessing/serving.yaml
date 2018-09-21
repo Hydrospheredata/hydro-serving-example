@@ -1,6 +1,15 @@
-model:
-  name: "demo_preprocessing"
-  type: "python:3.6"
-  contract: "contract.prototxt"
-  payload:
-    - "src/"
+kind: Model
+name: "demo_preprocessing"
+model-type: "python:3.6"
+payload:
+  - "src/"
+contract:
+  normalize:
+    inputs:
+      data:
+        shape: [24]
+        type: double
+    outputs:
+      data:
+        shape: [1, 1, 24]
+        type: double
