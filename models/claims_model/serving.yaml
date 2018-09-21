@@ -1,6 +1,17 @@
-model:
-  name: "claims_model"
-  type: "python:3.6"
-  contract: "contract.prototxt"
-  payload:
-    - "src/"
+kind: Model
+name: "claims_model"
+model-type: "python:3.6"
+payload:
+  - "src/"
+contract:
+  claim:
+    inputs:
+      client_profile:
+        shape: [112]
+        type: float64
+        profile: text
+    outputs:
+      amount:
+        shape: scalar
+        type: int64
+        profile: real
