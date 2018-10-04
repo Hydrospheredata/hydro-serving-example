@@ -15,7 +15,7 @@ This repo contains various demo scenarios and pre-trained models.
 ## Models
    To upload a model:
  ```bash
- pip install hs==0.1.0
+ pip install hs
  cd model/$MODEL_FOLDER
  hs cluster add --name <name> --server <server_addr>
  hs upload
