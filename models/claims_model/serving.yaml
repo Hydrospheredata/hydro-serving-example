@@ -1,6 +1,7 @@
 kind: Model
 name: "claims_model"
 model-type: "python:3.6"
+#training-data: /path/to/microtrain.csv # uncomment if you want to upload train data
 payload:
   - "src/"
 contract:
