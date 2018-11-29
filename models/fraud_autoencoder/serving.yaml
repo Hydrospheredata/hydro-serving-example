@@ -1,0 +1,20 @@
+kind: Model
+name: fraud_autoencoder
+model-type: python:3.6
+payload:
+  - "src/"
+  - "requirements.txt"
+  - "relu-2layers-4units.3.h5"
+
+contract:
+  infer:
+    inputs:
+      X:
+        shape: [-1, 7]
+        type: double
+        profile: numerical
+    outputs:
+      reconstructed:
+        shape: [-1, 1]
+        type: double
+        profile: numerical
