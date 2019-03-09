@@ -1,0 +1,25 @@
+kind: Model
+name: "autoencoder"
+runtime: hydrosphere/serving-runtime-tensorflow:1.7.0-latest
+#install-command: "pip install -r requirements.txt"
+#model-type: "python:3.6"
+#training-data: /path/to/microtrain.csv # uncomment if you want to upload train data
+#profileTypes:
+#  client_profile: NUMERICAL
+payload:
+  - "variables/"
+  - "saved_model.pb"
+    #contract:
+    #  claim:
+    #    inputs:
+    #      client_profile:
+    #        shape: [112]
+    #        type: float64
+    #        profile: text
+    #    outputs:
+    #      amount:
+    #        shape: scalar
+    #        type: int64
+    #        profile: real
+metadata:
+  why: demo
