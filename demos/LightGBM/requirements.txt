@@ -1,0 +1,7 @@
+matplotlib
+pandas
+scikit-learn
+scipy
+glibc
+pyarrow
+lightgbm==2.2.3

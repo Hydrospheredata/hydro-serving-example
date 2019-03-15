@@ -1,0 +1,9 @@
+kind: Model
+name: "---"
+runtime: hydrosphere/serving-runtime-python:3.6-latest
+install-command: "pip install -r requirements.txt"
+payload:
+  - "src/"
+  - "requirements.txt"
+  - "model/trained.model"
+contract:
