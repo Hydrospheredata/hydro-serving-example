@@ -4,4 +4,4 @@ scikit-learn
 scipy
 glibc
 pyarrow
-#lightgbm
+lightgbm
