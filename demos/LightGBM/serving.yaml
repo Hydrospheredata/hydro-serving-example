@@ -1,5 +1,5 @@
 kind: Model
-name: "LightGBM_Favorita"
+name: "lightgbm_favorita"
 runtime: hydrosphere/serving-runtime-python:3.6-latest
 install-command: "pip install -r requirements.txt"
 payload:
