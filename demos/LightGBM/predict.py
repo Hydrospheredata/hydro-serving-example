@@ -43,7 +43,7 @@ def main():
     writeLog("Loading the model...");
     
     try:    
-        model = joblib.load("forecaster.pkl"); #it is a pretrained LightGBM model.
+        model = joblib.load("model/forecaster.pkl"); #it is a pretrained LightGBM model.
         writeLog("Model loaded successfully...");
     except Exception as exception:
         writeLog("{}".format(exception));
@@ -55,6 +55,7 @@ def main():
         writeLog("Prediction made:");
         writeLog("----------------------------");
         writeLog(repr(prediction));
+        writeLog("Prediction __class__: {}".format(prediction.__class__))
     except Exception as exception:
         writeLog("{}".format(exception));
 
@@ -62,6 +63,8 @@ def main():
     writeLog("----------------------------");
 
     logfile.close();
+
+    return prediction;
 
 if __name__ == "__main__":
     main();

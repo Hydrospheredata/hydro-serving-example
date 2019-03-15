@@ -1,9 +1,18 @@
 kind: Model
-name: "---"
+name: "LightGBM_Favorita"
 runtime: hydrosphere/serving-runtime-python:3.6-latest
 install-command: "pip install -r requirements.txt"
 payload:
   - "src/"
   - "requirements.txt"
-  - "model/trained.model"
+  - "model/forecaster.pkl"
 contract:
+  predict:
+    inputs:
+      input_data:
+        shape: [-1]
+        type: string
+    outputs:
+      prediction:
+        shape: [-1]
+        type: float64
