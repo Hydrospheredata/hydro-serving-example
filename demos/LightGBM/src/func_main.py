@@ -12,15 +12,20 @@ model = joblib.load("/model/files/forecaster.pkl");
 
 def predict(input_data):
 
-    samples_list = [];
+    try:
+        samples_list = [];
 
-    for sample_json in input_data.string_val:
-        sample_dict = json.loads(sample_json);
-        samples_list.append(sample_dict);
+        for sample_json in input_data.string_val:
+            sample_dict = json.loads(sample_json);
+            samples_list.append(sample_dict);
 
-    data_frame = pd.DataFrame.from_dict(samples_list);
+        data_frame = pd.DataFrame.from_dict(samples_list);
 
-    prediction = model.predict(data_frame).tolist();
+        prediction = model.predict(data_frame).tolist();
+
+    except Exception as exception:
+        print(exception);
+        prediction = [0];
 
     tensor_shape = hs.TensorShapeProto(dim=[hs.TensorShapeProto.Dim(size=len(samples_list))]);
 
