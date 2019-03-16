@@ -10,7 +10,12 @@ def getData(filename, size = 5):
 	data_file = open(filename, "r+");
 	data_list = data_file.readlines();
 
-	return data_list[0:size];
+	data = [];
+
+	for i in range(0, size):
+		data.append(data_list[i].encode("utf-8"));
+
+	return data;
 
 def main():
 	channel = grpc.insecure_channel(cfg["url"]); 
@@ -18,7 +23,6 @@ def main():
 
 	data = getData("samples.json");
 	dim_size = len(data);
-	print(data);
 
 	model_spec = hs.ModelSpec(name="favorita", signature_name="favorita");
 
@@ -33,4 +37,4 @@ def main():
 	return result;
 
 if __name__ == "__main__":
-	print(repr(main()));
+	main();
