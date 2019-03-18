@@ -10,25 +10,24 @@ import hydro_serving_grpc as hs;
 
 model = joblib.load("/model/files/forecaster.pkl");
 
-def predict(input_data):
+def predict(**kwargs):
 
     try:
-        samples_list = [];
 
-        for sample_json in input_data.string_val:
-            sample_dict = json.loads(sample_json);
-            samples_list.append(sample_dict);
+        input_data = {};
 
-        data_frame = pd.DataFrame.from_dict(samples_list);
+        for key, value in kwargs.items():
+            input_data[key] = value.double_val;
 
+        data_frame = pd.DataFrame.from_dict(input_data);
         prediction = model.predict(data_frame).tolist();
 
-        tensor_shape = hs.TensorShapeProto(dim=[hs.TensorShapeProto.Dim(size=len(samples_list))]);
+        prediction_tensor_shape = hs.TensorShapeProto(dim=[hs.TensorShapeProto.Dim(size=len(prediction))]);
         status_tensor_shape = hs.TensorShapeProto(dim=[hs.TensorShapeProto.Dim(size=1)]);
 
         status = [b"Ok"];
 
-        return hs.PredictResponse(outputs = {"prediction": hs.TensorProto(dtype = hs.DT_FLOAT, float_val = prediction, tensor_shape = tensor_shape), \
+        return hs.PredictResponse(outputs = {"prediction": hs.TensorProto(dtype = hs.DT_DOUBLE, double_val = prediction, tensor_shape = prediction_tensor_shape), \
             "status": hs.TensorProto(dtype = hs.DT_STRING, string_val = status, tensor_shape = status_tensor_shape)});
 
     except Exception as exception:
@@ -38,7 +37,7 @@ def predict(input_data):
         
         tensor_shape = hs.TensorShapeProto(dim=[hs.TensorShapeProto.Dim(size=1)]);
 
-        return hs.PredictResponse(outputs = {"prediction": hs.TensorProto(dtype = hs.DT_FLOAT, float_val = prediction, tensor_shape = tensor_shape), \
+        return hs.PredictResponse(outputs = {"prediction": hs.TensorProto(dtype = hs.DT_DOUBLE, double_val = prediction, tensor_shape = tensor_shape), \
             "status": hs.TensorProto(dtype = hs.DT_STRING, string_val = status, tensor_shape = tensor_shape)});
 
 
