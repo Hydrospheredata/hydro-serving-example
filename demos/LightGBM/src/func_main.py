@@ -22,15 +22,24 @@ def predict(input_data):
         data_frame = pd.DataFrame.from_dict(samples_list);
 
         prediction = model.predict(data_frame).tolist();
-        tensor_shape = hs.TensorShapeProto(dim=[hs.TensorShapeProto.Dim(size=len(samples_list))]);
 
-        return hs.PredictResponse(outputs = {"prediction": hs.TensorProto(dtype = hs.DT_FLOAT, float_val = prediction, tensor_shape = tensor_shape)});
+        tensor_shape = hs.TensorShapeProto(dim=[hs.TensorShapeProto.Dim(size=len(samples_list))]);
+        status_tensor_shape = hs.TensorShapeProto(dim=[hs.TensorShapeProto.Dim(size=1)]);
+
+        status = [b"Ok"];
+
+        return hs.PredictResponse(outputs = {"prediction": hs.TensorProto(dtype = hs.DT_FLOAT, float_val = prediction, tensor_shape = tensor_shape), \
+            "status": hs.TensorProto(dtype = hs.DT_STRING, string_val = status, tensor_shape = status_tensor_shape)});
 
     except Exception as exception:
-        print(exception);
-        prediction = [repr(exception).encode("utf-8")];
+        
+        status = [repr(exception).encode("utf-8")]
+        prediction = [0.00];
+        
         tensor_shape = hs.TensorShapeProto(dim=[hs.TensorShapeProto.Dim(size=1)]);
-        return hs.PredictResponse(outputs = {"prediction": hs.TensorProto(dtype = hs.DT_STRING, string_val = prediction, tensor_shape = tensor_shape)});
+
+        return hs.PredictResponse(outputs = {"prediction": hs.TensorProto(dtype = hs.DT_FLOAT, float_val = prediction, tensor_shape = tensor_shape), \
+            "status": hs.TensorProto(dtype = hs.DT_STRING, string_val = status, tensor_shape = tensor_shape)});
 
 
 

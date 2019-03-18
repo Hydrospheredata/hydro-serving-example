@@ -9,11 +9,12 @@ cfg_file.close();
 def getData(filename, size = 5):
 	data_file = open(filename, "r+");
 	data_list = data_file.readlines();
+	data_file.close();
 
 	data = [];
 
 	for i in range(0, size):
-		data.append(data_list[i].encode("utf-8"));
+		data.append(data_list[i].replace('"', '\\"').encode("utf-8"));
 
 	return data;
 

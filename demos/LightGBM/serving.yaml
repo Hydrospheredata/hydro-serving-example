@@ -16,3 +16,6 @@ contract:
       prediction:
         shape: [-1]
         type: float64
+      status:
+        shape: [1]
+        type: string
