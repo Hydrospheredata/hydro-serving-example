@@ -22,12 +22,14 @@ def predict(input_data):
         data_frame = pd.DataFrame.from_dict(samples_list);
 
         prediction = model.predict(data_frame).tolist();
+        tensor_shape = hs.TensorShapeProto(dim=[hs.TensorShapeProto.Dim(size=len(samples_list))]);
 
     except Exception as exception:
         print(exception);
-        prediction = [0];
+        prediction = [0.00];
+        tensor_shape = hs.TensorShapeProto(dim=[hs.TensorShapeProto.Dim(size=1)]);
 
-    tensor_shape = hs.TensorShapeProto(dim=[hs.TensorShapeProto.Dim(size=len(samples_list))]);
+    
 
     return hs.PredictResponse(outputs = {"prediction": hs.TensorProto(dtype = hs.DT_FLOAT, float_val = prediction, tensor_shape = tensor_shape)});
 

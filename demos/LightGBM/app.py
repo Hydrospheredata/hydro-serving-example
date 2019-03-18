@@ -24,7 +24,7 @@ def main():
 	data = getData("samples.json");
 	dim_size = len(data);
 
-	model_spec = hs.ModelSpec(name="favorita", signature_name="favorita");
+	model_spec = hs.ModelSpec(name="lightgbm_favorita", signature_name="predict");
 
 	tensor_shape = hs.TensorShapeProto(dim=[hs.TensorShapeProto.Dim(size=dim_size)]);
 
