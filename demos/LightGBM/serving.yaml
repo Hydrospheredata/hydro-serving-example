@@ -8,489 +8,488 @@ payload:
   - "requirements.txt"
   - "model/forecaster.pkl"
 contract:
-  predict:
-    inputs:
-      day_1_2017:
-        shape: [-1]
-        type: float64
-      day_2_2017:
-        shape: [-1]
-        type: float64
-      day_3_2017:
-        shape: [-1]
-        type: float64
-      promo_3_2017:
-        shape: [-1]
-        type: float64
-      last_year_mean:
-        shape: [-1]
-        type: float64
-      last_year_count0:
-        shape: [-1]
-        type: float64
-      last_year_promo:
-        shape: [-1]
-        type: float64
-      mean_7_2017:
-        shape: [-1]
-        type: float64
-      median_7_2017:
-        shape: [-1]
-        type: float64
-      max_7_2017:
-        shape: [-1]
-        type: float64
-      mean_7_haspromo_2017:
-        shape: [-1]
-        type: float64
-      mean_7_nopromo_2017:
-        shape: [-1]
-        type: float64
-      count0_7_2017:
-        shape: [-1]
-        type: float64
-      promo_7_2017:
-        shape: [-1]
-        type: float64
-      item_7_mean:
-        shape: [-1]
-        type: float64
-      item_7_count0_mean:
-        shape: [-1]
-        type: float64
-      store_7_mean:
-        shape: [-1]
-        type: float64
-      store_7_count0_mean:
-        shape: [-1]
-        type: float64
-      mean_14_2017:
-        shape: [-1]
-        type: float64
-      median_14_2017:
-        shape: [-1]
-        type: float64
-      max_14_2017:
-        shape: [-1]
-        type: float64
-      mean_14_haspromo_2017:
-        shape: [-1]
-        type: float64
-      mean_14_nopromo_2017:
-        shape: [-1]
-        type: float64
-      count0_14_2017:
-        shape: [-1]
-        type: float64
-      promo_14_2017:
-        shape: [-1]
-        type: float64
-      item_14_mean:
-        shape: [-1]
-        type: float64
-      item_14_count0_mean:
-        shape: [-1]
-        type: float64
-      store_14_mean:
-        shape: [-1]
-        type: float64
-      store_14_count0_mean:
-        shape: [-1]
-        type: float64
-      mean_21_2017:
-        shape: [-1]
-        type: float64
-      median_21_2017:
-        shape: [-1]
-        type: float64
-      max_21_2017:
-        shape: [-1]
-        type: float64
-      mean_21_haspromo_2017:
-        shape: [-1]
-        type: float64
-      mean_21_nopromo_2017:
-        shape: [-1]
-        type: float64
-      count0_21_2017:
-        shape: [-1]
-        type: float64
-      promo_21_2017:
-        shape: [-1]
-        type: float64
-      item_21_mean:
-        shape: [-1]
-        type: float64
-      item_21_count0_mean:
-        shape: [-1]
-        type: float64
-      store_21_mean:
-        shape: [-1]
-        type: float64
-      store_21_count0_mean:
-        shape: [-1]
-        type: float64
-      mean_30_2017:
-        shape: [-1]
-        type: float64
-      median_30_2017:
-        shape: [-1]
-        type: float64
-      max_30_2017:
-        shape: [-1]
-        type: float64
-      mean_30_haspromo_2017:
-        shape: [-1]
-        type: float64
-      mean_30_nopromo_2017:
-        shape: [-1]
-        type: float64
-      count0_30_2017:
-        shape: [-1]
-        type: float64
-      promo_30_2017:
-        shape: [-1]
-        type: float64
-      item_30_mean:
-        shape: [-1]
-        type: float64
-      item_30_count0_mean:
-        shape: [-1]
-        type: float64
-      store_30_mean:
-        shape: [-1]
-        type: float64
-      store_30_count0_mean:
-        shape: [-1]
-        type: float64
-      mean_60_2017:
-        shape: [-1]
-        type: float64
-      median_60_2017:
-        shape: [-1]
-        type: float64
-      max_60_2017:
-        shape: [-1]
-        type: float64
-      mean_60_haspromo_2017:
-        shape: [-1]
-        type: float64
-      mean_60_nopromo_2017:
-        shape: [-1]
-        type: float64
-      count0_60_2017:
-        shape: [-1]
-        type: float64
-      promo_60_2017:
-        shape: [-1]
-        type: float64
-      item_60_mean:
-        shape: [-1]
-        type: float64
-      item_60_count0_mean:
-        shape: [-1]
-        type: float64
-      store_60_mean:
-        shape: [-1]
-        type: float64
-      store_60_count0_mean:
-        shape: [-1]
-        type: float64
-      mean_90_2017:
-        shape: [-1]
-        type: float64
-      median_90_2017:
-        shape: [-1]
-        type: float64
-      max_90_2017:
-        shape: [-1]
-        type: float64
-      mean_90_haspromo_2017:
-        shape: [-1]
-        type: float64
-      mean_90_nopromo_2017:
-        shape: [-1]
-        type: float64
-      count0_90_2017:
-        shape: [-1]
-        type: float64
-      promo_90_2017:
-        shape: [-1]
-        type: float64
-      item_90_mean:
-        shape: [-1]
-        type: float64
-      item_90_count0_mean:
-        shape: [-1]
-        type: float64
-      store_90_mean:
-        shape: [-1]
-        type: float64
-      store_90_count0_mean:
-        shape: [-1]
-        type: float64
-      mean_140_2017:
-        shape: [-1]
-        type: float64
-      median_140_2017:
-        shape: [-1]
-        type: float64
-      max_140_2017:
-        shape: [-1]
-        type: float64
-      mean_140_haspromo_2017:
-        shape: [-1]
-        type: float64
-      mean_140_nopromo_2017:
-        shape: [-1]
-        type: float64
-      count0_140_2017:
-        shape: [-1]
-        type: float64
-      promo_140_2017:
-        shape: [-1]
-        type: float64
-      item_140_mean:
-        shape: [-1]
-        type: float64
-      item_140_count0_mean:
-        shape: [-1]
-        type: float64
-      store_140_mean:
-        shape: [-1]
-        type: float64
-      store_140_count0_mean:
-        shape: [-1]
-        type: float64
-      mean_365_2017:
-        shape: [-1]
-        type: float64
-      median_365_2017:
-        shape: [-1]
-        type: float64
-      max_365_2017:
-        shape: [-1]
-        type: float64
-      mean_365_haspromo_2017:
-        shape: [-1]
-        type: float64
-      mean_365_nopromo_2017:
-        shape: [-1]
-        type: float64
-      count0_365_2017:
-        shape: [-1]
-        type: float64
-      promo_365_2017:
-        shape: [-1]
-        type: float64
-      item_365_mean:
-        shape: [-1]
-        type: float64
-      item_365_count0_mean:
-        shape: [-1]
-        type: float64
-      store_365_mean:
-        shape: [-1]
-        type: float64
-      store_365_count0_mean:
-        shape: [-1]
-        type: float64
-      mean_4_dow0:
-        shape: [-1]
-        type: float64
-      mean_10_dow0:
-        shape: [-1]
-        type: float64
-      count0_10_dow0:
-        shape: [-1]
-        type: float64
-      promo_10_dow0:
-        shape: [-1]
-        type: float64
-      item_mean_10_dow0:
-        shape: [-1]
-        type: float64
-      mean_20_dow0:
-        shape: [-1]
-        type: float64
-      mean_4_dow1:
-        shape: [-1]
-        type: float64
-      mean_10_dow1:
-        shape: [-1]
-        type: float64
-      count0_10_dow1:
-        shape: [-1]
-        type: float64
-      promo_10_dow1:
-        shape: [-1]
-        type: float64
-      item_mean_10_dow1:
-        shape: [-1]
-        type: float64
-      mean_20_dow1:
-        shape: [-1]
-        type: float64
-      mean_4_dow2:
-        shape: [-1]
-        type: float64
-      mean_10_dow2:
-        shape: [-1]
-        type: float64
-      count0_10_dow2:
-        shape: [-1]
-        type: float64
-      promo_10_dow2:
-        shape: [-1]
-        type: float64
-      item_mean_10_dow2:
-        shape: [-1]
-        type: float64
-      mean_20_dow2:
-        shape: [-1]
-        type: float64
-      mean_4_dow3:
-        shape: [-1]
-        type: float64
-      mean_10_dow3:
-        shape: [-1]
-        type: float64
-      count0_10_dow3:
-        shape: [-1]
-        type: float64
-      promo_10_dow3:
-        shape: [-1]
-        type: float64
-      item_mean_10_dow3:
-        shape: [-1]
-        type: float64
-      mean_20_dow3:
-        shape: [-1]
-        type: float64
-      mean_4_dow4:
-        shape: [-1]
-        type: float64
-      mean_10_dow4:
-        shape: [-1]
-        type: float64
-      count0_10_dow4:
-        shape: [-1]
-        type: float64
-      promo_10_dow4:
-        shape: [-1]
-        type: float64
-      item_mean_10_dow4:
-        shape: [-1]
-        type: float64
-      mean_20_dow4:
-        shape: [-1]
-        type: float64
-      mean_4_dow5:
-        shape: [-1]
-        type: float64
-      mean_10_dow5:
-        shape: [-1]
-        type: float64
-      count0_10_dow5:
-        shape: [-1]
-        type: float64
-      promo_10_dow5:
-        shape: [-1]
-        type: float64
-      item_mean_10_dow5:
-        shape: [-1]
-        type: float64
-      mean_20_dow5:
-        shape: [-1]
-        type: float64
-      mean_4_dow6:
-        shape: [-1]
-        type: float64
-      mean_10_dow6:
-        shape: [-1]
-        type: float64
-      count0_10_dow6:
-        shape: [-1]
-        type: float64
-      promo_10_dow6:
-        shape: [-1]
-        type: float64
-      item_mean_10_dow6:
-        shape: [-1]
-        type: float64
-      mean_20_dow6:
-        shape: [-1]
-        type: float64
-      promo_0:
-        shape: [-1]
-        type: float64
-      promo_1:
-        shape: [-1]
-        type: float64
-      promo_2:
-        shape: [-1]
-        type: float64
-      promo_3:
-        shape: [-1]
-        type: float64
-      promo_4:
-        shape: [-1]
-        type: float64
-      promo_5:
-        shape: [-1]
-        type: float64
-      promo_6:
-        shape: [-1]
-        type: float64
-      promo_7:
-        shape: [-1]
-        type: float64
-      promo_8:
-        shape: [-1]
-        type: float64
-      promo_9:
-        shape: [-1]
-        type: float64
-      promo_10:
-        shape: [-1]
-        type: float64
-      promo_11:
-        shape: [-1]
-        type: float64
-      promo_12:
-        shape: [-1]
-        type: float64
-      promo_13:
-        shape: [-1]
-        type: float64
-      promo_14:
-        shape: [-1]
-        type: float64
-      promo_15:
-        shape: [-1]
-        type: float64
-      family:
-        shape: [-1]
-        type: float64
-      perish:
-        shape: [-1]
-        type: float64
-      item_class:
-        shape: [-1]
-        type: float64
-      store_nbr:
-        shape: [-1]
-        type: float64
-      store_cluster:
-        shape: [-1]
-        type: float64
-      store_type:
-        shape: [-1]
-        type: float64
-    outputs:
-      prediction:
-        shape: [-1]
-        type: float64
-      status:
-        shape: [1]
-        type: string
+  inputs:
+    day_1_2017:
+      shape: [-1]
+      type: float64
+    day_2_2017:
+      shape: [-1]
+      type: float64
+    day_3_2017:
+      shape: [-1]
+      type: float64
+    promo_3_2017:
+      shape: [-1]
+      type: float64
+    last_year_mean:
+      shape: [-1]
+      type: float64
+    last_year_count0:
+      shape: [-1]
+      type: float64
+    last_year_promo:
+      shape: [-1]
+      type: float64
+    mean_7_2017:
+      shape: [-1]
+      type: float64
+    median_7_2017:
+      shape: [-1]
+      type: float64
+    max_7_2017:
+      shape: [-1]
+      type: float64
+    mean_7_haspromo_2017:
+      shape: [-1]
+      type: float64
+    mean_7_nopromo_2017:
+      shape: [-1]
+      type: float64
+    count0_7_2017:
+      shape: [-1]
+      type: float64
+    promo_7_2017:
+      shape: [-1]
+      type: float64
+    item_7_mean:
+      shape: [-1]
+      type: float64
+    item_7_count0_mean:
+      shape: [-1]
+      type: float64
+    store_7_mean:
+      shape: [-1]
+      type: float64
+    store_7_count0_mean:
+      shape: [-1]
+      type: float64
+    mean_14_2017:
+      shape: [-1]
+      type: float64
+    median_14_2017:
+      shape: [-1]
+      type: float64
+    max_14_2017:
+      shape: [-1]
+      type: float64
+    mean_14_haspromo_2017:
+      shape: [-1]
+      type: float64
+    mean_14_nopromo_2017:
+      shape: [-1]
+      type: float64
+    count0_14_2017:
+      shape: [-1]
+      type: float64
+    promo_14_2017:
+      shape: [-1]
+      type: float64
+    item_14_mean:
+      shape: [-1]
+      type: float64
+    item_14_count0_mean:
+      shape: [-1]
+      type: float64
+    store_14_mean:
+      shape: [-1]
+      type: float64
+    store_14_count0_mean:
+      shape: [-1]
+      type: float64
+    mean_21_2017:
+      shape: [-1]
+      type: float64
+    median_21_2017:
+      shape: [-1]
+      type: float64
+    max_21_2017:
+      shape: [-1]
+      type: float64
+    mean_21_haspromo_2017:
+      shape: [-1]
+      type: float64
+    mean_21_nopromo_2017:
+      shape: [-1]
+      type: float64
+    count0_21_2017:
+      shape: [-1]
+      type: float64
+    promo_21_2017:
+      shape: [-1]
+      type: float64
+    item_21_mean:
+      shape: [-1]
+      type: float64
+    item_21_count0_mean:
+      shape: [-1]
+      type: float64
+    store_21_mean:
+      shape: [-1]
+      type: float64
+    store_21_count0_mean:
+      shape: [-1]
+      type: float64
+    mean_30_2017:
+      shape: [-1]
+      type: float64
+    median_30_2017:
+      shape: [-1]
+      type: float64
+    max_30_2017:
+      shape: [-1]
+      type: float64
+    mean_30_haspromo_2017:
+      shape: [-1]
+      type: float64
+    mean_30_nopromo_2017:
+      shape: [-1]
+      type: float64
+    count0_30_2017:
+      shape: [-1]
+      type: float64
+    promo_30_2017:
+      shape: [-1]
+      type: float64
+    item_30_mean:
+      shape: [-1]
+      type: float64
+    item_30_count0_mean:
+      shape: [-1]
+      type: float64
+    store_30_mean:
+      shape: [-1]
+      type: float64
+    store_30_count0_mean:
+      shape: [-1]
+      type: float64
+    mean_60_2017:
+      shape: [-1]
+      type: float64
+    median_60_2017:
+      shape: [-1]
+      type: float64
+    max_60_2017:
+      shape: [-1]
+      type: float64
+    mean_60_haspromo_2017:
+      shape: [-1]
+      type: float64
+    mean_60_nopromo_2017:
+      shape: [-1]
+      type: float64
+    count0_60_2017:
+      shape: [-1]
+      type: float64
+    promo_60_2017:
+      shape: [-1]
+      type: float64
+    item_60_mean:
+      shape: [-1]
+      type: float64
+    item_60_count0_mean:
+      shape: [-1]
+      type: float64
+    store_60_mean:
+      shape: [-1]
+      type: float64
+    store_60_count0_mean:
+      shape: [-1]
+      type: float64
+    mean_90_2017:
+      shape: [-1]
+      type: float64
+    median_90_2017:
+      shape: [-1]
+      type: float64
+    max_90_2017:
+      shape: [-1]
+      type: float64
+    mean_90_haspromo_2017:
+      shape: [-1]
+      type: float64
+    mean_90_nopromo_2017:
+      shape: [-1]
+      type: float64
+    count0_90_2017:
+      shape: [-1]
+      type: float64
+    promo_90_2017:
+      shape: [-1]
+      type: float64
+    item_90_mean:
+      shape: [-1]
+      type: float64
+    item_90_count0_mean:
+      shape: [-1]
+      type: float64
+    store_90_mean:
+      shape: [-1]
+      type: float64
+    store_90_count0_mean:
+      shape: [-1]
+      type: float64
+    mean_140_2017:
+      shape: [-1]
+      type: float64
+    median_140_2017:
+      shape: [-1]
+      type: float64
+    max_140_2017:
+      shape: [-1]
+      type: float64
+    mean_140_haspromo_2017:
+      shape: [-1]
+      type: float64
+    mean_140_nopromo_2017:
+      shape: [-1]
+      type: float64
+    count0_140_2017:
+      shape: [-1]
+      type: float64
+    promo_140_2017:
+      shape: [-1]
+      type: float64
+    item_140_mean:
+      shape: [-1]
+      type: float64
+    item_140_count0_mean:
+      shape: [-1]
+      type: float64
+    store_140_mean:
+      shape: [-1]
+      type: float64
+    store_140_count0_mean:
+      shape: [-1]
+      type: float64
+    mean_365_2017:
+      shape: [-1]
+      type: float64
+    median_365_2017:
+      shape: [-1]
+      type: float64
+    max_365_2017:
+      shape: [-1]
+      type: float64
+    mean_365_haspromo_2017:
+      shape: [-1]
+      type: float64
+    mean_365_nopromo_2017:
+      shape: [-1]
+      type: float64
+    count0_365_2017:
+      shape: [-1]
+      type: float64
+    promo_365_2017:
+      shape: [-1]
+      type: float64
+    item_365_mean:
+      shape: [-1]
+      type: float64
+    item_365_count0_mean:
+      shape: [-1]
+      type: float64
+    store_365_mean:
+      shape: [-1]
+      type: float64
+    store_365_count0_mean:
+      shape: [-1]
+      type: float64
+    mean_4_dow0:
+      shape: [-1]
+      type: float64
+    mean_10_dow0:
+      shape: [-1]
+      type: float64
+    count0_10_dow0:
+      shape: [-1]
+      type: float64
+    promo_10_dow0:
+      shape: [-1]
+      type: float64
+    item_mean_10_dow0:
+      shape: [-1]
+      type: float64
+    mean_20_dow0:
+      shape: [-1]
+      type: float64
+    mean_4_dow1:
+      shape: [-1]
+      type: float64
+    mean_10_dow1:
+      shape: [-1]
+      type: float64
+    count0_10_dow1:
+      shape: [-1]
+      type: float64
+    promo_10_dow1:
+      shape: [-1]
+      type: float64
+    item_mean_10_dow1:
+      shape: [-1]
+      type: float64
+    mean_20_dow1:
+      shape: [-1]
+      type: float64
+    mean_4_dow2:
+      shape: [-1]
+      type: float64
+    mean_10_dow2:
+      shape: [-1]
+      type: float64
+    count0_10_dow2:
+      shape: [-1]
+      type: float64
+    promo_10_dow2:
+      shape: [-1]
+      type: float64
+    item_mean_10_dow2:
+      shape: [-1]
+      type: float64
+    mean_20_dow2:
+      shape: [-1]
+      type: float64
+    mean_4_dow3:
+      shape: [-1]
+      type: float64
+    mean_10_dow3:
+      shape: [-1]
+      type: float64
+    count0_10_dow3:
+      shape: [-1]
+      type: float64
+    promo_10_dow3:
+      shape: [-1]
+      type: float64
+    item_mean_10_dow3:
+      shape: [-1]
+      type: float64
+    mean_20_dow3:
+      shape: [-1]
+      type: float64
+    mean_4_dow4:
+      shape: [-1]
+      type: float64
+    mean_10_dow4:
+      shape: [-1]
+      type: float64
+    count0_10_dow4:
+      shape: [-1]
+      type: float64
+    promo_10_dow4:
+      shape: [-1]
+      type: float64
+    item_mean_10_dow4:
+      shape: [-1]
+      type: float64
+    mean_20_dow4:
+      shape: [-1]
+      type: float64
+    mean_4_dow5:
+      shape: [-1]
+      type: float64
+    mean_10_dow5:
+      shape: [-1]
+      type: float64
+    count0_10_dow5:
+      shape: [-1]
+      type: float64
+    promo_10_dow5:
+      shape: [-1]
+      type: float64
+    item_mean_10_dow5:
+      shape: [-1]
+      type: float64
+    mean_20_dow5:
+      shape: [-1]
+      type: float64
+    mean_4_dow6:
+      shape: [-1]
+      type: float64
+    mean_10_dow6:
+      shape: [-1]
+      type: float64
+    count0_10_dow6:
+      shape: [-1]
+      type: float64
+    promo_10_dow6:
+      shape: [-1]
+      type: float64
+    item_mean_10_dow6:
+      shape: [-1]
+      type: float64
+    mean_20_dow6:
+      shape: [-1]
+      type: float64
+    promo_0:
+      shape: [-1]
+      type: float64
+    promo_1:
+      shape: [-1]
+      type: float64
+    promo_2:
+      shape: [-1]
+      type: float64
+    promo_3:
+      shape: [-1]
+      type: float64
+    promo_4:
+      shape: [-1]
+      type: float64
+    promo_5:
+      shape: [-1]
+      type: float64
+    promo_6:
+      shape: [-1]
+      type: float64
+    promo_7:
+      shape: [-1]
+      type: float64
+    promo_8:
+      shape: [-1]
+      type: float64
+    promo_9:
+      shape: [-1]
+      type: float64
+    promo_10:
+      shape: [-1]
+      type: float64
+    promo_11:
+      shape: [-1]
+      type: float64
+    promo_12:
+      shape: [-1]
+      type: float64
+    promo_13:
+      shape: [-1]
+      type: float64
+    promo_14:
+      shape: [-1]
+      type: float64
+    promo_15:
+      shape: [-1]
+      type: float64
+    family:
+      shape: [-1]
+      type: float64
+    perish:
+      shape: [-1]
+      type: float64
+    item_class:
+      shape: [-1]
+      type: float64
+    store_nbr:
+      shape: [-1]
+      type: float64
+    store_cluster:
+      shape: [-1]
+      type: float64
+    store_type:
+      shape: [-1]
+      type: float64
+  outputs:
+    prediction:
+      shape: [-1]
+      type: float64
+    status:
+      shape: [1]
+      type: string
