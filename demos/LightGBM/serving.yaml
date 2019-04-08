@@ -1,6 +1,7 @@
 kind: Model
 name: "lightgbm_favorita"
-runtime: hydrosphere/serving-runtime-python:3.6-latest
+runtime: hydrosphere/serving-runtime-python-3.6:dev
+#runtime: hydrosphere/serving-runtime-python:3.6-latest
 #runtime: hydrosphere/serving-runtime-python-3.6:2.0.0-rc5
 install-command: "pip install -r requirements.txt"
 payload:
@@ -8,6 +9,7 @@ payload:
   - "requirements.txt"
   - "model/forecaster.pkl"
 contract:
+  name: "predict"
   inputs:
     day_1_2017:
       shape: [-1]
