@@ -1,0 +1,20 @@
+kind: Model
+name: "image_base64_to_331"
+runtime: "hydrosphere/serving-runtime-python-3.7:dev"
+install-command: "pip install -r requirements.txt"
+payload:
+  - "src/"
+  - "requirements.txt"
+contract:
+  name: "unpack"
+  inputs:
+    image_base64:
+      shape: [1]
+      type: string
+      profile: text
+
+  outputs:
+    shaped_image:
+      shape: [1, 331, 331, 3]
+      type: double
+      profile: image
