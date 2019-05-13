@@ -1,0 +1,25 @@
+kind: Model
+name: claims
+payload:
+  - "src"   # mocked path to real model files
+runtime: hydrosphere/serving-runtime-python-3.6:latest
+#training-data: s3://bucket/object.csv
+metadata:
+  type: example
+  class: org.apache.spark.ml.PipelineModel
+  timestamp: 1497440372794
+  sparkVersion: 2.1.1
+  uid: PipelineModel_4ccbbca3d107857d3ed8
+
+contract:
+  name: claim
+  inputs:
+    client_profile:
+      shape: [112]
+      type: float64 # using tf type names instead of proto ones
+      profile: text # data profiling
+  outputs:
+    amount:
+      shape: scalar
+      type: int64
+      profile: real

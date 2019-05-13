@@ -1,0 +1,6 @@
+kind: Model
+name: "claims-autoencoder"
+runtime: hydrosphere/serving-runtime-tensorflow:1.7.0-latest
+payload:
+  - "variables/"
+  - "saved_model.pb"
