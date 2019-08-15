@@ -6,7 +6,7 @@ It is trained on data from famous [kaggle Titanic competition](https://www.kaggl
 
 - [Model contract](examples/titanic_xgboost/model/serving.yaml) - contains deployment configuration
 - [Signature function](examples/titanic_xgboost/model/src/func_main.py) - entry point of model servable
-- [Model demo](examples/titanic_xgboost/demo/Titanic Demo.ipynb) - demo on how to invoke Titanic model application
+- [Model demo](examples/titanic_xgboost/demo/Titanic_Demo.ipynb) - demo on how to invoke Titanic model application
 - [Model training](examples/titanic_xgboost/model/train) - code to train model
 - [Model data](examples/titanic_xgboost/data) - training and test data
 
