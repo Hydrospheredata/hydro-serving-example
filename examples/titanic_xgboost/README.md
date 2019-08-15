@@ -4,11 +4,11 @@ This demo utilises a simple model to predict if passenger survived in Titanic di
 
 It is trained on data from famous [kaggle Titanic competition](https://www.kaggle.com/c/titanic/overview)
 
-- [Model contract](examples/titanic_xgboost/model/serving.yaml) - contains deployment configuration
-- [Signature function](examples/titanic_xgboost/model/src/func_main.py) - entry point of model servable
-- [Model demo](examples/titanic_xgboost/demo/Titanic_Demo.ipynb) - demo on how to invoke Titanic model application
-- [Model training](examples/titanic_xgboost/model/train) - code to train model
-- [Model data](examples/titanic_xgboost/data) - training and test data
+- [Model contract](model/serving.yaml) - contains deployment configuration
+- [Signature function](model/src/func_main.py) - entry point of model servable
+- [Model demo](demo/Titanic_Demo.ipynb) - demo on how to invoke Titanic model application
+- [Model training](model/train) - code to train model
+- [Model data](data) - training and test data
 
 ## How to train XGBoost model
 
