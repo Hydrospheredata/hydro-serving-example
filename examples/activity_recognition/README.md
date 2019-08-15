@@ -1,0 +1,2 @@
+# Activity recognition model example
+-----

@@ -1,6 +1,14 @@
 # hydro-serving-example
-This repo contains various demo scenarios and pre-trained models.
+This repo contains various demo scenarios and pre-trained models. Folder structure:
 
+
+
+
+
+
+
+
+---------
 ## Demos
 
 ### object_detection
