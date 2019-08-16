@@ -14,7 +14,7 @@ contract:
     faces:
       shape: [ -1, 160, 160, 3]
       type: uint8
-      profile: numerical
+      profile: image
   outputs:
     y:
       shape: [-1, 1]
