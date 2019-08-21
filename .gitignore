@@ -138,3 +138,5 @@ pip-selfcheck.json
 .hs/
 logs/
 
+/examples/titanic_xgboost/data/train.csv
+/examples/titanic_xgboost/data/test.csv
