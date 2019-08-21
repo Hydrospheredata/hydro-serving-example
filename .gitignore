@@ -137,6 +137,7 @@ pip-selfcheck.json
 .vscode/
 .hs/
 logs/
-
-/examples/titanic_xgboost/data/train.csv
-/examples/titanic_xgboost/data/test.csv
+#
+#/examples/titanic_xgboost/data/train.csv
+#/examples/titanic_xgboost/data/test.csv
+#/examples/fraud_detection/data/fraud_data.csv

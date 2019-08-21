@@ -10,6 +10,19 @@ It is trained on data from famous [kaggle Titanic competition](https://www.kaggl
 - [Model training](model/train) - code to train model
 - [Model data](data) - training and test data
 
+## How to load data
+```commandline
+cd data
+dvc run -d s3://hydrosphere-examples/data/titanic/train.csv \
+          -o train.csv \
+          aws s3 cp s3://hydrosphere-examples/data/titanic/train.csv train.csv
+          
+          
+dvc run -d s3://hydrosphere-examples/data/titanic/test.csv
+          -o test.csv 
+          aws s3 cp s3://hydrosphere-examples/data/titanic/test.csv test.csv
+```
+
 ## How to train XGBoost model
 
 ```commandline
