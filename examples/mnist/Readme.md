@@ -12,7 +12,6 @@ It is trained on [mnist dataset](http://yann.lecun.com/exdb/mnist/)
 ## How to train model
 
 ```commandline
-pip install -r requirements.txt
 cd model
 python basic_api.py
 ```
