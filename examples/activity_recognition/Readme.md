@@ -8,7 +8,7 @@ It is trained on [SHL dataset](http://www.shl-dataset.org)
 - [Signature function](model/src/func_main.py) - entry point of model servable.
 - [Model demo](demo/Mnist_demo.ipynb) - demo on how to invoke Mnist model application
 
-## How to deploy model
+## How to deploy model:
 
 ```commandline
 cd model
