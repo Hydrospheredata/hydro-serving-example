@@ -1,7 +1,0 @@
-{
-  "treesNum": 5,
-  "samplesNum": 7,
-  "shingleSize": 2,
-  "timeDecay": 10000,
-  "warmupScore": -69
-}

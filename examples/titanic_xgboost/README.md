@@ -12,15 +12,7 @@ It is trained on data from famous [kaggle Titanic competition](https://www.kaggl
 
 ## How to load data
 ```commandline
-cd data
-dvc run -d s3://hydrosphere-examples/data/titanic/train.csv \
-          -o train.csv \
-          aws s3 cp s3://hydrosphere-examples/data/titanic/train.csv train.csv
-          
-          
-dvc run -d s3://hydrosphere-examples/data/titanic/test.csv
-          -o test.csv 
-          aws s3 cp s3://hydrosphere-examples/data/titanic/test.csv test.csv
+dvc pull data/*
 ```
 
 ## How to train XGBoost model
@@ -32,7 +24,6 @@ python train.py
 ```
 
 ## How to deploy model
-
 ```commandline
 cd model
 hs upload

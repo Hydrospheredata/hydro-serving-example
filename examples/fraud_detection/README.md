@@ -10,10 +10,7 @@ It is trained on data from famous [kaggle Fraud detection competition](https://w
 - [Model data](data) - fraud data
 ## How to load data
 ```commandline
-cd data
-dvc run -d s3://hydrosphere-examples/data/fraud_data.csv
-          -o fraud_data.csv
-          aws s3 cp s3://hydrosphere-examples/data/fraud_data.csv fraud_data.csv
+dvc pull data/*
 ```
 ## How to deploy model
 
