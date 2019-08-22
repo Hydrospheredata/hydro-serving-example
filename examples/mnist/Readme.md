@@ -9,7 +9,7 @@ It is trained on [mnist dataset](http://yann.lecun.com/exdb/mnist/)
 - [Model demo](demo/Mnist_demo.ipynb) - demo on how to invoke Mnist model application
 
 
-## How to train XGBoost model
+## How to train model
 
 ```commandline
 pip install -r requirements.txt
