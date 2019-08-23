@@ -1,12 +1,12 @@
-# hydro-serving-example
+# Hydrosphere serving examples
 This repo contains various demo scenarios and pre-trained models.
 
 [Hydrosphere documentation]( https://hydrosphere.io/serving-docs/latest/index.html)
 
 ---------
 
-## Examples
-
+## Python Runtime: 
+[Python serving documentation](https://hydrosphere.io/serving-docs/latest/tutorials/python.html)
 ###  [Acitvity recognition](examples/activity_recognition)
    Activity recognition model
    
@@ -16,16 +16,24 @@ This repo contains various demo scenarios and pre-trained models.
 ### [Fraud detection](examples/fraud_detection)
    Fraud detection model
    
-### [Mnist classification](examples/mnist)
-   Digit classification model trained on mnist
-
 ### [Mobilenet](examples/mobilenet)
    Object detection model based on Mobilenet
-
+   
 ### [Titanic prediction](examples/titanic_xgboost)
 
+### [Mnist Python](examples/python_mnist)
+   Digit classification model
 
-# Data management
+
+## Tensorflow Runtime:
+[Tensorflow serving documentation](https://hydrosphere.io/serving-docs/latest/tutorials/tensorflow.html)
+### [Mnist Tensorflow](examples/mnist)
+   Digit classification model
+   
+## Spark Runtime:
+### [Binarizer](examples/binarizer)
+
+# Data Management
 Some models contain dataset for training/testing purposes. This data is stored on s3 bucket: s3://hydrosphere-examples. 
 Data is managed using [dvc](https://github.com/iterative/dvc). To load data you have to:
  - install and configure  awscli: [Installation guide](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html)
