@@ -19,3 +19,6 @@ hs upload
 ```commandline
 dvc pull data/*
 ```
+
+## How to use autoencoder:
+Autoencoder is a custom model for metrics processing. It is deployed as an independent model and application. After that, it is added as a custom model in activity recognition metrics module. Autoencoder is supposed to lose accuracy when data domain changes, so it is used for data tracking.
