@@ -10,7 +10,7 @@ This model consists of two stages:
 - [Model contract](models/face_detection_model/serving.yaml) - contains deployment configuration
 - [Signature function](models/face_detection_model/src/func_main.py) - entry point of model servable
 
-### How to deploy model
+### Deployment
 ```commandline
 cd models/face_detection_model
 hs upload
@@ -22,7 +22,7 @@ hs upload
 - [LFW_KNN_Classifier](models/facenet_model/lfw_classifier.pkl)
 - [Pretrained facenet model](models/facenet_model/20180402-114759.pb)
 
-### How to deploy model
+### Deployment
 ```commandline
 cd models/facenet_model
 hs upload

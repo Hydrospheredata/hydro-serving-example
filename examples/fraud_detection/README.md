@@ -8,11 +8,11 @@ It is trained on data from famous [kaggle Fraud detection competition](https://w
 - [Signature function](model/src/func_main.py) - entry point of model servable
 - [Model demo](demo/Fraud_Demo.ipynb) - demo on how to invoke Titanic model application
 - [Model data](data) - fraud data
-## How to load data
+## Load data
 ```commandline
 dvc pull data/*
 ```
-## How to deploy model
+## Deployment
 
 ```commandline
 cd model

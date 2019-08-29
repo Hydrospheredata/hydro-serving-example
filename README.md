@@ -49,3 +49,4 @@ Data is managed using [dvc](https://github.com/iterative/dvc). To load data you 
      ```commandline
     dvc pull examples/MODEL_NAME/data/*
     ```
+ 

@@ -10,12 +10,12 @@ It is trained on data from famous [kaggle Titanic competition](https://www.kaggl
 - [Model training](model/train) - code to train model
 - [Model data](data) - training and test data
 
-## How to load data
+## Load data
 ```commandline
 dvc pull data/*
 ```
 
-## How to train XGBoost model
+## Training
 
 ```commandline
 pip install -r requirements.txt
@@ -23,7 +23,7 @@ cd model/train
 python train.py
 ```
 
-## How to deploy model
+## Deployment
 ```commandline
 cd model
 hs upload

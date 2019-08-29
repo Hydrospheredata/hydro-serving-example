@@ -8,12 +8,12 @@ It is trained on [ImageNet data](http://www.image-net.org)
 - [Signature function](model/src/func_main.py) - entry point of model servable
 - [Model demo](demo/Mobile_net_demo.ipynb) - demo on how to invoke mobilenet model application
 
-## How to load data
+## Load data
 ```commandline
 dvc pull data/*
 ```
 
-## How to deploy model
+## Deployment
 ```commandline
 cd model
 hs upload

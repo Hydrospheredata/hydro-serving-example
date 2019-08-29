@@ -11,7 +11,7 @@ Adult model is stored on remote storage, so before deploying, load it:
 dvc pull model/random-forest-adult.joblib.dvc
 ```
 
-## How to deploy model
+## Deployment
 
 ```commandline
 cd model
