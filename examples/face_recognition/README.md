@@ -1,4 +1,4 @@
-#Face detection and face recognition pipeline
+# Face detection and face recognition pipeline
 This model consists of two stages:
 1. face detection - detecting faces in img
 2. face recognition - classifying faces (uses [facenet](https://github.com/davidsandberg/facenet) model for face embeddings and KNN classifier trained on [lfw dataset](http://vis-www.cs.umass.edu/lfw/))
