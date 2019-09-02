@@ -1,0 +1,8 @@
+md5: 44c8c81ef1a93af3fdef5ac0abf2a904
+wdir: .
+outs:
+- md5: f328614b2df2a9e9b59465fb57033752
+  path: train.csv
+  cache: true
+  metric: false
+  persist: false

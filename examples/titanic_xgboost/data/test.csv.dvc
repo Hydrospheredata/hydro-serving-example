@@ -1,0 +1,8 @@
+md5: b254e26d1821b4d7231ebcd513bc675e
+wdir: .
+outs:
+- md5: 6502f24816519eb2bdddde211c0f65f7
+  path: test.csv
+  cache: true
+  metric: false
+  persist: false

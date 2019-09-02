@@ -5,7 +5,7 @@ This demo contains the model (spark) for binarization of input value. If value i
 
 - [Model demo](demo/Binarizer_demo.ipynb) - demo on how to invoke model application
 
-## How to deploy model
+## Deployment:
 
 ```commandline
 cd model
