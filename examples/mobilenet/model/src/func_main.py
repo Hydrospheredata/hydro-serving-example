@@ -1,15 +1,15 @@
 import hydro_serving_grpc as hs
 import numpy as np
 import tensorflow as tf
-from keras.applications import mobilenetv2
+from keras.applications import mobilenet_v2
 
 
 def extract_value(proto):
     img = np.array(proto.double_val, dtype='float64').reshape((-1, 224, 224, 3))
-    return mobilenetv2.preprocess_input(img)
+    return mobilenet_v2.preprocess_input(img)
 
 
-mobile_net = mobilenetv2.MobileNetV2(alpha=0.35,
+mobile_net = mobilenet_v2.MobileNetV2(alpha=0.35,
                                      weights="/model/files/mobilenet_v2_weights_tf_dim_ordering_tf_kernels_0.35_224")
 
 global graph
