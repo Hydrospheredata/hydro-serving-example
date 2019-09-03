@@ -1,0 +1,8 @@
+md5: 62e001b23d2fde3481f45dc8830f306d
+wdir: .
+outs:
+- md5: d41d8cd98f00b204e9800998ecf8427e
+  path: rf.joblib.pkl
+  cache: true
+  metric: false
+  persist: false
