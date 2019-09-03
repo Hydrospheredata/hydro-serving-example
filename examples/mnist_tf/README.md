@@ -13,7 +13,7 @@ It is trained on [mnist dataset](http://yann.lecun.com/exdb/mnist/)
 
 ```commandline
 cd model
-python basic_api.py
+python train_mnist.py
 ```
 
 ## Deployment:

@@ -8,7 +8,7 @@ For this model we created two scenarios:
 ---
 - [Model contract(tensor)](model/adult_tensor/serving.yaml) - contains deployment configuration
 - [Signature function(tensor)](model/adult_tensor/src/func_main.py) - entry point of model servable.
-- [Model contract(scalar)](model/adult_scalarserving.yaml) - contains deployment configuration
+- [Model contract(scalar)](model/adult_scalar/serving.yaml) - contains deployment configuration
 - [Signature function(scalar)](model/adult_scalar/src/func_main.py) - entry point of model servable.
 - [Model demo](demo/adult_demo.ipynb) - demo on how to invoke model application
 
