@@ -10,6 +10,8 @@ This repo contains various demo scenarios and pre-trained models.
 ###  [Acitvity recognition](examples/activity_recognition)
    Activity recognition model
    
+### [Adult](examples/adult)
+
 ### [Face recognition pipeline](examples/face_recognition)
    Face recognition pipeline based on facenet
    

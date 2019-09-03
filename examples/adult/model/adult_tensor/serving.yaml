@@ -2,8 +2,8 @@ kind: Model
 name: "adult_tensor"
 payload:
 - "src/"
-- "requirements.txt"
-- "random-forest-adult.joblib"
+- "../requirements.txt"
+- "../random-forest-adult.joblib"
 runtime: "hydrosphere/serving-runtime-python-3.6:0.1.2-rc0"
 install-command: "pip install -r requirements.txt"
 contract:
