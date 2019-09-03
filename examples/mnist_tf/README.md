@@ -20,5 +20,5 @@ python basic_api.py
 
 ```commandline
 cd model
-hs upload
+hs upload --name mnist_tf --runtime hydrosphere/serving-runtime-tensorflow-1.13.1:dev
 ```

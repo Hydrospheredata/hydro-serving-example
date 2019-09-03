@@ -9,5 +9,5 @@ This demo contains the model (spark) for binarization of input value. If value i
 
 ```commandline
 cd model
-hs upload
+hs upload --runtime hydrosphere/serving-runtime-spark-2.1.2:dev
 ```
