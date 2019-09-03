@@ -13,12 +13,12 @@ It is trained on [mnist dataset](http://yann.lecun.com/exdb/mnist/)
 
 ```commandline
 cd model
-python basic_api.py
+python train_mnist.py
 ```
 
 ## Deployment:
 
 ```commandline
 cd model
-hs upload
+hs upload --name mnist_tf --runtime hydrosphere/serving-runtime-tensorflow-1.13.1:dev
 ```
