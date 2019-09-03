@@ -1,0 +1,8 @@
+md5: 1c6c9d3c2ef7da23758a335c06a0cab6
+wdir: .
+outs:
+- md5: d41d8cd98f00b204e9800998ecf8427e
+  path: 20180402-114759.pb
+  cache: true
+  metric: false
+  persist: false
