@@ -6,12 +6,14 @@ It is trained on data from famous [kaggle Fraud detection competition](https://w
 
 - [Model contract](model/serving.yaml) - contains deployment configuration
 - [Signature function](model/src/func_main.py) - entry point of model servable
-- [Model demo](demo/Fraud_Demo.ipynb) - demo on how to invoke Titanic model application
+- [Model demo](demo/fraud_demo.ipynb) - demo on how to invoke Titanic model application
 - [Model data](data) - fraud data
-## Load data
+## Load data & model
 ```commandline
 dvc pull data/*
+dvc pull model/rf.joblib.pkl.dvc
 ```
+
 ## Deployment
 
 ```commandline

@@ -2,9 +2,9 @@ kind: Model
 name: "adult_scalar"
 payload:
   - "src/"
-  - "requirements.txt"
-  - "random-forest-adult.joblib"
-runtime: "hydrosphere/serving-runtime-python-3.6:0.1.2-rc0"
+  - "../requirements.txt"
+  - "../random-forest-adult.joblib"
+runtime: "hydrosphere/serving-runtime-python-3.6:dev"
 install-command: "pip install -r requirements.txt"
 training-data: s3://serving-demo-files/adultsalary.csv
 contract:

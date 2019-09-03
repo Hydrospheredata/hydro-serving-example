@@ -22,6 +22,11 @@ hs upload
 - [LFW_KNN_Classifier](models/facenet_model/lfw_classifier.pkl)
 - [Pretrained facenet model](models/facenet_model/20180402-114759.pb)
 
+### Load model 
+```commandline
+dvc pull models/facenet_model/20180402-114759.pb.dvc
+```
+
 ### Deployment
 ```commandline
 cd models/facenet_model
