@@ -6,7 +6,7 @@ It is trained on [mnist dataset](http://yann.lecun.com/exdb/mnist/)
 
 - [Model configuration](model/) - contains saved tensorflow model and metafiles
 - [Model define and train file](train_mnist.py) - defines model architecture, hyperparameters. Preprocess and trains the model
-- [Model demo](demo/Mnist_demo.ipynb) - demo on how to invoke Mnist model application
+- [Model demo](demo/mnist_demo.ipynb) - demo on how to invoke Mnist model application
 
 
 ## Training:
