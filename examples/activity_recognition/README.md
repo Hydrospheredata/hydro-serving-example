@@ -8,7 +8,7 @@ It is trained on [SHL dataset](http://www.shl-dataset.org)
 - [Signature function](model/src/func_main.py) - entry point of model servable.
 - [Model demo](demo/AR_demo.ipynb) - demo on how to invoke model application
 
-## Deplyment:
+## Deployment:
 
 ```commandline
 cd model
