@@ -1,5 +1,5 @@
 kind: Model
-name: "mnist2"
+name: "mnist_py"
 payload:
   - "src/"
   - "requirements.txt"
