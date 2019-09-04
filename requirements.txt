@@ -1,0 +1,3 @@
+dvc[s3]
+numpy
+hydro-serving-grpc

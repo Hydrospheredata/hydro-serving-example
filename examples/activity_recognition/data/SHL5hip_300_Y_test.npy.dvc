@@ -1,0 +1,8 @@
+md5: 0fc55f02046ae18dbccef231a0348196
+wdir: .
+outs:
+- md5: 2a51069de4738f69a80fb420e07cf86d
+  path: SHL5hip_300_Y_test.npy
+  cache: true
+  metric: false
+  persist: false

@@ -1,0 +1,20 @@
+kind: Model
+name: fraud_random_forests
+model-type: python:3.6
+payload:
+- "src/"
+- "requirements.txt"
+- "rf.joblib.pkl"
+
+contract:
+  infer:
+    inputs:
+      features:
+        shape: [-1, 7]
+        type: double
+        profile: numerical
+    outputs:
+      is_fraud:
+        shape: [-1, 1]
+        type: bool
+        profile: numerical

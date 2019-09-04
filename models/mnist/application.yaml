@@ -1,5 +1,0 @@
-kind: Application
-name: mnist_app
-singular:
-  model: mnist:1
-  runtime: hydrosphere/serving-runtime-tensorflow:1.7.0-latest

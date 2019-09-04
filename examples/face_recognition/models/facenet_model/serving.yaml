@@ -1,0 +1,22 @@
+kind: Model
+name: face_recognition
+runtime: "hydrosphere/serving-runtime-python-3.6:dev"
+install-command: "sh setup.sh"
+payload:
+- "src/"
+- "20180402-114759.pb"
+- "lfw_classifier.pkl"
+- "setup.sh"
+
+contract:
+  name: infer
+  inputs:
+    faces:
+      shape: [ -1, 160, 160, 3]
+      type: uint8
+      profile: image
+  outputs:
+    y:
+      shape: [-1, 1]
+      type: string
+      profile: text

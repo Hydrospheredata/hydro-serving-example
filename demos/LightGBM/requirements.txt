@@ -1,7 +1,0 @@
-matplotlib
-pandas
-scikit-learn
-scipy
-glibc
-pyarrow
-lightgbm
