@@ -23,13 +23,13 @@ This repo contains various demo scenarios and pre-trained models.
    
 ### [Titanic prediction](examples/titanic_xgboost)
 
-### [Mnist Python](examples/python_mnist)
+### [Mnist Python](examples/mnist_py)
    Digit classification model
 
 
 ## Tensorflow Runtime:
 [Tensorflow serving documentation](https://hydrosphere.io/serving-docs/latest/tutorials/tensorflow.html)
-### [Mnist Tensorflow](examples/mnist)
+### [Mnist Tensorflow](examples/mnist_tf)
    Digit classification model
    
 ## Spark Runtime:
