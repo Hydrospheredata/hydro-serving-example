@@ -1,0 +1,7 @@
+md5: acfa264eb46d204ed159298161d73ab8
+outs:
+- md5: d2b1078bfed89d37a9461882eb155c3d
+  path: amazon_model.h5
+  cache: true
+  metric: false
+  persist: false

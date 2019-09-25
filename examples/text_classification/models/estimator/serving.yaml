@@ -1,0 +1,30 @@
+kind: Model
+name: amazon_estimator
+runtime: "hydrosphere/serving-runtime-python-3.6:0.1.2-rc0"
+install-command: "pip install -r requirements.txt"
+payload:
+- "src/"
+- "amazon_model.h5"
+- "requirements.txt"
+contract:
+  name: predict
+  inputs:
+    tokenized:
+      shape: scalar
+      type: int64
+      profile: numerical
+  outputs:
+    confidence:
+      shape: scalar
+      type: double
+      profile: numerical
+    label:
+      shape: scalar
+      type: int32
+      profile: numerical
+  metadata:
+    embeddings: glove.twitter.27B.100d
+    embedding_dim: 100
+    maxlen: 100
+
+

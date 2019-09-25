@@ -1,0 +1,7 @@
+md5: 794c5f393343815f4f6d9ab3e2f84191
+outs:
+- md5: 857269324797199268658e4d0ee925dd
+  path: test.ft.txt.bz2
+  cache: true
+  metric: false
+  persist: false
