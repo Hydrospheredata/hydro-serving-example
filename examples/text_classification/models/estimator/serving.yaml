@@ -10,7 +10,7 @@ contract:
   name: predict
   inputs:
     tokenized:
-      shape: scalar
+      shape: [100]
       type: int64
       profile: numerical
   outputs:

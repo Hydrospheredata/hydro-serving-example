@@ -7,8 +7,7 @@ amazon_model._make_predict_function()
 graph = tf.get_default_graph()
 def predict(tokenized):
     global graph
-    tokenized_sentence = tokenized.int64_val
-    tokenized_sentence = np.array([tokenized_sentence])
+    tokenized_sentence = np.array(tokenized.int64_val, ndmin=2)
     with graph.as_default():
         prediction = amazon_model.predict([tokenized_sentence])
     confidence = prediction[0,0]

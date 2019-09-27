@@ -46,6 +46,7 @@ Data is managed using [dvc](https://github.com/iterative/dvc). To load data you 
    Digit classification model
 
 ### [Amazon Reviews](examples/text_classification)
+   [Amazon customer reviews](https://www.kaggle.com/bittlingmayer/amazonreviews) (input text) and star ratings (output labels)  for sentiment prediction
  
 
 ## Tensorflow Runtime Examples:

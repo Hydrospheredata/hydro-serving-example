@@ -18,6 +18,6 @@ def tokenize(text):
     tok_tensor = hs.TensorProto(
         int64_val = pad_sentence,
         dtype=hs.DT_INT64,
-        tensor_shape=hs.TensorShapeProto())
+        tensor_shape=hs.TensorShapeProto(dim=[hs.TensorShapeProto.Dim(size=100)]))
     return hs.PredictResponse(outputs={'tokenized': tok_tensor})
 

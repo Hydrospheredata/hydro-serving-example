@@ -1,7 +1,9 @@
 # Amazon review sentiment analysis
+Uses Amazon dataset of customer reviews and ratings to train model predict if review was positive or not
+
 This model consists of two stages:
 1. text tokenization - detecting faces in img
-2. text classification - 0 for negative, 1 for positive review
+2. sentiment prediction - 0 for negative, 1 for positive review
 
 
 ## Text tokenization: 
@@ -11,7 +13,7 @@ This model consists of two stages:
 
 ### Load model
 
-Models for amazon review are stored on s3 bucket as they are too large. To download them you have to configure dvc (see [guide](../../README.md))
+Models for amazon review are stored on s3 bucket as they are too large to store them on github. To download them you have to configure dvc (see [guide](../../README.md))
 
 Then you can easily pull model:
 ```commandline
@@ -24,7 +26,9 @@ cd models/tokenizer
 hs upload
 ```
 
-## Classification:
+## Prediciton:
+Prediction model is LSTM model based on glove embeddings
+
 - [Model contract](models/estimator/serving.yaml) - contains deployment configuration
 - [Signature function](models/estimator/src/func_main.py) - entry point of model servable
 - [Pretrained amazon model](models/estimator/amazon_model.h5) (stored on s3)
