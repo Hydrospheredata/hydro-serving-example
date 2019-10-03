@@ -1,0 +1,7 @@
+md5: 19c7a2496271fcfb0bf394ac4589e1af
+outs:
+- md5: 3da2dc027a610b974b029b4f8dd9d2e4
+  path: tokenizer.pickle
+  cache: true
+  metric: false
+  persist: false

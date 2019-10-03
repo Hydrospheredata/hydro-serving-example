@@ -45,6 +45,9 @@ Data is managed using [dvc](https://github.com/iterative/dvc). To load data you 
 ### [Mnist Python](examples/mnist_py)
    Digit classification model
 
+### [Amazon Reviews](examples/text_classification)
+   [Amazon customer reviews](https://www.kaggle.com/bittlingmayer/amazonreviews) (input text) and star ratings (output labels)  for sentiment prediction
+ 
 
 ## Tensorflow Runtime Examples:
 [Tensorflow serving documentation](https://hydrosphere.io/serving-docs/latest/tutorials/tensorflow.html)
