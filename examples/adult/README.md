@@ -12,7 +12,13 @@ For this model we created two scenarios:
 - [Signature function(scalar)](model/adult_scalar/src/func_main.py) - entry point of model servable.
 - [Model demo](demo/adult_demo.ipynb) - demo on how to invoke model application
 
+## Load data
 Adult model is stored on remote storage, so before deploying, load it:
+Data is managed using [dvc](https://github.com/iterative/dvc). To load data you have to:
+ - install and configure  awscli: [Installation guide](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html)
+     - Warning: do not forget to configure credentials for your aws account in awscli: you need to create a user
+ - install `dvc[s3]` to manage s3 remote cache
+ - pull necessary data from dvc:
 ```commandline
 dvc pull model/random-forest-adult.joblib.dvc
 ```

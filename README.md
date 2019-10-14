@@ -9,6 +9,7 @@ This repo contains demo scenarios and pre-trained models to show Hydro Serving c
 Some models contain dataset for training/testing purposes. This data is stored on s3 bucket: s3://hydrosphere-examples. 
 Data is managed using [dvc](https://github.com/iterative/dvc). To load data you have to:
  - install and configure  awscli: [Installation guide](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html)
+     - Warning: do not forget to configure credentials for your aws account in awscli: you need to create a user
  - install `dvc[s3]` to manage s3 remote cache
  - pull necessary data from dvc:
  

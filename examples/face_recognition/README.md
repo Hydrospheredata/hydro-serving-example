@@ -23,6 +23,11 @@ hs upload
 - [Pretrained facenet model](models/facenet_model/20180402-114759.pb)
 
 ### Load model 
+Data is managed using [dvc](https://github.com/iterative/dvc). To load data you have to:
+ - install and configure  awscli: [Installation guide](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html)
+     - Warning: do not forget to configure credentials for your aws account in awscli: you need to create a user
+ - install `dvc[s3]` to manage s3 remote cache
+ - pull necessary data from dvc:
 ```commandline
 dvc pull models/facenet_model/20180402-114759.pb.dvc
 ```
