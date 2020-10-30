@@ -1,3 +1,2 @@
-dvc[s3]
-numpy
-hydro-serving-grpc
+dvc[s3]~=1.9.1
+hydro-serving-grpc~=2.4.0
