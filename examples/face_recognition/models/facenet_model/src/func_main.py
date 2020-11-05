@@ -1,7 +1,6 @@
 import os
 import pickle
 
-import hydro_serving_grpc as hs
 import numpy as np
 import tensorflow as tf
 from tensorflow.python.platform import gfile
@@ -47,21 +46,15 @@ with graph.as_default():
 
 
 def infer(faces):
-    img_data = np.array(faces.int_val)
-    imgs = img_data.reshape([dim.size for dim in faces.tensor_shape.dim])
     # preprocess imgs for facenet
-    for i in range(len(imgs)):
-        imgs[i] = prewhiten(imgs[i])
+    for i in range(len(faces)):
+        faces[i] = prewhiten(faces[i])
+
     with graph.as_default():
         with tf.Session(graph=graph) as sess:
-            feed_dict = {images_placeholder: imgs, phase_train_placeholder: False}
+            feed_dict = {images_placeholder: faces, phase_train_placeholder: False}
             emb_array = sess.run(embeddings, feed_dict=feed_dict)
             predictions = classifier.predict_proba(emb_array)
             class_indices = np.argmax(predictions, axis=1)
             classes = [class_names[index] for index in class_indices]
-            y_shape = hs.TensorShapeProto(dim=[hs.TensorShapeProto.Dim(size=len(classes))])
-            class_prediciton = hs.TensorProto(
-                dtype=hs.DT_STRING,
-                string_val=[class_name.encode() for class_name in classes],
-                tensor_shape=y_shape)
-            return hs.PredictResponse(outputs={'y': class_prediciton})
+            return {"y": np.array(classes).astype("str")}

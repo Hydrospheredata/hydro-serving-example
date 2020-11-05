@@ -1,12 +1,11 @@
 kind: Model
 name: face_detector
-runtime: "hydrosphere/serving-runtime-python-3.6:dev"
+runtime: "hydrosphere/serving-runtime-python-3.6:2.4.0"
 install-command: "sh setup.sh"
 payload:
-- "src/"
-- "shape_predictor_5_face_landmarks.dat"
-- "setup.sh"
-
+  - "src/"
+  - "shape_predictor_5_face_landmarks.dat"
+  - "setup.sh"
 contract:
   name: detect
   inputs:
