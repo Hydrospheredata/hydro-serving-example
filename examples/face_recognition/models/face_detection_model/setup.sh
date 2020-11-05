@@ -16,5 +16,5 @@ apt-get update \
 apt-get install libglib2.0-0
 
 pip install numpy==1.17
-pip install dlib
+pip install dlib==19.17
 pip install opencv-python==4.1.0.25
