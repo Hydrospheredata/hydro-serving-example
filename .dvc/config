@@ -2,3 +2,5 @@
     remote = hydrosphere
 ['remote "hydrosphere"']
     url = https://dogvptekeekpv.cloudfront.net
+['remote "s3"']
+    url = s3://hydrosphere-examples

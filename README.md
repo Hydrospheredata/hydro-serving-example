@@ -1,60 +1,46 @@
 # Hydrosphere serving examples
-This repo contains demo scenarios and pre-trained models to show Hydro Serving capabilities.
 
-[Hydrosphere documentation]( https://hydrosphere.io/serving-docs/latest/index.html)
+This repo contains demo scenarios and pre-trained models to show Hydrosphere capabilities.
 
------
+Consult Hydrosphere [documentation](https://docs.hydrosphere.io) for more information about the platform.
 
+---
 ## Data Management
-Some models contain dataset for training/testing purposes. This data is stored on s3 bucket: s3://hydrosphere-examples. 
-Data is managed using [dvc](https://github.com/iterative/dvc). To load data you have to:
- - install and configure  awscli: [Installation guide](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html)
-     - Warning: do not forget to configure credentials for your aws account in awscli: you need to create a user
- - install `dvc[s3]` to manage s3 remote cache
- - pull necessary data from dvc:
- 
-    to pull all data:
-     ```commandline
-    dvc pull
-    ```
-    
-     to pull data for certain model:
-     ```commandline
-    dvc pull examples/MODEL_NAME/data/*
-    ```
- 
 
----------
-## Python Runtime Examples: 
-[Python serving documentation](https://hydrosphere.io/serving-docs/latest/tutorials/python.html)
-###  [Acitvity recognition](examples/activity_recognition)
-   Activity recognition model
+Some models contain dataset or artifacts for training and testing purposes. Those artifacts are managed by [dvc](https://github.com/iterative/dvc). To load data you have to:
+- install `dvc`
+   ```sh
+   pip install dvc
+   ```
+- pull necessary data from dvc:
+   ```sh
+   dvc pull
+   ``` 
+
+---
+## Python Examples
+
+To learn more, how to deploy a python model, check out [documentation](https://docs.hydrosphere.io/quickstart/getting-started).
+
+### [Activity recognition](examples/activity_recognition)
+   Activity recognition model.
    
-### [Census Dataset](examples/adult)
+### [Census classification](examples/adult)
+   Census classification model. 
 
 ### [Face recognition pipeline](examples/face_recognition)
-   Face recognition pipeline based on facenet
+   Face recognition pipeline based on FaceNet. 
    
 ### [Fraud detection](examples/fraud_detection)
-   Fraud detection model
+   Fraud detection model.
    
-### [Mobilenet](examples/mobilenet)
-   Object detection model based on Mobilenet
+### [MobileNet](examples/mobilenet)
+   Object detection model based on MobileNet.
    
 ### [Titanic & XGBoost](examples/titanic_xgboost)
 
 ### [Mnist Python](examples/mnist_py)
-   Digit classification model
+   Hand-written digit classification model.
 
 ### [Amazon Reviews](examples/text_classification)
-   [Amazon customer reviews](https://www.kaggle.com/bittlingmayer/amazonreviews) (input text) and star ratings (output labels)  for sentiment prediction
- 
-
-## Tensorflow Runtime Examples:
-[Tensorflow serving documentation](https://hydrosphere.io/serving-docs/latest/tutorials/tensorflow.html)
-### [Mnist Tensorflow](examples/mnist_tf)
-   Digit classification model
-   
-## Spark Runtime Examples:
-### [Binarizer](examples/binarizer)
-
+   Amazon reviews sentiment classification model.
