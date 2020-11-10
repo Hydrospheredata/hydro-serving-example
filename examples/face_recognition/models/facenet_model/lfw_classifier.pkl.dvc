@@ -1,0 +1,3 @@
+outs:
+- md5: 018a58fea267f4b0a97644be2443efa9
+  path: lfw_classifier.pkl
