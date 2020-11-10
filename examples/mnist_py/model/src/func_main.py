@@ -10,6 +10,6 @@ def predict(images):
         probas = model.predict(images.reshape((-1, 28 * 28)))
 
     return {
-        "classes": np.array(probas).argmax(axis=0),
+        "classes": np.array(probas).argmax(axis=1),
         "probabilities": probas.astype('double')
     }

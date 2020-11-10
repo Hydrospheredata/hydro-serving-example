@@ -11,7 +11,7 @@ contract:
   name: infer
   inputs:
     faces:
-      shape: [ -1, 160, 160, 3]
+      shape: [-1, 160, 160, 3]
       type: uint8
       profile: image
   outputs:

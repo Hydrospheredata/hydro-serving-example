@@ -4,10 +4,25 @@ import numpy as np
 import pandas as pd
 import xgboost as xgb
 
-train_df = pd.read_csv('../data/train.csv', header=0)
-test_df = pd.read_csv('../data/test.csv', header=0)
-
 from sklearn.base import TransformerMixin
+
+
+def age_converter(text):
+    try:
+        return int(text.rstrip())
+    except ValueError:
+        return np.nan
+
+
+def load_data(path): 
+    df = pd.read_csv(path)
+    df.columns = df.columns.str.rstrip()
+    df["Age"] = df["Age"].apply(age_converter)
+    return df
+
+
+train_df = load_data("../data/train.csv")
+test_df = load_data("../data/test.csv")
 
 
 class DataFrameImputer(TransformerMixin):
@@ -34,5 +49,4 @@ train_y = train_df['Survived']
 
 gbm = xgb.XGBClassifier(max_depth=3, n_estimators=300, learning_rate=0.05).fit(train_X, train_y)
 
-# gbm.save_model("../model/trained.model")
-pickle.dump(gbm, open("../trained.model", "wb"))
+pickle.dump(gbm, open("../model/trained.model", "wb"))

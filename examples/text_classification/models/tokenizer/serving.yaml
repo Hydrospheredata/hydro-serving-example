@@ -1,15 +1,15 @@
 kind: Model
-name: amazon_tokenizere
-runtime: "hydrosphere/serving-runtime-python-3.6:0.1.2-rc0"
+name: amazon_tokenizer
+runtime: "hydrosphere/serving-runtime-python-3.6:2.4.0"
 install-command: "pip install -r requirements.txt"
 payload:
-- "src/"
-- "../tokenizer.pickle"
-- "requirements.txt"
+  - "src/"
+  - "tokenizer.pickle"
+  - "requirements.txt"
 contract:
   name: tokenize
   inputs:
-    text:
+    sentence:
       shape: scalar
       type: string
       profile: text

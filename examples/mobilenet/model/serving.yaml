@@ -1,11 +1,11 @@
 kind: Model
 name: "mobilenet_v2_035"
+runtime: "hydrosphere/serving-runtime-python-3.6:2.4.0"
+install-command: "pip install -r requirements.txt"
 payload:
 - "src/"
 - "requirements.txt"
 - "mobilenet_v2_weights_tf_dim_ordering_tf_kernels_0.35_224"
-runtime: "hydrosphere/serving-runtime-python-3.6:0.1.2-rc0"
-install-command: "pip install -r requirements.txt"
 contract:
   name: "predict"
   inputs:

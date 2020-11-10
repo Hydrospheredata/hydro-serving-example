@@ -1,3 +1,0 @@
-xgboost
-pandas
-scikit-learn==0.20.3

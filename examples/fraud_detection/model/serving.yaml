@@ -1,20 +1,20 @@
 kind: Model
 name: fraud_random_forests
-model-type: python:3.6
+runtime: "hydrosphere/serving-runtime-python-3.6:2.4.0"
+install-command: "pip install -r requirements.txt"
 payload:
-- "src/"
-- "requirements.txt"
-- "rf.joblib.pkl"
-
+  - "src/"
+  - "requirements.txt"
+  - "rf.joblib.pkl"
 contract:
-  infer:
-    inputs:
-      features:
-        shape: [-1, 7]
-        type: double
-        profile: numerical
-    outputs:
-      is_fraud:
-        shape: [-1, 1]
-        type: bool
-        profile: numerical
+  name: infer
+  inputs:
+    features:
+      shape: [-1, 7]
+      type: double
+      profile: numerical
+  outputs:
+    is_fraud:
+      shape: [-1, 1]
+      type: bool
+      profile: numerical

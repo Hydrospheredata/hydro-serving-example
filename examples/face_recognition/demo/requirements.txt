@@ -1,0 +1,5 @@
+opencv-python==4.1.0.25
+numpy==1.17
+matplotlib==3.3.2
+hydrosdk~=2.4.1
+

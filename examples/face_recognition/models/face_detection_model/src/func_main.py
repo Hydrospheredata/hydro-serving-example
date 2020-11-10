@@ -14,4 +14,4 @@ def detect(x):
     faces = []
     for i in range(len(boxes)):
         faces.append(dlib.get_face_chip(x, boxes[i], size=160))
-    return {"faces": np.array(faces)}
+    return {"faces": np.array(faces).astype('uint8')}
