@@ -1,5 +1,5 @@
 kind: Model
-name: "adult_classification"
+name: "census"
 payload:
   - "src/"
   - "requirements.txt"

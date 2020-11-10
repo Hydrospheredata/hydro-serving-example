@@ -1,4 +1,4 @@
-# Adult classification model 
+# Census classification model 
 
 This folder contains a model for a classification task based on the [Adult Dataset](https://www.kaggle.com/wenruliu/adult-income-dataset). 
 
@@ -11,13 +11,13 @@ This folder contains a model for a classification task based on the [Adult Datas
 
 ## Prerequisites
 
-In order to upload a model to the Hydrosphere you will need the [Hydrosphere CLI](https://docs.hydrosphere.io/quickstart/installation/cli).
+In order to upload the model to the Hydrosphere you will need the [Hydrosphere CLI](https://docs.hydrosphere.io/quickstart/installation/cli).
 
 ```sh
 pip install hs
 ```
 
-Once you've installed the CLI, add your Hydrosphere cluster.
+Once you've installed CLI, add your Hydrosphere cluster.
 
 ```sh
 hs cluster add --server http://localhost --name local
@@ -26,7 +26,7 @@ hs cluster use local
 
 ## Model upload
 
-To upload the model, perform the following:
+To upload the model, follow below steps.
 
 ```sh
 cd model

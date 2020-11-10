@@ -22,7 +22,7 @@ To load data follow below steps.
 To learn more, how to deploy a python model, check out our [getting started](https://docs.hydrosphere.io/quickstart/getting-started) guide.
 
 * [Activity recognition model](examples/activity_recognition).
-* [Census classification model](examples/adult).
+* [Census classification model](examples/census).
 * [Face recognition pipeline based on FaceNet](examples/face_recognition).
 * [Fraud detection model](examples/fraud_detection). 
 * [Object detection model based on MobileNet](examples/mobilenet).  
