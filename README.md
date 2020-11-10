@@ -1,12 +1,12 @@
-# Hydrosphere serving examples
+# Hydrosphere examples
 
 This repo contains demo scenarios and pre-trained models to show Hydrosphere capabilities.
 
-Consult [documentation](https://docs.hydrosphere.io) for more information about the platform.
+## Data and artifacts management
 
-## Data Management
+Some models contain dataset or artifacts for training and testing purposes. Those artifacts are managed by [dvc](https://github.com/iterative/dvc). 
 
-Some models contain dataset or artifacts for training and testing purposes. Those artifacts are managed by [dvc](https://github.com/iterative/dvc). To load data you have to:
+To load data follow below steps.
 - Install `dvc` package.
    ```sh
    pip install dvc
@@ -17,9 +17,9 @@ Some models contain dataset or artifacts for training and testing purposes. Thos
    dvc pull # load all remote files
    ``` 
 
-## Python Examples
+## Python examples
 
-To learn more, how to deploy a python model, check out [documentation](https://docs.hydrosphere.io/quickstart/getting-started).
+To learn more, how to deploy a python model, check out our [getting started](https://docs.hydrosphere.io/quickstart/getting-started) guide.
 
 * [Activity recognition model](examples/activity_recognition).
 * [Census classification model](examples/adult).
