@@ -1,42 +1,64 @@
 # Amazon Review Sentiment Analysis
-This demo shows how you can use Amazon dataset of customer reviews and ratings to train a model predicting whether review sentiment
- was positive or not.
-## Load data
-Data is managed using [dvc](https://github.com/iterative/dvc). To load data you have to:
- - install and configure  awscli: [Installation guide](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html)
-     - Warning: do not forget to configure credentials for your aws account in awscli: you need to create a user
- - install `dvc[s3]` to manage s3 remote cache
- - pull necessary data from dvc:
- 
-To upload all models and instantiate applications from this demo 
-```
-dvc pull $(find . -type f -name "*.dvc")
-hs apply
-```
 
-## Decsription
-This model consists of two stages:
-1. Text tokenization - tokenize string into an array of tokens with padding
-    - [Model contract](models/tokenizer/serving.yaml) - contains deployment configuration
-    - [Signature function](models/tokenizer/src/func_main.py) - entry point of model servable
-    - [Tokenizer model](tokenizer.pickle) - tokenizer model (stored on s3).  You can pull it with `dvc pull models/tokenizer.pickle.dvc`
+This demo utilizes a model trained on an Amazon reviews dataset to predict review's sentiment. 
 
-### Deployment
-```commandline
-hs upload --dir models/tokenizer
+## Directory structure
+
+- `data` — Folder contains data to train the model.
+- `demo` — Folder contains a sample Jupyter notebook for invoking a deployed model.
+- `models` — Folder contains model artifacts, ready to be uploaded to the Hydrosphere. 
+
+## Prerequisites
+
+In order to upload the model to the Hydrosphere you will need the [Hydrosphere CLI](https://docs.hydrosphere.io/quickstart/installation/cli).
+
+```sh
+pip install hs
 ```
 
-2. Sentiment prediction - classify array of tokens into two classes: 0 for negative, 1 for positive review. 
-Prediction model is an LSTM model based on GloVe embeddings
+Once you've installed CLI, add your Hydrosphere cluster.
 
-    - [Model contract](models/estimator/serving.yaml) - contains deployment configuration
-    - [Signature function](models/estimator/src/func_main.py) - entry point of model servable
-    - [Pretrained amazon model](models/estimator/amazon_model.h5) - classification model (stored on s3). You can pull it with `dvc pull models/amazon_model.h5.dvc`
+```sh
+hs cluster add --server http://localhost --name local
+hs cluster use local
+```
 
+## Model upload
 
-    To upload this stage separately to an HS cluster you can use `hs upload` command. 
+To upload the model, follow below steps.
 
-### Deployment
-```commandline
-hs upload --dir models/estimator
+```sh
+cd models/tokenizer
+hs upload
+cd ../estimator
+hs upload
+```
+
+## Model deployment
+
+To deploy a model, create an application from it. You can do it either from the UI, or by using our Python SDK.
+
+```py
+from hydrosdk.application import ApplicationBuilder, ExecutionStageBuilder
+from hydrosdk import Cluster, ModelVersion
+from grpc import ssl_channel_credentials
+
+cluster = Cluster(
+    http_address="<hydrosphere-http-address>",
+    grpc_address="<hydrosphere-grpc-address>",
+    ssl=True,                                       # turn off, if your Hydrosphere instance doesn't have
+    grpc_credentials=ssl_channel_credentials(),     # TLS certificates installed
+)
+
+mv1 = ModelVersion.find(cluster, "amazon_tokenizer", 1)
+mv1.lock_till_released()
+mv2 = ModelVersion.find(cluster, "amazon_estimator", 1)
+mv2.lock_till_released()
+stage1 = ExecutionStageBuilder().with_model_variant(mv1, 100).build()
+stage2 = ExecutionStageBuilder().with_model_variant(mv2, 100).build()
+app = ApplicationBuilder(cluster, "amazon_sentiment") \
+    .with_stage(stage1) \
+    .with_stage(stage2) \
+    .build()
+app.lock_while_starting()
 ```

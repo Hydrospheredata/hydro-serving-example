@@ -1,7 +1,0 @@
-md5: e7b944dcb6f7bb1eb9b0101bf507c5c9
-outs:
-- md5: 828758acdafd487421397fb17c0e5e4f
-  path: train.ft.txt.bz2
-  cache: true
-  metric: false
-  persist: false
