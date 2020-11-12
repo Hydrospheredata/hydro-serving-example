@@ -60,8 +60,9 @@ def train_model(data):
 def dump_artifacts(model, encoder):
     logger.info("Dumping artifacts")
 
-    joblib.dump(model, '../model/model.joblib')
-    joblib.dump(encoder, "../model/encoders.joblib")
+    joblib.dump(model, '../models/model/model.joblib')
+    joblib.dump(encoder, "../models/model/encoders.joblib")
+    joblib.dump(encoder, "../models/metric/encoders.joblib")
 
 
 if __name__ == "__main__": 

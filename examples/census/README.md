@@ -6,7 +6,7 @@ This folder contains a model for a classification task based on the [Adult Datas
 
 - `data` — Folder contains data to train the model.
 - `demo` — Folder contains a sample Jupyter notebook for invoking a deployed model.
-- `model` — Folder contains model artifacts, ready to be uploaded to the Hydrosphere. 
+- `models` — Folder contains model artifacts, ready to be uploaded to the Hydrosphere. 
 - `ops` — Folder contains models' training script.
 
 ## Prerequisites
@@ -29,7 +29,9 @@ hs cluster use local
 To upload the model, follow below steps.
 
 ```sh
-cd model
+cd models/metric
+hs upload
+cd ../model
 hs upload
 ```
 

@@ -7,7 +7,7 @@ payload:
   - "encoders.joblib"
 runtime: "hydrosphere/serving-runtime-python-3.7:2.4.0"
 install-command: "pip install -r requirements.txt"
-training-data: "../data/train.csv"
+training-data: "../../data/train.csv"
 metadata:
   documentation: "https://docs.hydrosphere.io/quickstart/tutorials/train-and-deploy-census-income-classification-model"
 contract:
@@ -70,7 +70,7 @@ contract:
       type: string
       profile: categorical
   outputs:
-    y:
+    income:
       shape: scalar
       type: string
       profile: categorical

@@ -22,4 +22,4 @@ def predict(**kwargs):
 
     predicted = clf.predict(X)
 
-    return {"y": output_encoder.inverse_transform(predicted)[0]}
+    return {"income": output_encoder.inverse_transform(predicted)[0]}
