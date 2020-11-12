@@ -1,6 +1,6 @@
 # Hand-written digit classification model
 
-This demo contains the model trained for MNIST digit classification.
+This demo utilizes the model trained for MNIST digit classification.
 
 It is trained on MNIST [dataset](http://yann.lecun.com/exdb/mnist/)
 
