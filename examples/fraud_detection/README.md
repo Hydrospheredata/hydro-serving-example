@@ -4,7 +4,7 @@ This demo utilizes a simple model to predict if a transaction is fraudulent.
 
 It is trained on data from the famous Kaggle [Fraud detection competition](https://www.kaggle.com/ntnu-testimon/paysim1)
 
-## Directory structure:
+## Directory structure
 
 - `data` — Folder contains data to train the model.
 - `demo` — Folder contains a sample Jupyter notebook for invoking a deployed model.

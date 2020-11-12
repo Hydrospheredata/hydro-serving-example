@@ -4,7 +4,7 @@ This model consists of two stages:
 1. Face detection - detecting faces on an image
 1. Face recognition - classifying detected faces (uses [facenet](https://github.com/davidsandberg/facenet) model for face embeddings and KNN classifier trained on [lfw dataset](http://vis-www.cs.umass.edu/lfw/))
 
-## Directory structure:
+## Directory structure
 
 - `demo` — Folder contains a sample Jupyter notebook for invoking a deployed model.
 - `models` — Folder contains two model artifacts, ready to be uploaded to the Hydrosphere. 
