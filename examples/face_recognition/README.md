@@ -1,39 +1,66 @@
-# Face detection and face recognition pipeline
+# Face recognition pipeline based on FaceNet
+
 This model consists of two stages:
-1. face detection - detecting faces in img
-2. face recognition - classifying faces (uses [facenet](https://github.com/davidsandberg/facenet) model for face embeddings and KNN classifier trained on [lfw dataset](http://vis-www.cs.umass.edu/lfw/))
+1. Face detection - detecting faces on an image
+1. Face recognition - classifying detected faces (uses [facenet](https://github.com/davidsandberg/facenet) model for face embeddings and KNN classifier trained on [lfw dataset](http://vis-www.cs.umass.edu/lfw/))
 
-## Pipeline structure:
-![model](face_recognition.png)
+## Directory structure:
 
-## Face detection: 
-- [Model contract](models/face_detection_model/serving.yaml) - contains deployment configuration
-- [Signature function](models/face_detection_model/src/func_main.py) - entry point of model servable
+- `demo` — Folder contains a sample Jupyter notebook for invoking a deployed model.
+- `models` — Folder contains two model artifacts, ready to be uploaded to the Hydrosphere. 
 
-### Deployment
-```commandline
-cd models/face_detection_model
+## Prerequisites
+
+In order to upload the model to the Hydrosphere you will need the [Hydrosphere CLI](https://docs.hydrosphere.io/quickstart/installation/cli).
+
+```sh
+pip install hs
+```
+
+Once you've installed CLI, add your Hydrosphere cluster.
+
+```sh
+hs cluster add --server http://localhost --name local
+hs cluster use local
+```
+
+## Model upload
+
+To upload the models, follow below steps.
+
+```sh
+cd models/face_detection
+hs upload
+cd ../face_recognition
 hs upload
 ```
 
-## Face recognition:
-- [Model contract](models/facenet_model/serving.yaml) - contains deployment configuration
-- [Signature function](models/facenet_model/src/func_main.py) - entry point of model servable
-- [LFW_KNN_Classifier](models/facenet_model/lfw_classifier.pkl)
-- [Pretrained facenet model](models/facenet_model/20180402-114759.pb)
 
-### Load model 
-Data is managed using [dvc](https://github.com/iterative/dvc). To load data you have to:
- - install and configure  awscli: [Installation guide](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html)
-     - Warning: do not forget to configure credentials for your aws account in awscli: you need to create a user
- - install `dvc[s3]` to manage s3 remote cache
- - pull necessary data from dvc:
-```commandline
-dvc pull models/facenet_model/20180402-114759.pb.dvc
+## Model deployment
+
+To deploy a model, create an application from it. You can do it either from the UI, or by using our Python SDK.
+
 ```
+from hydrosdk.application import ApplicationBuilder, ExecutionStageBuilder
+from hydrosdk import Cluster, ModelVersion
+from grpc import ssl_channel_credentials
 
-### Deployment
-```commandline
-cd models/facenet_model
-hs upload
+cluster = Cluster(
+    http_address="<hydrosphere-http-address>",
+    grpc_address="<hydrosphere-grpc-address>",
+    ssl=True,                                       # turn off, if your Hydrosphere instance doesn't have
+    grpc_credentials=ssl_channel_credentials(),     # TLS certificates installed
+)
+
+mv1 = ModelVersion.find(cluster, "face_detection", 1)
+mv1.lock_till_released()
+mv2 = ModelVersion.find(cluster, "face_recognition", 1)
+mv2.lock_till_released()
+stage1 = ExecutionStageBuilder().with_model_variant(mv1, 100).build()
+stage2 = ExecutionStageBuilder().with_model_variant(mv2, 100).build()
+app = ApplicationBuilder(cluster, "face_recognition") \
+    .with_stage(stage1) \
+    .with_stage(stage2) \
+    .build()
+app.lock_while_starting()
 ```
