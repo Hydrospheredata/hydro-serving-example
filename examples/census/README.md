@@ -37,7 +37,7 @@ hs upload
 
 To deploy a model, create an application from it. You can do it either from the UI, or by using our Python SDK.
 
-```
+```py
 from hydrosdk.application import ApplicationBuilder, ExecutionStageBuilder
 from hydrosdk import Cluster, ModelVersion
 from grpc import ssl_channel_credentials
