@@ -1,8 +1,0 @@
-md5: df1235a4d6f96df5d74a9752cf0ce074
-wdir: .
-outs:
-- md5: cc1a054150706057ff0c85db49c62f2e
-  path: SHL5hip_300_Y_train.npy
-  cache: true
-  metric: false
-  persist: false
