@@ -1,3 +1,3 @@
 # Simple models
 
-This examples show how you can compose simple one-stage applications.
+This examples show how you can create simple one-stage applications.
