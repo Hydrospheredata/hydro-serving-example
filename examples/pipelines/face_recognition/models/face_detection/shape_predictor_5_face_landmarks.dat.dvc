@@ -1,0 +1,3 @@
+outs:
+- md5: 79db4b6294389d5ec3923c422efad7ec
+  path: shape_predictor_5_face_landmarks.dat

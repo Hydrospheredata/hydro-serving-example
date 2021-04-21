@@ -1,0 +1,36 @@
+kind: Model
+name: "titanic_xgboost"
+runtime: "hydrosphere/serving-runtime-python-3.6:2.4.0"
+install-command: "pip install -r requirements.txt"
+payload:
+  - "src/"
+  - "requirements.txt"
+  - "trained.model"
+contract:
+  name: infer
+  inputs:
+    pclass:
+      shape: scalar
+      type: int32
+      profile: categorical
+    sex:
+      shape: scalar
+      type: string
+      profile: categorical
+    age:
+      shape: scalar
+      type: int32
+      profile: numerical
+    fare:
+      shape: scalar
+      type: double
+      profile: numerical
+    parch:
+      shape: scalar
+      type: int32
+      profile: categorical
+  outputs:
+    survived:
+      shape: scalar
+      type: int64
+      profile: categorical

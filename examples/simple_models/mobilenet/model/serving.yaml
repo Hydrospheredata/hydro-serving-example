@@ -1,0 +1,24 @@
+kind: Model
+name: "mobilenet_v2_035"
+runtime: "hydrosphere/serving-runtime-python-3.6:2.4.0"
+install-command: "pip install -r requirements.txt"
+payload:
+- "src/"
+- "requirements.txt"
+- "mobilenet_v2_weights_tf_dim_ordering_tf_kernels_0.35_224"
+contract:
+  name: "predict"
+  inputs:
+    input:
+      shape: [-1, 224, 224, 3]
+      type: double
+      profile: IMAGE
+  outputs:
+    classes:
+      shape: [-1, 1]
+      type: int64
+      profile: numerical
+    probabilities:
+      shape: [-1, 1000]
+      type: double
+      profile: numerical

@@ -1,6 +1,6 @@
-['remote "s3cache"']
-url = s3://hydrosphere-examples
 [core]
-remote = s3cache
-[cache]
-s3 = s3cache
+    remote = hydrosphere
+['remote "hydrosphere"']
+    url = https://dogvptekeekpv.cloudfront.net
+['remote "s3"']
+    url = s3://hydrosphere-examples

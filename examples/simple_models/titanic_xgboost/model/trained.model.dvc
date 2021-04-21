@@ -1,0 +1,3 @@
+outs:
+- md5: 942ba7a7586de233c63fa203be39f722
+  path: trained.model

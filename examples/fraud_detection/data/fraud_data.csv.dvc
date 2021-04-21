@@ -1,8 +1,0 @@
-md5: dd7d87594bb58fc389dc691069d7642e
-wdir: .
-outs:
-- md5: e92a5f7447f43712f1dca473d0b0fa85
-  path: fraud_data.csv
-  cache: true
-  metric: false
-  persist: false
