@@ -5,7 +5,11 @@ payload:
   - "requirements.txt"
   - "model.joblib"
   - "encoders.joblib"
+<<<<<<< HEAD
+runtime: "hydrosphere/serving-runtime-python-3.7:dev"
+=======
 runtime: "hydrosphere/serving-runtime-python-3.7:2.4.0"
+>>>>>>> origin/master
 install-command: "pip install -r requirements.txt"
 training-data: "../../data/train.csv"
 metadata:
@@ -73,4 +77,8 @@ contract:
     income:
       shape: scalar
       type: string
+<<<<<<< HEAD
       profile: categorical
+=======
+      profile: categorical
+>>>>>>> origin/master

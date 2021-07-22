@@ -1,0 +1,4 @@
+kind: Application
+name: census_app 
+singular:
+  model: "census:7"

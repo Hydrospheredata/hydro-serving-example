@@ -4,7 +4,11 @@ from hydrosdk.modelversion import ThresholdCmpOp
 
 
 cluster = Cluster(
+<<<<<<< HEAD
+    http_address="<cluster-url>",
+=======
     http_address="https://hydro-serving.dev.hydrosphere.io",
+>>>>>>> origin/master
 )
 
 model_signature = SignatureBuilder("predict") \
