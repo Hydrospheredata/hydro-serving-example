@@ -1,5 +1,5 @@
 import numpy as np
-from sklearn.externals import joblib
+import joblib
 
 clf = joblib.load('/model/files/rf.joblib.pkl')
 

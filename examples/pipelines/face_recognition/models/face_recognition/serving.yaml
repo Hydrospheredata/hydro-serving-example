@@ -1,6 +1,6 @@
 kind: Model
 name: face_recognition
-runtime: "hydrosphere/serving-runtime-python-3.6:2.4.0"
+runtime: "hydrosphere/serving-runtime-python-3.7:3.0.0-alpha.1"
 install-command: "sh setup.sh"
 payload:
   - "src/"
