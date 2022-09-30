@@ -1,4 +1,4 @@
 pandas==1.0.5
 scikit-learn==0.23.2
-joblib==0.16.0
+joblib==1.2.0
 pyod==0.7.4
